@@ -36,6 +36,11 @@ namespace finalproject.Models
             return ds.ReadLogInManager(email, password);
         }
 
+        public int UpdateManagerpassword(string password, string email)
+        {
+            DataServices ds = new DataServices();
+            return ds.UpdateManagerpassword(password, email);
+        }
 
     }
 }

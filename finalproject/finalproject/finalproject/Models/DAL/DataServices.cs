@@ -274,6 +274,116 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
+        // Relates to the manager
 
+        public int ReadLogInManager(string email, string password)
+        {
+
+            SqlConnection con = null;
+
+
+            try
+            {
+                // Connect
+                con = Connect("webOsDB");
+
+
+                // Create the insert command
+                SqlCommand selectCommand = createSelectCommand_MEmailPassword(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+               string Mpassword = "";
+
+                if (dr.Read())
+                {
+                    while (dr.Read())
+                    {
+                        Mpassword = (string)dr["password"];
+                    }
+
+                    dr.Close();
+                    if (Mpassword == password)
+                        return 0; // the Manager's email is exist and the password is correct 
+                    else return -1; // the Manager's email is exist but the password isn't correct
+                }
+                else return 1; // the Manager's email is not exist in the table
+            }
+            catch (Exception ex)
+            {
+                // write the error to log
+                throw new Exception("failed in reading manager by email", ex);
+            }
+            finally
+            {
+                // Close the connection
+                if (con != null)
+                    con.Close();
+            }
+
+        }
+
+        SqlCommand createSelectCommand_MEmailPassword(SqlConnection con, string email)
+        {
+            string commandStr = "SELECT password FROM Manager_2022 WHERE EMAIL = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.VarChar);
+            cmd.Parameters["@email"].Value = email;
+            return cmd;
+        }
+
+        public int UpdateManagerpassword(string password, string email)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+
+                SqlCommand selectCommand = createSelectCommand_MEmailPassword(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+                if (dr.Read())
+                {
+                    //dr.Close();
+
+                    //con.Open();
+
+                    SqlCommand updateCommand = createUpdateCommand_MUpdatePassword(con, password, email);
+                    updateCommand.ExecuteNonQuery();
+                    return 1;
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in update the user password", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createUpdateCommand_MUpdatePassword(SqlConnection con, string password, string email)
+        {
+            string commandStr = "UPDATE Manager_2022 SET password = @password" +
+                "WHERE email = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@password", SqlDbType.NVarChar);
+            cmd.Parameters["@password"].Value = password;
+            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+            cmd.Parameters["@email"].Value = email;
+            return cmd;
+        }
     }
 }

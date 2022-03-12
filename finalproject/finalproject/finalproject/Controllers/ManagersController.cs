@@ -31,8 +31,11 @@ namespace finalproject.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+
+        public int Put(string password, string email)
         {
+            Volunteer volunteer = new Volunteer();
+            return volunteer.UpdateManagerpassword(password, email);
         }
 
         // DELETE api/<controller>/5

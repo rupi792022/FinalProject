@@ -18,13 +18,17 @@
         function logIn() {
             let email = $("#email").val();
             let password = $("#password").val();
-            let apiCall = "../api/Manager?email=" + email + "&password=" + password;
+            let apiCall = "../api/Managers?email=" + email + "&password=" + password;
             ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
         }
 
-        function getSuccessCB(ManagerDetails) {
-            if (ManagerDetails == 0) 
+        function getSuccessCB(ManagerPassword) {
+            if (ManagerPassword == 0) {
                 window.location.href = "ManagerHome.html";
+            }
+            else if (ManagerPassword == -1) {
+                alert("The password is incorrect, please try again")
+            }
             else alert("The email is incorrect, please try again")
         }
 

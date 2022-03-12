@@ -115,8 +115,9 @@ namespace finalproject.Models
         public int InsertEmail()
         {
             DataServices ds = new DataServices();
-             this.Volunteer_password = genereateRandomPassword();
+            this.Volunteer_password = genereateRandomPassword();
             return ds.InsertEmail(this);
+            //ask Anat how can we send the email to the user if we do not know if we succsseded connect to the DB
         }
       
         // check if the user exist in the system and if the password is correct
