@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+    </script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#LogIn").click(LogIn);
+        });
+
+        function LogIn() {
+            let email = $("#email").val();
+            let password = $("#password").val();
+            let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
+            ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
+        }
+
+        function getSuccessCB(volunteerDetails) {
+            if (volunteerDetails == 0) {
+                window.location.href = "VolunteerHome.html";
+            }
+            else if (volunteerDetails == -1) {
+                alert("The password is incorrect, please try again")
+            }
+            else alert("The email is incorrect, please try again")
+        }
+
+        function getErrorCB() {
+            console.log("Failed to log in email")
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"><br />
+    <input type="text" id="password" name="password" placeholder="Enter password" required><br />
+    <button id="LogIn">Log In</button>
+</body>
+</html>
