@@ -1,13 +1,15 @@
 ﻿using finalproject.Models.DAL;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
+//using System.Net.Mail;
 using System.Text;
 using System.Web;
-//using MailKit.Net.Smtp;
-//using MailKit;
-//using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit;
+
+
 
 namespace finalproject.Models
 {
@@ -68,47 +70,47 @@ namespace finalproject.Models
             return sb.ToString();
         }
 
-        //private static bool sendEmail(string sendTo, string passsword)
-        //{
-        //    MimeMessage message = new MimeMessage();
+        private static bool sendEmail(string sendTo, string passsword)
+        {
+            MimeMessage message = new MimeMessage();
 
-        //    message.From.Add(new MailboxAddress("FinalProject", sendTo));
-        //    message.To.Add(MailboxAddress.Parse("sendTo"));
-        //    message.Subject = "Registartion Password";
-        //    string body = $"You password is : {passsword}";
-        //    message.Body = new TextPart("plain")
-        //    {
-        //        Text = body
-        //    };
+            message.From.Add(new MailboxAddress("FinalProject", sendTo));
+            message.To.Add(MailboxAddress.Parse("sendTo"));
+            message.Subject = "Registartion Password";
+            string body = $"You password is : {passsword}";
+            message.Body = new TextPart("plain")
+            {
+                Text = body
+            };
 
-        //    SmtpClient client = new SmtpClient();
+            SmtpClient client = new SmtpClient();
 
-        //    try
-        //    {
-        //        client.Connect("smtp.gmail.com", 465, true);
-        //        client.Authenticate(EmailInformation.Email, EmailInformation.Password);
-        //        client.Send(message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        client.Disconnect(true);
-        //        client.Dispose();
-        //    }
-        //    return true;
-        //}
+            try
+            {
+                client.Connect("smtp.gmail.com", 465, true);
+                client.Authenticate(EmailInformation.Email, EmailInformation.Password);
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                client.Disconnect(true);
+                client.Dispose();
+            }
+            return true;
+        }
 
-        //public static class EmailInformation
-        //{
-        //    private static readonly string email = "rupi792022@gmail.com";
-        //    public static readonly string password = "AdiAmit114";
-        //    public static string Email { get => email; }
-        //    public static string Password { get => password; }
-        //}
+        public static class EmailInformation
+        {
+            private static readonly string email = "rupi792022@gmail.com";
+            public static readonly string password = "AdiAmit114";
+            public static string Email { get => email; }
+            public static string Password { get => password; }
+        }
 
         public int InsertEmail()
         {
