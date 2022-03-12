@@ -202,6 +202,7 @@
     <Content Include="Pages\SingIn.html" />
     <Content Include="Pages\ManagerHome.html" />
     <Content Include="Pages\VolunteerHome.html" />
+    <Content Include="Pages\VolunteerPersonalDetails.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\ajaxCallsWithKey.js" />
     <Content Include="Scripts\bootstrap.js" />

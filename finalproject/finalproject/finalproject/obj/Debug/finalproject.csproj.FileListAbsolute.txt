@@ -85,3 +85,7 @@ C:\Users\Eden\Downloads\finalproject\finalproject\finalproject\finalproject\fina
 C:\Users\Eden\Downloads\finalproject\finalproject\finalproject\finalproject\finalproject\obj\Debug\finalproject.csproj.CopyComplete
 C:\Users\Eden\Downloads\finalproject\finalproject\finalproject\finalproject\finalproject\obj\Debug\finalproject.dll
 C:\Users\Eden\Downloads\finalproject\finalproject\finalproject\finalproject\finalproject\obj\Debug\finalproject.pdb
+C:\Users\tomer\Source\Repos\FinalProject\finalproject\finalproject\finalproject\obj\Debug\finalproject.csproj.AssemblyReference.cache
+C:\Users\tomer\Source\Repos\FinalProject\finalproject\finalproject\finalproject\obj\Debug\finalproject.csproj.CoreCompileInputs.cache
+C:\Users\tomer\Source\Repos\FinalProject\finalproject\finalproject\finalproject\obj\Debug\finalproject.dll
+C:\Users\tomer\Source\Repos\FinalProject\finalproject\finalproject\finalproject\obj\Debug\finalproject.pdb

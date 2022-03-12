@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+    </script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#Save").click(Save);
+        });
+
+        function Save() {
+            let firstname = $("#firstname").val();
+            let lastname = $("#lastname").val();
+            let birthdate = $("#birthdate").val();
+            let mobilephone = $("#mobilephone").val();
+            let email = $(this).attr("email");
+            let gender = $("input[type=checkbox][name=gender]:checked").val();
+            let volunteertype = $("input[type=checkbox][name=volunteertype]:checked").val();
+            
+
+            ajaxCall("PUT", "../api/Volunteers?first_name=" + firstname + "&last_name=" + lastname + "&date_of_birth=" + birthdate + "&phone_number=" + mobilephone + "&gender=" + gender + "&volunteer_email=" + email + "&volunteer_type=" + volunteertype, "", SaveSuccessCB, SaveErrorCB);
+
+            function SaveSuccessCB() {
+
+            }
+            function SaveErrorCB() {
+
+            }
+      
+        } 
+    </script>
+</head>
+<body>
+    <input type="text" id="firstname" name="fname" placeholder="Enter First Name"><br><br>
+    <input type="text" id="lastname" name="lname" placeholder="Enter Last Name"><br><br>
+    <input type="date" id="birthdate" name="birthdate" placeholder="Enter Birth Date"><br><br>
+    <input type="number" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number"><br><br>
+
+    <label>Gender:</label>
+    <input type="checkbox" id="woman" name="gender" value="Woman">
+    <label for="woman"> Woman</label>
+    <input type="checkbox" id="man" name="gender" value="Man">
+    <label for="man"> Man</label><br><br>
+
+    <label>Volunteer Type:</label>
+    <input type="checkbox" id="freetime" name="volunteertype" value="FreeTime">
+    <label for="freetime"> Free Time</label>
+    <input type="checkbox" id="againsthours" name="volunteertype" value="AgainstHours">
+    <label for="againsthours"> Against hours</label><br><br>
+
+    <label for="password"> Change password</label>
+    <input type="password" id="password" name="password" placeholder="Enter Password"><br><br>
+
+    <button id="Save">Save</button>
+</body>
+</html>
