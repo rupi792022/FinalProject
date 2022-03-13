@@ -15,32 +15,61 @@
         });
 
         function Save() {
-            let firstname = $("#firstname").val();
-            let lastname = $("#lastname").val();
-            let birthdate = $("#birthdate").val();
-            let mobilephone = $("#mobilephone").val();
-            let email = $(this).attr("email");
-            let gender = $("input[type=checkbox][name=gender]:checked").val();
-            let volunteertype = $("input[type=checkbox][name=volunteertype]:checked").val();
-            
+            getDatails = JSON.parse(localStorage.getItem('volunteerDetails'));
 
-            ajaxCall("PUT", "../api/Volunteers?first_name=" + firstname + "&last_name=" + lastname + "&date_of_birth=" + birthdate + "&phone_number=" + mobilephone + "&gender=" + gender + "&volunteer_email=" + email + "&volunteer_type=" + volunteertype, "", SaveSuccessCB, SaveErrorCB);
+            let newpassword = $("#NewPassword").val();
+            let verifynewpassword = $("#VerifyNewPassword").val();
 
-            function SaveSuccessCB() {
-
+            if (newpassword != verifynewpassword) {
+                alert("Verification is not correct.")
             }
-            function SaveErrorCB() {
+            else {
 
+                if (newpassword != "")
+                    password = $("#newpassword").val();
+                else
+                    password = getDatails.Volunteer_password;
+
+
+                let firstname = $("#firstname").val();
+                let lastname = $("#lastname").val();
+                let birthdate = $("#birthdate").val();
+                let mobilephone = $("#mobilephone").val();
+                let email = getDatails.Volunteer_email;
+                let gender = $("input[type=checkbox][name=gender]:checked").val();
+                let volunteertype = $("input[type=checkbox][name=volunteertype]:checked").val();
+
+                let MyVolunteerDetails = {
+                    First_name: firstname,
+                    Last_name: lastname,
+                    Date_of_birth=birthdate,
+                    Phone_number=mobilephone,
+                    Gender: gender,
+                    Volunteer_email: email,
+                    Volunteer_type: volunteertype,
+                    Volunteer_password: password
+                }
+
+                ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
+                return false;
+
+                function SaveSuccessCB(data) {
+                    console.log(data);
+                    localStorage.setItem("volunteerDetails", JSON.stringify(MyVolunteerDetails));
+                }
+                function SaveErrorCB(error) {
+                    console.log(error);
+                }
             }
-      
-        } 
+        }
+
     </script>
 </head>
 <body>
-    <input type="text" id="firstname" name="fname" placeholder="Enter First Name"><br><br>
-    <input type="text" id="lastname" name="lname" placeholder="Enter Last Name"><br><br>
-    <input type="date" id="birthdate" name="birthdate" placeholder="Enter Birth Date"><br><br>
-    <input type="number" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number"><br><br>
+    <input type="text" id="firstname" name="fname" placeholder="Enter First Name" required><br><br>
+    <input type="text" id="lastname" name="lname" placeholder="Enter Last Name" required><br><br>
+    <input type="date" id="birthdate" name="birthdate" placeholder="Enter Birth Date" required><br><br>
+    <input type="number" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"><br><br>
 
     <label>Gender:</label>
     <input type="checkbox" id="woman" name="gender" value="Woman">
@@ -54,8 +83,9 @@
     <input type="checkbox" id="againsthours" name="volunteertype" value="AgainstHours">
     <label for="againsthours"> Against hours</label><br><br>
 
-    <label for="password"> Change password</label>
-    <input type="password" id="password" name="password" placeholder="Enter Password"><br><br>
+    <label> Change password</label><br><br>
+    <input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
+    <input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
 
     <button id="Save">Save</button>
 </body>

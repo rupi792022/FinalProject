@@ -16,7 +16,7 @@
         });
 
         function LogIn() {
-            let email = $("#email").val();
+            let email = $("#email").val().toLowerCase();
             let password = $("#password").val();
             let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
             ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
@@ -25,6 +25,13 @@
         function getSuccessCB(volunteerDetails) {
             if (volunteerDetails == 0) {
                 window.location.href = "VolunteerHome.html";
+
+                if (typeof (Storage) !== "undefined") {
+                    localStorage.setItem('volunteerDetails', JSON.stringify(volunteerDetails));
+                }
+                else {
+                    alert("web storage not supported!");
+                }
             }
             else if (volunteerDetails == -1) {
                 alert("The password is incorrect, please try again")
@@ -40,6 +47,7 @@
 <body>
     <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"><br />
     <input type="password" id="password" name="password" placeholder="Enter password" required><br />
+    <a href="ForgotPassword.html">Forgot Password</a>
     <button id="LogIn">Log In</button>
 </body>
 </html>

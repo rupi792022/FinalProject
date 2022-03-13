@@ -196,6 +196,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\ForgotPassword.html" />
     <Content Include="Pages\OpeningPage.html" />
     <Content Include="Pages\LogInVolunteer.html" />
     <Content Include="Pages\LogInManagaer.html" />

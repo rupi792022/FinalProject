@@ -77,7 +77,7 @@ namespace finalproject.Models
             message.From.Add(new MailboxAddress("FinalProject", sendTo));
             message.To.Add(MailboxAddress.Parse("sendTo"));
             message.Subject = "Registartion Password";
-            string body = $"You password is : {passsword}";
+            string body = $"Your password is : {passsword}";
             message.Body = new TextPart("plain")
             {
                 Text = body

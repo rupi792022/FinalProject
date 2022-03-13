@@ -16,7 +16,7 @@
         });
 
         function logIn() {
-            let email = $("#email").val();
+            let email = $("#email").val().toLowerCase();
             let password = $("#password").val();
             let apiCall = "../api/Managers?email=" + email + "&password=" + password;
             ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
@@ -25,6 +25,7 @@
         function getSuccessCB(ManagerPassword) {
             if (ManagerPassword == 0) {
                 window.location.href = "ManagerHome.html";
+
             }
             else if (ManagerPassword == -1) {
                 alert("The password is incorrect, please try again")
@@ -35,8 +36,6 @@
         function getErrorCB() {
             console.log("Failed to log in email")
         }
-       
-
     </script>
 </head>
 <body>
