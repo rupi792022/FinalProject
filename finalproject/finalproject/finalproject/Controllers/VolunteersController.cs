@@ -40,10 +40,10 @@ namespace finalproject.Controllers
             volunteer.UpdateVolunteerDetails(volunteer);
         }
 
-        public int Put(string password, string email)
+        public string Get( string email)
         {
             Volunteer volunteer = new Volunteer();
-           return volunteer.UpdateVolunteerpassword(password, email);
+           return volunteer.Readpassword( email);
         }
 
         // DELETE api/<controller>/5

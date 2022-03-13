@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
-    <link href="../css/login.css" rel="stylesheet" />
+    <!--<link href="../css/login.css" rel="stylesheet" />-->
     <script>
 
         $(document).ready(function () {
@@ -22,18 +22,24 @@
         });
 
         function LogIn() {
-            let email = $("#email").val().toLowerCase();
+            let email = $("#email").val();
             let password = $("#password").val();
             let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
+
+
+             MyVolunteerDetails = {
+                Volunteer_email: email,
+                Volunteer_password: password
+            }
             ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
         }
 
         function getSuccessCB(volunteerDetails) {
             if (volunteerDetails == 0) {
-                window.location.href = "VolunteerHome.html";
+                window.location.href = "VolunteerPersonalDetails.html";
 
                 if (typeof (Storage) !== "undefined") {
-                    localStorage.setItem('volunteerDetails', JSON.stringify(volunteerDetails));
+                    localStorage.setItem('volunteerDetails', JSON.stringify(MyVolunteerDetails));
                 }
                 else {
                     alert("web storage not supported!");
@@ -51,7 +57,7 @@
     </script>
 </head>
 <body>
-    <div class="container-fluid">
+    <!--<div class="container-fluid">
         <div class="row" id="up">
         </div>
         <div class="row" id="header">
@@ -60,25 +66,25 @@
         <div class="row" id="main">
             <section class="ftco-section">
                 <form action="/action_page.php">
-                    <div class="form-group">
+                    <div class="form-group">-->
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"><br />
-                    </div>
-                    <div class="form-group">
+                    <!--</div>
+                    <div class="form-group">-->
                         <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required><br />
-                        <!--<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>-->
+                        <!--<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     </div>
                     <div class="form-group d-md-flex">
-                        <div class="w-50 text-md-right">
+                        <div class="w-50 text-md-right">-->
                             <a  id="ForgotPassword" href="ForgotPassword.html">Forgot Password</a>
-                        </div>
-                    </div>
+                        <!--</div>
+                    </div>-->
                     <button type="submit" class="form-control btn btn-primary" id="LogIn">Log In</button>
-                </form>
+                <!--</form>
             </section>
 
         </div>
         <div class="row" id="footer"></div>
-    </div>
+    </div>-->
 </body>
 </html>
 

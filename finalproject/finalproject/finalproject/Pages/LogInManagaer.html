@@ -16,15 +16,27 @@
         });
 
         function logIn() {
-            let email = $("#email").val().toLowerCase();
+            let email = $("#email").val();
             let password = $("#password").val();
             let apiCall = "../api/Managers?email=" + email + "&password=" + password;
+
+            MyManagerDetails = {
+                Manager_email: email,
+                Manager_password: password
+            }
+
             ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
         }
 
         function getSuccessCB(ManagerPassword) {
             if (ManagerPassword == 0) {
                 window.location.href = "ManagerHome.html";
+                if (typeof (Storage) !== "undefined") {
+                    localStorage.setItem('ManagerDetails', JSON.stringify(MyManagerDetails));
+                }
+                else {
+                    alert("web storage not supported!");
+                }
 
             }
             else if (ManagerPassword == -1) {

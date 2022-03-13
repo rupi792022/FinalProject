@@ -3,12 +3,12 @@ using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Net.Mail;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
-using MailKit.Net.Smtp;
-using MailKit;
-
+//using MailKit.Net.Smtp;
+//using MailKit;
+using System.Net;
 
 
 namespace finalproject.Models
@@ -70,53 +70,93 @@ namespace finalproject.Models
             return sb.ToString();
         }
 
-        private static bool sendEmail(string sendTo, string passsword)
+        //private static bool sendEmail(string sendTo, string passsword)
+        //{
+        //    MimeMessage message = new MimeMessage();
+
+        //    message.From.Add(new MailboxAddress("FinalProject", sendTo));
+        //    message.To.Add(MailboxAddress.Parse("sendTo"));
+        //    message.Subject = "Registartion Password";
+        //    string body = $"Your password is : {passsword}";
+        //    message.Body = new TextPart("plain")
+        //    {
+        //        Text = body
+        //    };
+
+        //    SmtpClient client = new SmtpClient();
+
+        //    try
+        //    {
+        //        client.Connect("smtp.gmail.com", 465, true);
+        //        client.Authenticate(EmailInformation.Email, EmailInformation.Password);
+        //        client.Send(message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        return false;
+        //    }
+        //    finally
+        //    {
+        //        client.Disconnect(true);
+        //        client.Dispose();
+        //    }
+        //    return true;
+        //}
+
+        //public static class EmailInformation
+        //{
+        //    private static readonly string email = "rupi792022@gmail.com";
+        //    public static readonly string password = "AdiAmit114";
+        //    public static string Email { get => email; }
+        //    public static string Password { get => password; }
+        //}
+
+
+
+        public int sendEmail(string email, string password) //send Email
         {
-            MimeMessage message = new MimeMessage();
-
-            message.From.Add(new MailboxAddress("FinalProject", sendTo));
-            message.To.Add(MailboxAddress.Parse("sendTo"));
-            message.Subject = "Registartion Password";
-            string body = $"Your password is : {passsword}";
-            message.Body = new TextPart("plain")
+            //    DBservices dbs = new DBservices();
+            //    string password = dbs.forgotPassword(email);
+            //if (password == null)
+            //    return "The email address is not registered. \n Please try again.";
+            // Gmail Address from where you send the mail 
+            var fromAddress = "rupi792022@gmail.com";
+            // any address where the email will be sending       
+            var toAddress = email;
+            //Password of your gmail address 
+            const string fromPassword = "AdiAmit114";
+            // Passing the values and make a email formate to display 
+            string subject = "Password";
+            string body = "From: FOA System" + "\n";
+            body += "From Email: " + fromAddress + "\n";
+            body += "Subject: " + subject + "\n";
+            body += "Your password is: " + password + "\n";
+            // smtp settings 
+            var smtp = new System.Net.Mail.SmtpClient();
             {
-                Text = body
-            };
-
-            SmtpClient client = new SmtpClient();
-
-            try
-            {
-                client.Connect("smtp.gmail.com", 465, true);
-                client.Authenticate(EmailInformation.Email, EmailInformation.Password);
-                client.Send(message);
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587; smtp.EnableSsl = true;
+                smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
+                smtp.Timeout = 20000;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-            finally
-            {
-                client.Disconnect(true);
-                client.Dispose();
-            }
-            return true;
-        }
 
-        public static class EmailInformation
-        {
-            private static readonly string email = "rupi792022@gmail.com";
-            public static readonly string password = "AdiAmit114";
-            public static string Email { get => email; }
-            public static string Password { get => password; }
+            smtp.Send(fromAddress, toAddress, subject, body);
+
+            return -2;
         }
 
         public int InsertEmail()
         {
             DataServices ds = new DataServices();
             this.Volunteer_password = genereateRandomPassword();
-            return ds.InsertEmail(this);
+            int tosendEmail = ds.InsertEmail(this);
+            if(tosendEmail != -1)
+            {
+                tosendEmail = sendEmail(this.volunteer_email, this.Volunteer_password);
+            }
+            return tosendEmail;
             //ask Anat how can we send the email to the user if we do not know if we succsseded connect to the DB
         }
       
@@ -135,10 +175,10 @@ namespace finalproject.Models
         }
 
         // update the user password 
-        public int UpdateVolunteerpassword(string password, string email)
+        public string Readpassword(string email)
         {
             DataServices ds = new DataServices();
-            return ds.UpdateVolunteerpassword(password, email);
+            return ds.Readpassword( email);
         }
     }
 }

@@ -37,17 +37,21 @@
                 let mobilephone = $("#mobilephone").val();
                 let email = getDatails.Volunteer_email;
                 let gender = $("input[type=checkbox][name=gender]:checked").val();
+                let startdate = $("#startdate").val();
                 let volunteertype = $("input[type=checkbox][name=volunteertype]:checked").val();
+               /* let teamname= $("#teamname option:selected").val();*/
 
                 let MyVolunteerDetails = {
                     First_name: firstname,
                     Last_name: lastname,
-                    Date_of_birth=birthdate,
-                    Phone_number=mobilephone,
+                    Date_of_birth:birthdate,
+                    Phone_number:mobilephone,
                     Gender: gender,
                     Volunteer_email: email,
+                    Start_date: startdate,
                     Volunteer_type: volunteertype,
                     Volunteer_password: password
+                    /*Team_name:teamname*/
                 }
 
                 ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
@@ -56,6 +60,7 @@
                 function SaveSuccessCB(data) {
                     console.log(data);
                     localStorage.setItem("volunteerDetails", JSON.stringify(MyVolunteerDetails));
+                    window.location.href = "VolunteerHome.html";
                 }
                 function SaveErrorCB(error) {
                     console.log(error);
@@ -82,6 +87,15 @@
     <label for="freetime"> Free Time</label>
     <input type="checkbox" id="againsthours" name="volunteertype" value="AgainstHours">
     <label for="againsthours"> Against hours</label><br><br>
+
+    <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required><br><br>
+
+    <!--<label for="teamname">Team Name:</label>
+
+    <select name="teamname" id="teamname">
+        <option value="monitor">Monitor</option>
+        <option value="social">Social</option>
+    </select>-->
 
     <label> Change password</label><br><br>
     <input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>

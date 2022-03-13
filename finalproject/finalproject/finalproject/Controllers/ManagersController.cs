@@ -34,8 +34,8 @@ namespace finalproject.Controllers
 
         public int Put(string password, string email)
         {
-            Volunteer volunteer = new Volunteer();
-            return volunteer.UpdateManagerpassword(password, email);
+            Manager manager = new Manager();
+            return manager.UpdateManagerpassword(password, email);
         }
 
         // DELETE api/<controller>/5

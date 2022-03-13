@@ -21,10 +21,12 @@
         function Send() {
             let email = $("#email").val();
             let DefaltPassword = '0000000A';
+            let firstname = 'needtoupdate';
 
             let myVolunteer = {
                 Volunteer_email: email,
-                Volunteer_password: DefaltPassword
+                Volunteer_password: DefaltPassword,
+                First_name: firstname
             }
 
             ajaxCall("POST", "../api/Volunteers", JSON.stringify(myVolunteer), postSuccessCB, postErrorCB);
@@ -35,7 +37,9 @@
             if (EmailisAllredayExist == -1) {
                 alert("The email is allready exist in the system, please enter another email");
             }
-            console.log("the password was sent to the user");
+            else if (EmailisAllredayExist == -2)
+                //ask Anat if we need to use the sffected
+                alert("Password recovery request was sent successfuly. \n Please check your email to recover your password.");
             window.location.href = "";
             
         }

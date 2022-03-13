@@ -90,7 +90,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand CreateInsert_VEmailVPassword(Volunteer volunteer, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Volunteer_2022 ( [email], [password]) VALUES('"+ volunteer.Volunteer_email + "', '" + volunteer.Volunteer_password + "')";
+            string insertStr = "INSERT INTO Volunteer_2022 ( [email], [password],[first_name]) VALUES('"+ volunteer.Volunteer_email + "', '" + volunteer.Volunteer_password+ "', '" + volunteer.First_name + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -118,27 +118,23 @@ namespace finalproject.Models.DAL
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
                 Volunteer volunteer = new Volunteer();
-
-                if (dr.Read())
-                {
+                bool emailexist = false;
+             
                     while (dr.Read())
                     {
+                        emailexist = true;
                         volunteer.Volunteer_email = (string)dr["email"];
                         volunteer.First_name = (string)dr["first_name"];
-                        volunteer.Last_name = (string)dr["last_name"];
-                        volunteer.Date_of_birth = (string)dr["date_of_birth"];
                         volunteer.Volunteer_password = (string)dr["password"];
-                        volunteer.Volunteer_type = (string)dr["volunteer_type"];
-                        volunteer.Gender = (string)dr["gender"];
-                        volunteer.Phone_number = Convert.ToInt32(dr["phone_number"]);
-                        volunteer.Start_date = (string)dr["start_date"];
-                        volunteer.Team_name = (string)dr["team_name"];
+
                     }
 
                     dr.Close();
-                    // it is enough to check if only one field is null because all the details about the user are saved together at the same time
-                    // so if one of them is null it means that all of them are null
-                    if (volunteer.Volunteer_password == password && volunteer.First_name == "")
+                // it is enough to check if only one field is null because all the details about the user are saved together at the same time
+                // so if one of them is null it means that all of them are null
+                if (emailexist == true)
+                {
+                    if (volunteer.Volunteer_password == password && volunteer.First_name == "needtoupdate")
                         return 0; // the volunteer's email is exist and the password is correct but all the other fields are with null values
                     else return -1; // the volunteer's email is exist but the password isn't correct
                 }
@@ -160,7 +156,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand createSelectCommand_EmailPassword(SqlConnection con, string email)
         {
-            string commandStr = "SELECT * FROM Volunteer_2022 WHERE EMAIL = @email";
+            string commandStr = "SELECT email, first_name, password FROM Volunteer_2022 WHERE EMAIL = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.VarChar);
             cmd.Parameters["@email"].Value = email;
@@ -175,7 +171,7 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date,volunteer.Team_name);
+                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date/*,volunteer.Team_name*/);
                 selectCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -190,7 +186,7 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date,string Team_name)
+        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date/*,string Team_name*/)
         {
             string commandStr = "UPDATE Volunteer_2022 SET first_name = @First_name" +
                ",last_name = @Last_name" +
@@ -198,11 +194,11 @@ namespace finalproject.Models.DAL
                 ",volunteer_type =@Volunteer_type" +
                 ",gender =@Gender "+
                 ",phone_number =@Phone_number" +
-                ",start_date =@Start_date" +
-                ",team_name =@Team_name "+
+                ",start_date =@Start_date " +
+                //",team_name =@Team_name "+
                 "WHERE email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@Phone_number", SqlDbType.SmallInt);
+            cmd.Parameters.Add("@Phone_number", SqlDbType.Int);
             cmd.Parameters["@Phone_number"].Value = Phone_number;
             cmd.Parameters.Add("@First_name", SqlDbType.NVarChar);
             cmd.Parameters["@First_name"].Value = First_name;
@@ -216,40 +212,43 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@Gender"].Value = Gender;
             cmd.Parameters.Add("@Start_date", SqlDbType.NVarChar);
             cmd.Parameters["@Start_date"].Value = Start_date;
-            cmd.Parameters.Add("@Team_name", SqlDbType.NVarChar);
-            cmd.Parameters["@Team_name"].Value = Team_name;
+            //cmd.Parameters.Add("@Team_name", SqlDbType.NVarChar);
+            //cmd.Parameters["@Team_name"].Value = Team_name;
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
             return cmd;
         }
 
-        public int UpdateVolunteerpassword(string password, string email)
+        public string Readpassword( string email)
         {
+
 
             SqlConnection con = null;
 
+
             try
             {
+                // Connect
                 con = Connect("webOsDB");
 
-                SqlCommand selectCommand = createSelectCommand_VEmail(con, email);
+
+                // Create the insert command
+                SqlCommand selectCommand = createUpdateCommand_getPassword(con, email);
 
                 // Execute the command
                 //
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
 
-                if (dr.Read())
+                string getpassword = "";
+
+                while (dr.Read())
                 {
-                    //dr.Close();
-
-                    //con.Open();
-
-                    SqlCommand updateCommand = createUpdateCommand_UpdatePassword(con, password, email);
-                    updateCommand.ExecuteNonQuery();
-                    return 1;
+                    getpassword = (string)dr["password"];
                 }
-                return 0;
+
+                dr.Close();
+                return getpassword;
             }
             catch (Exception ex)
             {
@@ -263,12 +262,9 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createUpdateCommand_UpdatePassword(SqlConnection con, string password, string email) { 
-            string commandStr = "UPDATE Volunteer_2022 SET password = @password" +
-                "WHERE email = @email";
+        private SqlCommand createUpdateCommand_getPassword(SqlConnection con,  string email) {
+            string commandStr = "select password from Volunteer_2022 where email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@password", SqlDbType.NVarChar);
-            cmd.Parameters["@password"].Value = password;
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
             return cmd;
