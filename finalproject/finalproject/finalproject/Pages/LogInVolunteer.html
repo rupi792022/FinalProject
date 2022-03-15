@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
+
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
-    <!--<link href="../css/login.css" rel="stylesheet" />-->
+    <link href="../css/LogIn.css" rel="stylesheet" />
     <script>
 
         $(document).ready(function () {
@@ -27,7 +27,7 @@
             let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
 
 
-             MyVolunteerDetails = {
+            MyVolunteerDetails = {
                 Volunteer_email: email,
                 Volunteer_password: password
             }
@@ -57,34 +57,17 @@
     </script>
 </head>
 <body>
-    <!--<div class="container-fluid">
-        <div class="row" id="up">
-        </div>
-        <div class="row" id="header">
-            <img src="../Images/FOA.png" />
-        </div>
-        <div class="row" id="main">
-            <section class="ftco-section">
-                <form action="/action_page.php">
-                    <div class="form-group">-->
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"><br />
-                    <!--</div>
-                    <div class="form-group">-->
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required><br />
-                        <!--<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                    </div>
-                    <div class="form-group d-md-flex">
-                        <div class="w-50 text-md-right">-->
-                            <a  id="ForgotPassword" href="ForgotPassword.html">Forgot Password</a>
-                        <!--</div>
-                    </div>-->
-                    <button type="submit" class="form-control btn btn-primary" id="LogIn">Log In</button>
-                <!--</form>
-            </section>
-
-        </div>
-        <div class="row" id="footer"></div>
-    </div>-->
+    <div class="loginBox">
+        <img src="../Images/FOA.png" /><br />
+     
+        <form> 
+            <div class="inputBox">
+                <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$">
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+                <button id="LogIn" type="button">Log In</button>
+            </div>
+        </form>  <br /><a id="forgetpassword"  href="ForgotPassword.html">Forgot Password</a>
+    </div>
 </body>
 </html>
 
