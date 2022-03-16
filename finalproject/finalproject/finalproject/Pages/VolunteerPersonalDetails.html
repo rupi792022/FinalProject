@@ -3,19 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             $("#Save").click(Save);
         });
 
         function Save() {
-            getDatails = JSON.parse(localStorage.getItem('volunteerDetails'));
+            getDatails = JSON.parse(localStorage.getItem('userDetails'));
 
             let newpassword = $("#NewPassword").val();
             let verifynewpassword = $("#VerifyNewPassword").val();
@@ -36,59 +41,109 @@
                 let birthdate = $("#birthdate").val();
                 let mobilephone = $("#mobilephone").val();
                 let email = getDatails.Volunteer_email;
-                let gender = $("input[type=checkbox][name=gender]:checked").val();
-                let startdate = $("#startdate").val();
-                let volunteertype = $("input[type=checkbox][name=volunteertype]:checked").val();
-                let language = $('#language').val();
 
-                let MyVolunteerDetails = {
-                    First_name: firstname,
-                    Last_name: lastname,
-                    Date_of_birth:birthdate,
-                    Phone_number:mobilephone,
-                    Gender: gender,
-                    Volunteer_email: email,
-                    Start_date: startdate,
-                    Volunteer_type: volunteertype,
-                    Volunteer_password: password,
-                    Language:language
+                let gender = $("input[type=radio][name=gender]:checked").val();
+                if (gender) {
+                    console(gender);
                 }
+                else {
+                    alert('No gender selected');
 
-                ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
-                return false;
 
-                function SaveSuccessCB(data) {
-                    console.log(data);
-                    localStorage.setItem("volunteerDetails", JSON.stringify(MyVolunteerDetails));
-                    window.location.href = "VolunteerHome.html";
+                    let startdate = $("#startdate").val();
+                    let volunteertype = $("input[type=radio][name=gender]:checked").val();
+                    if (volunteertype) {
+                        console(volunteertype);
+                    }
+                    else {
+                        alert('No volunteer type selected');
+
+                        let language = $('#language').val();
+
+                        let MyVolunteerDetails = {
+                            First_name: firstname,
+                            Last_name: lastname,
+                            Date_of_birth: birthdate,
+                            Phone_number: mobilephone,
+                            Gender: gender,
+                            Volunteer_email: email,
+                            Start_date: startdate,
+                            Volunteer_type: volunteertype,
+                            Volunteer_password: password,
+                            Language: language
+                        }
+
+                        ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
+                        return false;
+
+                        function SaveSuccessCB(data) {
+                            console.log(data);
+                            localStorage.setItem("volunteerDetails", JSON.stringify(MyVolunteerDetails));
+                            window.location.href = "VolunteerHome.html";
+                        }
+                        function SaveErrorCB(error) {
+                            console.log(error);
+                        }
+                    }
                 }
-                function SaveErrorCB(error) {
-                    console.log(error);
-                }
-            }
-        }
 
     </script>
 </head>
 <body>
-    <input type="text" id="firstname" name="fname" placeholder="Enter First Name" required><br><br>
-    <input type="text" id="lastname" name="lname" placeholder="Enter Last Name" required><br><br>
-    <input type="date" id="birthdate" name="birthdate" placeholder="Enter Birth Date" required><br><br>
-    <input type="tel" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"><br><br>
+    <div class="loginBox">
+        <img src="../Images/FOA.png" /><br />
+        <form>
+            <div class="inputBox">
+                <table>
+                    <tr>
+                        <td><input type="text" id="firstname" name="fname" placeholder="Enter First Name" required></td>
+                        <td><input type="text" id="lastname" name="lname" placeholder="Enter Last Name" required></td>
+                    </tr>
 
-    <label>Gender:</label>
-    <input type="checkbox" id="woman" name="gender" value="Woman">
-    <label for="woman"> Woman</label>
-    <input type="checkbox" id="man" name="gender" value="Man">
-    <label for="man"> Man</label><br><br>
+                    <tr>
+                        <td><input type="date" id="birthdate" name="birthdate" placeholder="Enter Birth Date" required></td>
+                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
+                    </tr>
 
-    <label>Volunteer Type:</label>
-    <input type="checkbox" id="freetime" name="volunteertype" value="FreeTime">
-    <label for="freetime"> Free Time</label>
-    <input type="checkbox" id="againsthours" name="volunteertype" value="AgainstHours">
-    <label for="againsthours"> Against hours</label><br><br>
+                    <tr>
+                        <td class="d-md-flex">
+                            <label>Gender:</label>
+                            <input type="radio" id="woman" name="gender" value="Woman">
+                            <label for="woman"> Woman</label>
+                            <input type="radio" id="man" name="gender" value="Man">
+                            <label for="man"> Man</label>
+                        </td>
+                        <td>
+                            <label class="d-md-flex">Volunteer Type:</label>
+                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime">
+                            <label for="freetime"> Free Time</label>
+                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours">
+                            <label for="againsthours"> Against hours</label>
+                        </td>
+                    </tr>
 
-    <label for="startdate">Start Date:</label>
+                    <tr>
+                        <td>
+                            <label for="startdate">Start Date:</label>
+                            <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required>
+                        </td>
+                        <td>
+                            <label for="language">Languages:</label>
+                            <select name="language" id="language">
+                                <option value="hebrew">Hebrew</option>
+                                <option value="english">English</option>
+                                <option value="russian">Russian</option>
+                                <option value="french">French</option>
+                                <option value="arabic">Arabic</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+                <!--<label for="startdate">Start Date:</label>
     <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required><br><br>
 
     <label for="language">Languages:</label>
@@ -99,11 +154,15 @@
         <option value="french">French</option>
         <option value="arabic">Arabic</option>
     </select>
-
-    <label> Change password</label><br><br>
+    <br><br>
+    <label> Change password:</label><br><br>
     <input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
-    <input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
+    <input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>-->
+            
+                <button id="Save">Save</button>
+            </div>
+        </form>
 
-    <button id="Save">Save</button>
+    </div>
 </body>
 </html>
