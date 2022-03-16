@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
@@ -14,7 +14,7 @@
 
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
-    <link href="../css/LogIn.css" rel="stylesheet" />
+    <!--<link href="../css/LogIn.css" rel="stylesheet" />-->
     <script>
 
         $(document).ready(function () {
@@ -27,26 +27,32 @@
             let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
 
 
-            MyVolunteerDetails = {
+            MyUserDetails = {
                 Volunteer_email: email,
                 Volunteer_password: password
             }
             ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
         }
 
-        function getSuccessCB(volunteerDetails) {
-            if (volunteerDetails == 0) {
-                window.location.href = "VolunteerPersonalDetails.html";
-
-                if (typeof (Storage) !== "undefined") {
-                    localStorage.setItem('volunteerDetails', JSON.stringify(MyVolunteerDetails));
-                }
-                else {
-                    alert("web storage not supported!");
-                }
+        function getSuccessCB(userDetails) {
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem('userDetails', JSON.stringify(MyUserDetails));
             }
-            else if (volunteerDetails == -1) {
+            else {
+                alert("web storage not supported!");
+            }
+
+            if (userDetails == 1) {
+                window.location.href = "VolunteerPersonalDetails.html";  
+            }
+            else if (userDetails == -1 || userDetails == 3 ) {
                 alert("The password is incorrect, please try again")
+            }
+            else if (userDetails == 0) {
+                window.location.href = "VolunteerHome.html";
+            }
+            else if (userDetails == 2) {
+                window.location.href = "ManagerHome.html"; 
             }
             else alert("The email is incorrect, please try again")
         }
@@ -57,17 +63,17 @@
     </script>
 </head>
 <body>
-    <div class="loginBox">
+    <!--<div class="loginBox">
         <img src="../Images/FOA.png" /><br />
         <form> 
-            <div class="inputBox">
+            <div class="inputBox">-->
                 <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$">
                 <input type="password" id="password" name="password" placeholder="Enter password" required>
                 <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a><br />
                 <button id="LogIn" type="button">Log In</button>
-            </div>
+            <!--</div>
         </form> 
-    </div>
+    </div>-->
 </body>
 </html>
 

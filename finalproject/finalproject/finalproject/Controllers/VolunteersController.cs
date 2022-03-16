@@ -20,7 +20,6 @@ namespace finalproject.Controllers
         public int Get(string email, string password)
         {
             Volunteer volunteer = new Volunteer();
-
             return volunteer.ReadEmailPassword(email, password);
 
         }
@@ -29,7 +28,7 @@ namespace finalproject.Controllers
         // POST api/<controller>
         public HttpResponseMessage Post([FromBody] Volunteer volunteer)
         {
-            int emailExist = volunteer.InsertEmail();
+            bool emailExist = volunteer.InsertEmail();
             return Request.CreateResponse(HttpStatusCode.Created, emailExist);
         }
 

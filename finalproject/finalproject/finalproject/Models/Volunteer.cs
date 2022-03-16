@@ -52,7 +52,7 @@ namespace finalproject.Models
 
         private static string genereateRandomPassword()
         {
-            string allowedCharecters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*";
+            string allowedCharecters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!*";
             StringBuilder sb = new StringBuilder();
             int randomNumber;
             Random random = new Random();
@@ -67,7 +67,7 @@ namespace finalproject.Models
             return sb.ToString();
         }
 
-        public int sendEmail(string email, string password) //send Email
+        public bool sendEmail(string email, string password) //send Email
         {
             //    DBservices dbs = new DBservices();
             //    string password = dbs.forgotPassword(email);
@@ -97,20 +97,20 @@ namespace finalproject.Models
 
             smtp.Send(fromAddress, toAddress, subject, body);
 
-            return -2;
+            return true;
         }
 
-        public int InsertEmail()
+        public bool InsertEmail()
         {
             DataServices ds = new DataServices();
             this.Volunteer_password = genereateRandomPassword();
-            int tosendEmail = ds.InsertEmail(this);
-            if(tosendEmail != -1)
+            bool tosendEmail = ds.InsertEmail(this);
+            if(tosendEmail == true)
             {
                 tosendEmail = sendEmail(this.volunteer_email, this.Volunteer_password);
             }
             return tosendEmail;
-            //ask Anat how can we send the email to the user if we do not know if we succsseded connect to the DB
+          
         }
       
         // check if the user exist in the system and if the password is correct

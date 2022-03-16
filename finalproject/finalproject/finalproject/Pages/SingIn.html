@@ -22,27 +22,23 @@
         function Send() {
             let email = $("#email").val();
             let DefaltPassword = '0000000A';
-            let firstname = 'needtoupdate';
 
             let myVolunteer = {
                 Volunteer_email: email,
-                Volunteer_password: DefaltPassword,
-                First_name: firstname
+                Volunteer_password: DefaltPassword
             }
 
             ajaxCall("POST", "../api/Volunteers", JSON.stringify(myVolunteer), postSuccessCB, postErrorCB);
             return false;
         }
 
-        function postSuccessCB(EmailisAllredayExist) {
-            if (EmailisAllredayExist == -1) {
+        function postSuccessCB(sentOrExistEmail) {
+            if (sentOrExistEmail == false) {
                 alert("The email is allready exist in the system, please enter another email");
             }
-            else if (EmailisAllredayExist == -2)
+            else
                 //ask Anat if we need to use the sffected
-                alert("Password recovery request was sent successfuly. \n Please check your email to recover your password.");
-            window.location.href = "";
-            
+                alert("Password was sent successfuly");
         }
 
         function postErrorCB() {

@@ -196,9 +196,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\FOA.png" />
     <Content Include="Pages\ForgotPassword.html" />
-    <Content Include="Pages\OpeningPage.html" />
-    <Content Include="Pages\LogInVolunteer.html" />
-    <Content Include="Pages\LogInManagaer.html" />
+    <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\SingIn.html" />
     <Content Include="Pages\ManagerHome.html" />
     <Content Include="Pages\VolunteerHome.html" />
