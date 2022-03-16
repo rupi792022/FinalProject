@@ -39,7 +39,7 @@
                 let gender = $("input[type=checkbox][name=gender]:checked").val();
                 let startdate = $("#startdate").val();
                 let volunteertype = $("input[type=checkbox][name=volunteertype]:checked").val();
-               /* let teamname= $("#teamname option:selected").val();*/
+                let language = $('#language').val();
 
                 let MyVolunteerDetails = {
                     First_name: firstname,
@@ -50,8 +50,8 @@
                     Volunteer_email: email,
                     Start_date: startdate,
                     Volunteer_type: volunteertype,
-                    Volunteer_password: password
-                    /*Team_name:teamname*/
+                    Volunteer_password: password,
+                    Language:language
                 }
 
                 ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
@@ -74,7 +74,7 @@
     <input type="text" id="firstname" name="fname" placeholder="Enter First Name" required><br><br>
     <input type="text" id="lastname" name="lname" placeholder="Enter Last Name" required><br><br>
     <input type="date" id="birthdate" name="birthdate" placeholder="Enter Birth Date" required><br><br>
-    <input type="number" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"><br><br>
+    <input type="tel" id="mobilephone" name="mobilephone" placeholder="Enter Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"><br><br>
 
     <label>Gender:</label>
     <input type="checkbox" id="woman" name="gender" value="Woman">
@@ -88,14 +88,17 @@
     <input type="checkbox" id="againsthours" name="volunteertype" value="AgainstHours">
     <label for="againsthours"> Against hours</label><br><br>
 
+    <label for="startdate">Start Date:</label>
     <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required><br><br>
 
-    <!--<label for="teamname">Team Name:</label>
-
-    <select name="teamname" id="teamname">
-        <option value="monitor">Monitor</option>
-        <option value="social">Social</option>
-    </select>-->
+    <label for="language">Languages:</label>
+    <select name="language" id="language">
+        <option value="hebrew">Hebrew</option>
+        <option value="english">English</option>
+        <option value="russian">Russian</option>
+        <option value="french">French</option>
+        <option value="arabic">Arabic</option>
+    </select>
 
     <label> Change password</label><br><br>
     <input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>

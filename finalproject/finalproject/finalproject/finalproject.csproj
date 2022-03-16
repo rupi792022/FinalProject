@@ -178,12 +178,7 @@
     <Compile Include="Models\AntisemiticContent.cs" />
     <Compile Include="Models\DAL\DataServices.cs" />
     <Compile Include="Models\GuidingProgram.cs" />
-    <Compile Include="Models\Language.cs" />
-    <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Manager.cs" />
-    <Compile Include="Models\Question.cs" />
-    <Compile Include="Models\SocialNetwork.cs" />
-    <Compile Include="Models\Team.cs" />
     <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

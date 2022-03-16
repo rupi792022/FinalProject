@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Web;
-//using MailKit.Net.Smtp;
-//using MailKit;
 using System.Net;
 
 
@@ -24,10 +22,10 @@ namespace finalproject.Models
         string gender;
         int phone_number;
         string start_date;
-        string team_name;
+        string language;
        
         public Volunteer() { }
-        public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string team_name)
+        public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string language)
         {
             Volunteer_email = volunteer_email;
             First_name = first_name;
@@ -38,9 +36,8 @@ namespace finalproject.Models
             Gender = gender;
             Phone_number = phone_number;
             Start_date = start_date;
-            Team_name = team_name;
+            Language = language;
         }
-       
 
         public string Volunteer_email { get => volunteer_email; set => volunteer_email = value; }
         public string First_name { get => first_name; set => first_name = value; }
@@ -51,7 +48,7 @@ namespace finalproject.Models
         public string Gender { get => gender; set => gender = value; }
         public int Phone_number { get => phone_number; set => phone_number = value; }
         public string Start_date { get => start_date; set => start_date = value; }
-        public string Team_name { get => team_name; set => team_name = value; }
+        public string Language { get => language; set => language = value; }
 
         private static string genereateRandomPassword()
         {
@@ -69,50 +66,6 @@ namespace finalproject.Models
 
             return sb.ToString();
         }
-
-        //private static bool sendEmail(string sendTo, string passsword)
-        //{
-        //    MimeMessage message = new MimeMessage();
-
-        //    message.From.Add(new MailboxAddress("FinalProject", sendTo));
-        //    message.To.Add(MailboxAddress.Parse("sendTo"));
-        //    message.Subject = "Registartion Password";
-        //    string body = $"Your password is : {passsword}";
-        //    message.Body = new TextPart("plain")
-        //    {
-        //        Text = body
-        //    };
-
-        //    SmtpClient client = new SmtpClient();
-
-        //    try
-        //    {
-        //        client.Connect("smtp.gmail.com", 465, true);
-        //        client.Authenticate(EmailInformation.Email, EmailInformation.Password);
-        //        client.Send(message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        client.Disconnect(true);
-        //        client.Dispose();
-        //    }
-        //    return true;
-        //}
-
-        //public static class EmailInformation
-        //{
-        //    private static readonly string email = "rupi792022@gmail.com";
-        //    public static readonly string password = "AdiAmit114";
-        //    public static string Email { get => email; }
-        //    public static string Password { get => password; }
-        //}
-
-
 
         public int sendEmail(string email, string password) //send Email
         {
