@@ -29,41 +29,38 @@ body {
 }
 
 
-.loginBox input {
-    width: 100%;
-    margin-bottom: 20px
-}
-
-    .loginBox input[type="email"],
-    .loginBox input[type="password"] {
-        border: none;
-        border-bottom: 1px solid #C59636;
-        outline: none;
-        height: 40px;
-        color: gray;
-        background: #E5EDED;
-        font-family: Calibri;
-        border-radius: 40px;
-        font-size: 16px;
-        padding-left: 20px;
-        box-sizing: border-box
+    .loginBox input {
+        width: 100%;
+        margin-bottom: 20px
     }
 
-        .loginBox input[type="email"]:hover,
-        .loginBox input[type="password"]:hover {
-            /*    color: #C59636;*/
-            border: 1px solid #C59636;
-            border-radius: 40px;
-            box-shadow: 0 0 5px #C59636;
+        .loginBox input[type="email"]{
+            border: none;
+            border-bottom: 1px solid #C59636;
+            outline: none;
+            height: 40px;
+            color: gray;
+            background: #E5EDED;
             font-family: Calibri;
+            border-radius: 40px;
+            font-size: 16px;
+            padding-left: 20px;
+            box-sizing: border-box
         }
 
-        .loginBox input[type="email"]:focus,
-        .loginBox input[type="password"]:focus {
-            border: 1px solid #C59636;
-            border-radius: 40px;
-            font-family: Calibri;
-        }
+            .loginBox input[type="email"]:hover {
+                /*    color: #C59636;*/
+                border: 1px solid #C59636;
+                border-radius: 40px;
+                box-shadow: 0 0 5px #C59636;
+                font-family: Calibri;
+            }
+
+            .loginBox input[type="email"]:focus {
+                border: 1px solid #C59636;
+                border-radius: 40px;
+                font-family: Calibri;
+            }
 
 .inputBox {
     position: relative;
@@ -71,7 +68,6 @@ body {
 
     .inputBox span {
         position: absolute;
-
     }
 
 .loginBox button {
@@ -90,14 +86,10 @@ body {
 .loginBox a {
     color: #C59636;
     font-size: 14px;
-/*    font-weight: bold;*/
+    /*    font-weight: bold;*/
     text-decoration: none;
     /*text-align: center;*/
     display: block
-}
-
-a:hover {
-    font-weight: bold;
 }
 
 p {
@@ -110,4 +102,9 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+label {
+    font-family: Calibri;
+    color:gray;
 }

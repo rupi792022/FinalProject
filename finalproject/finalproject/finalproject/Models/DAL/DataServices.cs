@@ -102,43 +102,62 @@ namespace finalproject.Models.DAL
         {
 
             SqlConnection con = null;
-
-
             try
             {
                 // Connect
                 con = Connect("webOsDB");
 
-
                 // Create the insert command
-                SqlCommand selectCommand = createSelectCommand_EmailPassword(con, email);
-
+                SqlCommand selectCommand =createSelectCommand_VEmail(con, email);
                 // Execute the command
                 //
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                string DBpassword = "";
 
-                Volunteer volunteer = new Volunteer();
-                bool emailexist = false;
-             
+                if (dr.Read())
+                {
+                    selectCommand = createSelectCommand_Password(con, email);
+                    dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                     while (dr.Read())
                     {
-                        emailexist = true;
-                        volunteer.Volunteer_email = (string)dr["email"];
-                        volunteer.First_name = (string)dr["first_name"];
-                        volunteer.Volunteer_password = (string)dr["password"];
-
+                        DBpassword = (string)dr["password"];
                     }
-
-                    dr.Close();
-                // it is enough to check if only one field is null because all the details about the user are saved together at the same time
-                // so if one of them is null it means that all of them are null
-                if (emailexist == true)
-                {
-                    if (volunteer.Volunteer_password == password && volunteer.First_name == "needtoupdate")
-                        return 0; // the volunteer's email is exist and the password is correct but all the other fields are with null values
-                    else return -1; // the volunteer's email is exist but the password isn't correct
+                    if (DBpassword == password)
+                    {
+                        selectCommand = createSelectCommand_Details(con, email);
+                        dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        if (dr.Read())
+                        {
+                            // the password and the email are correct and relates to the volunteer and there is no need to update the user details
+                            return 0;
+                        }
+                        //  the password and the email are correct and relates to the volunteer and there is need to update the user details
+                        else return 1;
+                    }
+                    // the email is correct and relates to the volunteer but the password isn't
+                    else return -1;
                 }
-                else return 1; // the volunteer's email is not exist in the table
+                else {
+                    selectCommand = createSelectCommand_MEmailPassword(con, email);
+                    dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                    if (dr.Read())
+                    {
+                        DBpassword = (string)dr["password"];
+
+                        if (DBpassword == password)
+                        {
+                            // the email is correct and relates to the manager and the password is correct
+                            return 2;
+                        }
+                        // the email is correct and relates to the manager and the password isn't correct
+                        else return 3;
+                    }
+                    // the email isn't correct
+                    else return 4;
+                    
+                       
+                }
+
             }
             catch (Exception ex)
             {
@@ -154,9 +173,18 @@ namespace finalproject.Models.DAL
 
         }
 
-        SqlCommand createSelectCommand_EmailPassword(SqlConnection con, string email)
+        SqlCommand createSelectCommand_Details(SqlConnection con, string email)
         {
-            string commandStr = "SELECT email, first_name, password FROM Volunteer_2022 WHERE EMAIL = @email";
+            string commandStr = "SELECT first_name FROM Volunteer_2022 WHERE EMAIL = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.VarChar);
+            cmd.Parameters["@email"].Value = email;
+            return cmd;
+        }
+
+        SqlCommand createSelectCommand_Password(SqlConnection con, string email)
+        {
+            string commandStr = "SELECT password FROM Volunteer_2022 WHERE EMAIL = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.VarChar);
             cmd.Parameters["@email"].Value = email;

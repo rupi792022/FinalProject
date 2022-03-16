@@ -4,12 +4,17 @@
     <meta charset="utf-8" />
     <title></title>
     <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <link href="../css/LogIn.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             $("#LogIn").click(logIn);
@@ -51,8 +56,16 @@
     </script>
 </head>
 <body>
-    <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"><br />
-    <input type="password" id="password" name="password" placeholder="Enter password" required><br />
-    <button id="LogIn">Log In</button>
+    <div class="loginBox">
+        <img src="../Images/FOA.png" /><br />
+        <form>
+            <div class="inputBox">
+                <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$">
+                <input type="password" id="password" name="password" placeholder="Enter password" required><br />
+                <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a><br />
+                <button id="LogIn" type="button">Log In</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

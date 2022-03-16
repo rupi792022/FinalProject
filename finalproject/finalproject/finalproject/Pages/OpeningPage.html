@@ -9,6 +9,7 @@
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <link href="../css/OpeningPage.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             $("#ImManager").click(imManager);
@@ -17,16 +18,23 @@
 
         function imManager() {
             window.location.href = "LogInManagaer.html";
-            }
+        }
 
         function imVolunteer() {
             window.location.href = "LogInVolunteer.html";
-            }
+        }
 
     </script>
 </head>
 <body>
-    <button id="ImManager">Manager</button>
-    <button id="ImVolunteer">Volunteer</button>
+    <div class="loginBox">
+        <img src="../Images/FOA.png" /><br />
+        <form>
+            <div class="inputBox d-md-flex" >
+                <button type="button" id="ImManager">Manager</button>
+               <button type="button" id="ImVolunteer">Volunteer</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

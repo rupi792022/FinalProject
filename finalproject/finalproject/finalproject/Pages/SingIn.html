@@ -12,6 +12,7 @@
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <link href="../css/SingIn.css" rel="stylesheet" />
     <script>
 
         $(document).ready(function () {
@@ -52,7 +53,16 @@
     </script>
 </head>
 <body>
-    <input type="email" id="email" placeholder="Enter email" name="email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$">
-    <button id="send">Send</button>
+    <div class="loginBox">
+        <img src="../Images/FOA.png" /><br />
+        <form>
+            <label>Please enter an email to create a new user in the system</label>
+            <div class="inputBox">
+                
+                <input type="email" id="email" placeholder="Enter email" name="email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$">
+                <button type="button" id="send">Send</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
