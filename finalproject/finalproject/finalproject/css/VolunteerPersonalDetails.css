@@ -20,6 +20,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 670px;
+    height:500px;
     min-height: 350px;
     background: #E5EDED;
     border-radius: 10px;
@@ -43,29 +44,30 @@
             border: none;
             border-bottom: 1px solid #C59636;
             outline: none;
-            height: 40px;
+            height: 35px;
             color: gray;
             background: #E5EDED;
             font-family: Calibri;
             border-radius: 40px;
             font-size: 14px;
             padding-left: 20px;
-            box-sizing: border-box;
-            /*text-align:center*/
+            box-sizing: border-box;  
+        }
+        .loginBox input[type="date"] {
+            padding-right: 12px;
         }
 
-
-.loginBox input[type="email"]:hover,
-.loginBox input[type="password"]:hover,
-.loginBox input[type="text"]:hover,
-.loginBox input[type="date"]:hover,
-.loginBox input[type="tel"]:hover {
-    /*    color: #C59636;*/
-    border: 1px solid #C59636;
-    border-radius: 40px;
-    box-shadow: 0 0 5px #C59636;
-    font-family: Calibri;
-}
+            .loginBox input[type="email"]:hover,
+            .loginBox input[type="password"]:hover,
+            .loginBox input[type="text"]:hover,
+            .loginBox input[type="date"]:hover,
+            .loginBox input[type="tel"]:hover {
+                /*    color: #C59636;*/
+                border: 1px solid #C59636;
+                border-radius: 40px;
+                box-shadow: 0 0 5px #C59636;
+                font-family: Calibri;
+            }
 
 .loginBox input[type="email"]:focus,
 .loginBox input[type="password"]:focus,
@@ -77,9 +79,9 @@
     font-family: Calibri;
 }
 
-/*.inputBox {
+.inputBox {
     position: relative;
-}*/
+}
 
     .inputBox span {
         position: absolute;
@@ -117,8 +119,12 @@ table {
 
 
 
-.w-50 {
-    width: 50% !important;
+.w-30 {
+    width: 30% !important;
+}
+
+.w-45 {
+    width: 45% !important;
 }
 
 pre{
@@ -131,6 +137,11 @@ pre{
     display: flex !important;
 }
 
- .contuner {
-    width: 100%;
+table{
+    width:100%;
+}
+
+tr td {  
+    width:150px;
+    text-align:center;
 }
