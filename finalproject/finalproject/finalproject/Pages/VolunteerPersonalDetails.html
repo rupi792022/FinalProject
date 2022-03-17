@@ -103,89 +103,74 @@
                     </tr>
                     <tr>
                         <td><p>Birthdate:</p></td>
-                        <td><input type="date" id="birthdate" name="birthdate" placeholder="Birthdate" required></td>
+                        <td><input type="date" id="birthdate" name="birthdate" required></td>
                         <td><p>Mobile Phone Number:</p></td>
                         <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
                     </tr>
-                </table>
-                <pre class="d-md-flex w-30">
-                <label for="gender">          Gender:</label>
-                <input type="radio" id="woman" name="gender" value="Woman">
-                <label for="woman"> Woman</label>
-                <input type="radio" id="man" name="gender" value="Man">
-                <label for="man"> Man</label>
-                </pre>
-                <pre class="d-md-flex w-45">
-                <label for="volunteertype">          Volunteer Type:</label>
-                <input type="radio" id="freetime" name="volunteertype" value="FreeTime">
-                <label for="freetime"> Free Time</label>
-                <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours">
-                <label for="againsthours"> Against hours</label>
-                </pre>
-
-                <table>
+                    <tr>
+                        <td>
+                            <!--<label for="gender">    Gender:</label>-->
+                            <input type="radio" id="woman" name="gender" value="Woman">
+                            <label for="woman"> Woman</label><br>
+                            <input type="radio" id="man" name="gender" value="Man">
+                            <label for="man"> Man</label>
+                        </td>
+                        <td>
+                            <!--<label for="volunteertype">    Volunteer Type:</label>-->
+                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime">
+                            <label for="freetime"> Free Time</label><br>
+                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours">
+                            <label for="againsthours"> Against hours</label>
+                        </tdclass="radiobtn">
+                        <td>
+                            <input type="radio" id="Hebrew" name="language" value="Hebrew">
+                            <label for="Hebrew">Hebrew</label><br>
+                            <input type="radio" id="English" name="language" value="English">
+                            <label for="English">English</label><br>
+                            <input type="radio" id="Russian" name="language" value="Russian">
+                            <label for="Russian">Russian</label><br>
+                            <input type="radio" id="French" name="language" value="French">
+                            <label for="French">French</label><br>
+                            <input type="radio" id="Arabic" name="language" value="Arabic">
+                            <label for="Arabic">Arabic</label>
+                        </td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <td><p>Start Date:</p>
                         <td>
-                            <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required>
+                            <input type="date" id="startdate" name="startdate" required>
                         </td>
                         <td></td>
                         <td></td>
                     </tr>
+                    <tr>
+                        <td><p>Change Password:</p></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button id="Save">Save</button></td>
+                    </tr>
                 </table>
-
-
-
-
-
-                <label for="startdate">Start Date:</label>
-    <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required><br><br>
-
-    <label for="language">Languages:</label>
-    <select name="language" id="language">
-        <option value="hebrew">Hebrew</option>
-        <option value="english">English</option>
-        <option value="russian">Russian</option>
-        <option value="french">French</option>
-        <option value="arabic">Arabic</option>
-    </select>
-    <br><br>
-    <label> Change password:</label><br><br>
-    <input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
-    <input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
-
-                            <button id="Save">Save</button>
-</div>
+            </div>
         </form>
     </div>
-
-    <!--<label>Gender:</label>
-    <input type="radio" id="woman" name="gender" value="Woman">
-    <label for="woman"> Woman</label>
-    <input type="radio" id="man" name="gender" value="Man">
-    <label for="man"> Man</label>
-
-    <label>Volunteer Type:</label>
-    <input type="radio" id="freetime" name="volunteertype" value="FreeTime">
-    <label for="freetime"> Free Time</label>
-    <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours">
-    <label for="againsthours"> Against hours</label>
-
-    <label for="startdate">Start Date:</label>
-    <input type="date" id="startdate" name="startdate" placeholder="Enter Start Date" required><br><br>
-
-    <label for="language">Languages:</label>
-    <select name="language" id="language">
-        <option value="hebrew">Hebrew</option>
-        <option value="english">English</option>
-        <option value="russian">Russian</option>
-        <option value="french">French</option>
-        <option value="arabic">Arabic</option>
-    </select>
-    <br><br>
-    <label> Change password:</label><br><br>
-    <input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
-    <input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"><br><br>
-
 </body>
     </html>

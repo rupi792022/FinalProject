@@ -26,6 +26,7 @@ body {
     border-radius: 10px;
     padding: 40px;
     box-sizing: border-box;
+    font-family: Calibri !important;
 }
 
 
@@ -81,6 +82,7 @@ body {
     border-radius: 20px;
     cursor: pointer;
     font-family: Calibri;
+   
 }
 
 .loginBox a {
@@ -93,7 +95,9 @@ body {
 }
 
 p {
-    color: #0000ff
+    color: gray;
+    font-family:Calibri !important;
+      
 }
 
 img {

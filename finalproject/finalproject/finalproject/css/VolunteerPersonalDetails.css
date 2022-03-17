@@ -32,8 +32,7 @@
 
 
     .loginBox input {
-        width: 220px;
-        margin-bottom: 10px;
+        margin-bottom: 7px;
     }
 
         .loginBox input[type="email"],
@@ -51,10 +50,12 @@
             border-radius: 40px;
             font-size: 14px;
             padding-left: 20px;
-            box-sizing: border-box;  
+            box-sizing: border-box;
+            width: 180px;
         }
         .loginBox input[type="date"] {
             padding-right: 12px;
+            direction:rtl;
         }
 
             .loginBox input[type="email"]:hover,
@@ -91,7 +92,7 @@
     border: none;
     outline: none;
     height: 40px;
-    width: 50%;
+    width: 180px;
     font-size: 16px;
     background: #C59636;
     color: #fff;
@@ -139,9 +140,15 @@ pre{
 
 table{
     width:100%;
+   /* border:1px solid black;*/
 }
 
-tr td {  
-    width:150px;
-    text-align:center;
+tr td {
+    width: 150px;
+    text-align: left;
+/*    border: 1px solid black;*/
+}
+
+p{
+    padding-left:10px;
 }
