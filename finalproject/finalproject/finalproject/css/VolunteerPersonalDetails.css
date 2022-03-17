@@ -19,18 +19,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    width: 670px;
     min-height: 350px;
     background: #E5EDED;
     border-radius: 10px;
     padding: 40px;
+    font-family: Calibri;
+    font-size:14px;
     /*box-sizing: border-box;*/
 }
 
 
     .loginBox input {
-        width: 90%;
-        margin-bottom: 20px;
+        width: 220px;
+        margin-bottom: 10px;
     }
 
         .loginBox input[type="email"],
@@ -46,17 +48,12 @@
             background: #E5EDED;
             font-family: Calibri;
             border-radius: 40px;
-            font-size: 16px;
+            font-size: 14px;
             padding-left: 20px;
             box-sizing: border-box;
             /*text-align:center*/
         }
 
-.d-md-flex {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-}
 
 .loginBox input[type="email"]:hover,
 .loginBox input[type="password"]:hover,
@@ -80,9 +77,9 @@
     font-family: Calibri;
 }
 
-.inputBox {
+/*.inputBox {
     position: relative;
-}
+}*/
 
     .inputBox span {
         position: absolute;
@@ -101,9 +98,6 @@
     font-family: Calibri;
 }
 
-p {
-    color: #0000ff
-}
 
 img {
     height: 80px;
@@ -115,8 +109,28 @@ img {
 
 table {
     width: 100%;
+    font-family: Calibri;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-td {
-    text-align: center;
+
+
+.w-50 {
+    width: 50% !important;
+}
+
+pre{
+    font-family:Calibri !important
+}
+
+.d-md-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+ .contuner {
+    width: 100%;
 }

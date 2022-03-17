@@ -195,6 +195,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\FOA.png" />
+    <Content Include="Pages\DefiningLearningPath.html" />
     <Content Include="Pages\ForgotPassword.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\SingIn.html" />
