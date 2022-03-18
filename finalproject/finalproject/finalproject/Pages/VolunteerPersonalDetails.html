@@ -34,60 +34,56 @@
                     password = $("#newpassword").val();
                 else
                     password = getDatails.Volunteer_password;
+            }
 
+            let firstname = $("#firstname").val();
+            let lastname = $("#lastname").val();
+            let birthdate = $("#birthdate").val();
+            let mobilephone = $("#mobilephone").val();
+            let email = getDatails.Volunteer_email;
 
-                let firstname = $("#firstname").val();
-                let lastname = $("#lastname").val();
-                let birthdate = $("#birthdate").val();
-                let mobilephone = $("#mobilephone").val();
-                let email = getDatails.Volunteer_email;
+            let gender = $("input[type=radio][name=gender]:checked").val();
+            if (gender) {
+                console(gender);
+            }
+            else alert('No gender selected');
 
-                let gender = $("input[type=radio][name=gender]:checked").val();
-                if (gender) {
-                    console(gender);
-                }
-                else {
-                    alert('No gender selected');
+            let startdate = $("#startdate").val();
+            let volunteertype = $("input[type=radio][name=gender]:checked").val();
+            if (volunteertype) {
+                console(volunteertype);
+            }
+            else alert('No volunteer type selected');
 
-
-                    let startdate = $("#startdate").val();
-                    let volunteertype = $("input[type=radio][name=gender]:checked").val();
-                    if (volunteertype) {
-                        console(volunteertype);
-                    }
-                    else {
-                        alert('No volunteer type selected');
-
-                        var arrlanguage = [];
-                        let language = $("input:checkbox[name=type]:checked").each(function () {
-                            arrlanguage.push($(this).val());
-
-                        let MyVolunteerDetails = {
-                            First_name: firstname,
-                            Last_name: lastname,
-                            Date_of_birth: birthdate,
-                            Phone_number: mobilephone,
-                            Gender: gender,
-                            Volunteer_email: email,
-                            Start_date: startdate,
-                            Volunteer_type: volunteertype,
-                            Volunteer_password: password,
-                            Language: language
-                        }
-
-                        ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
-                        return false;
-
-                        function SaveSuccessCB(data) {
-                            console.log(data);
-                            localStorage.setItem("userDetails", JSON.stringify(MyVolunteerDetails));
-                            window.location.href = "VolunteerHome.html";
-                        }
-                        function SaveErrorCB(error) {
-                            console.log(error);
-                        }
-                    }
-                }
+            var arrlanguage = [];
+            let language =$("input:checkbox[name=type]:checked").each(function () {
+                arrlanguage.push($(this).val());
+            });
+          
+            let MyVolunteerDetails = {
+                First_name: firstname,
+                Last_name: lastname,
+                Date_of_birth: birthdate,
+                Phone_number: mobilephone,
+                Gender: gender,
+                Volunteer_email: email,
+                Start_date: startdate,
+                Volunteer_type: volunteertype,
+                Volunteer_password: password,
+                Language: language
+            }
+            ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
+            return false;
+        }
+     
+            function SaveSuccessCB(data) {
+                console.log(data);
+                localStorage.setItem("userDetails", JSON.stringify(MyVolunteerDetails));
+                window.location.href = "VolunteerHome.html";
+            }
+            function SaveErrorCB(error) {
+                console.log(error);
+            }
 
     </script>
 </head>

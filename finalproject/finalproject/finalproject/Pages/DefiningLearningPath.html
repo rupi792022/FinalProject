@@ -3,8 +3,149 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/GuidingProgram.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            count = 0;
+            firstTimeAddQuestion = true;
+            $("#QA").hide();
+            $("#AddQuestion").click(AddQuestion);
+            $("#save").click(Save);
+            $('#buttonUpload').on('click', function () {
+                var data = new FormData();
+                var files = $("#files").get(0).files;
+
+                // Add the uploaded file to the form data collection
+                if (files.length > 0) {
+                    for (f = 0; f < files.length; f++) {
+                        data.append("UploadedImage", files[f]);
+                    }
+                    data.append("name", "FOAfiles"); // append what ever data you want to send along with the files. See how you extract it in the controller.
+                }
+
+                // Ajax upload
+                $.ajax({
+                    type: "POST",
+                    url: "../Api/FileUpload",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: showImages,
+                    error: error
+                });
+
+                return false;
+            });
+
+        });
+
+        function showImages(data) {
+            console.log(data);
+
+            var imgStr = "";
+
+            if (Array.isArray(data)) {
+
+                for (var i = 0; i < data.length; i++) {
+                    imgStr += "<img src='../" + data[i] + "'/>";
+                }
+
+            }
+
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+            }
+
+            document.getElementById("ph").innerHTML = imgStr;
+        }
+
+        function error(data) {
+            console.log(data);
+        }
+
+        function AddQuestion() {
+            count++;
+            if (firstTimeAddQuestion) {
+                $("#QA").show();
+                firstTimeAddQuestion = false;
+            }
+            else {
+                if (count < 5) {
+                    $("#QA").clone().appendTo("#AddNewQuestion");
+                    $('#Question').attr('id', 'Question' + count) ;
+                }
+                else alert("You can only insert a 4 questions");
+            }
+        }
+
+       
+
+        function Save() {
+            getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            let managerEmail = getDatails.Manager_email;
+            let programName = $("#program_name").val();
+            let levelSerialNum = $("#level_serial_num").val();
+           //missing value
+
+            let MyGuidingProgram = {
+                Manager_email: managerEmail,
+                Program_name: programName,
+                Level_serial_num: levelSerialNum,
+                //Guiding_serial_num: guidingSerialNum,
+                //Date: date,
+                //Content_level: contentLevel,
+                //Question_content_1: question1,
+                //Question_content_2: question2,
+                //Question_content_3: question3,
+                //Question_content_4: question4,
+                //Answers_1: answers1,
+                //Answers_2: answers_2,
+                //Answers_3: answers_3,
+                //Answers_4: answers_4
+            }
+            ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), postSuccessCB, postErrorCB);
+            return false;
+        }
+
+        function SaveSuccessCB(data) {
+            console.log(data);
+            localStorage.setItem("GuidingProgram", JSON.stringify(MyGuidingProgram));
+            window.location.href = "VolunteerHome.html";
+        }
+        function SaveErrorCB(error) {
+            console.log(error);
+        }
+    </script>
 </head>
 <body>
-    <input type="text" id="LearningName" name="LearningName" required placeholder="Enter the name of the learning path">
+    <input type="text" id="program_name" name="program_name" required placeholder="Enter the name of the learning path">
+    <input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Enter Steps Number" min="1">
+
+    <form method="post" enctype="multipart/form-data" id="formUpload">
+        <div>
+            <label for="files">Files</label>
+            <input type="file" id="files" name="files" multiple="multiple" />
+        </div>
+        <br />
+        <button type="button" id="buttonUpload">Upload files</button>
+    </form>
+    <div id="ph"></div>
+
+    <button type="button" id="AddQuestion">Add Question</button>
+    <div id="QA">
+        <input type="text" id="Question" name="Question" required placeholder="Enter a question">
+        <input type="text" id="correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer">
+        <input type="text" id="Answer2" name="Answer2" required placeholder="Enter a possible answer">
+        <input type="text" id="Answer3" name="Answer3" required placeholder="Enter a possible answer">
+        <input type="text" id="Answer4" name="Answer4" required placeholder="Enter a possible answer">
+    </div>
+    <div id="AddNewQuestion"></div>
+    <button type="button" id="save">Save</button>
 </body>
 </html>
