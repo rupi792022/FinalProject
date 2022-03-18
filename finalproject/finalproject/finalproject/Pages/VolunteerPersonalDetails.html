@@ -58,7 +58,9 @@
                     else {
                         alert('No volunteer type selected');
 
-                        let language = $('#language').val();
+                        var arrlanguage = [];
+                        let language = $("input:checkbox[name=type]:checked").each(function () {
+                            arrlanguage.push($(this).val());
 
                         let MyVolunteerDetails = {
                             First_name: firstname,
@@ -78,7 +80,7 @@
 
                         function SaveSuccessCB(data) {
                             console.log(data);
-                            localStorage.setItem("volunteerDetails", JSON.stringify(MyVolunteerDetails));
+                            localStorage.setItem("userDetails", JSON.stringify(MyVolunteerDetails));
                             window.location.href = "VolunteerHome.html";
                         }
                         function SaveErrorCB(error) {
@@ -108,30 +110,30 @@
                         <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
                     </tr>
                     <tr>
+                      
                         <td>
-                            <!--<label for="gender">    Gender:</label>-->
                             <input type="radio" id="woman" name="gender" value="Woman">
                             <label for="woman"> Woman</label><br>
                             <input type="radio" id="man" name="gender" value="Man">
                             <label for="man"> Man</label>
                         </td>
                         <td>
-                            <!--<label for="volunteertype">    Volunteer Type:</label>-->
+                            <p>Volunteer Type:</p>
                             <input type="radio" id="freetime" name="volunteertype" value="FreeTime">
                             <label for="freetime"> Free Time</label><br>
                             <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours">
                             <label for="againsthours"> Against hours</label>
-                        </tdclass="radiobtn">
+                        </td>
                         <td>
-                            <input type="radio" id="Hebrew" name="language" value="Hebrew">
+                            <input type="checkbox" id="Hebrew" name="language" value="Hebrew">
                             <label for="Hebrew">Hebrew</label><br>
-                            <input type="radio" id="English" name="language" value="English">
+                            <input type="checkbox" id="English" name="language" value="English">
                             <label for="English">English</label><br>
-                            <input type="radio" id="Russian" name="language" value="Russian">
+                            <input type="checkbox" id="Russian" name="language" value="Russian">
                             <label for="Russian">Russian</label><br>
-                            <input type="radio" id="French" name="language" value="French">
+                            <input type="checkbox" id="French" name="language" value="French">
                             <label for="French">French</label><br>
-                            <input type="radio" id="Arabic" name="language" value="Arabic">
+                            <input type="checkbox" id="Arabic" name="language" value="Arabic">
                             <label for="Arabic">Arabic</label>
                         </td>
                         <td></td>
@@ -145,28 +147,22 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><p>Change Password:</p></td>
+                        <td><p><b>Change Password:</b></p></td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td><p>New Password:</p></td>
                         <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td><p>Verify New Password:</p></td>
                         <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"></td>
                         <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><button id="Save">Save</button></td>
+                        <td><button type="button" id="Save">Save</button></td>
                     </tr>
                 </table>
             </div>

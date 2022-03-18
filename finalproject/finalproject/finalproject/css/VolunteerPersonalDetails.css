@@ -20,7 +20,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 670px;
-    height:500px;
+    height:510px;
     min-height: 350px;
     background: #E5EDED;
     border-radius: 10px;
@@ -55,7 +55,8 @@
         }
         .loginBox input[type="date"] {
             padding-right: 12px;
-            direction:rtl;
+        }
+        .loginBox input[type="checkbox"] {
         }
 
             .loginBox input[type="email"]:hover,
@@ -140,13 +141,14 @@ pre{
 
 table{
     width:100%;
-   /* border:1px solid black;*/
+    /*border:1px solid black;*/
 }
 
 tr td {
     width: 150px;
-    text-align: left;
-/*    border: 1px solid black;*/
+   /* text-align: left;*/
+    padding-top: -30px !important;
+    /*border: 1px solid black;*/
 }
 
 p{
