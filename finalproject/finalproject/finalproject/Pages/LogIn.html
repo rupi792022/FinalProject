@@ -24,42 +24,89 @@
         function LogIn() {
             let email = $("#email").val();
             let password = $("#password").val();
-            let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
-
 
             MyUserDetails = {
                 Volunteer_email: email,
                 Volunteer_password: password
             }
-            ajaxCall("GET", apiCall, "", getSuccessCB, getErrorCB);
+            let apiCall = "../api/Volunteers/ReadEmail_V?email=" + email;
+            ajaxCall("GET", apiCall, "", getSuccessEmail_v, getErrorEmail_v);
         }
 
-        function getSuccessCB(userDetails) {
+        function SaveUserDetails() {
             if (typeof (Storage) !== "undefined") {
                 localStorage.setItem('userDetails', JSON.stringify(MyUserDetails));
             }
             else {
                 alert("web storage not supported!");
             }
-
-            if (userDetails == 1) {
-                window.location.href = "VolunteerPersonalDetails.html";  
-            }
-            else if (userDetails == -1 || userDetails == 3 ) {
-                alert("The password is incorrect, please try again")
-            }
-            else if (userDetails == 0) {
-                window.location.href = "VolunteerHome.html";
-            }
-            else if (userDetails == 2) {
-                window.location.href = "ManagerHome.html"; 
-            }
-            else alert("The email is incorrect, please try again")
         }
 
-        function getErrorCB() {
-            console.log("Failed to log in email")
+        function getSuccessEmail_v(VolunteerEmail) {
+            if (VolunteerEmail == true) {
+                let apiCall = "../api/Volunteers?email=" + MyUserDetails.Volunteer_email + "&password=" + MyUserDetails.Volunteer_password;
+                ajaxCall("GET", apiCall, "", getSuccessPassword_v, getErrorPassword_v);
+            }
+            else {
+                let apiCall = "../api/Managers?email=" + MyUserDetails.Volunteer_email;
+                ajaxCall("GET", apiCall, "", getSuccessEmail_m, getErrorEmail_m);
+            }
         }
+
+        function getErrorEmail_v() {
+            console.log("Failed to read volunteer's email")
+        }
+
+        function getSuccessPassword_v(VolunteerPassword) {
+            if (VolunteerPassword == true) {
+                let apiCall = "../api/Volunteers/ReadDetails_V?email=" + MyUserDetails.Volunteer_email;
+                ajaxCall("GET", apiCall, "", getSuccessDetails_v, getErrorDetails_v);
+            }
+            else console.log("The password is incorrect, please try again");
+        }
+
+        function getErrorPassword_v() {
+            console.log("Failed to read volunteer's passsword")
+        }
+
+        function getSuccessDetails_v(VolunteerDetails) {
+            SaveUserDetails();
+            if (VolunteerDetails == true) {
+                window.location.href = "VolunteerPersonalDetails.html";
+            }
+            else window.location.href = "VolunteerHome.html";
+        }
+
+        function getErrorDetails_v() {
+            console.log("Failed to read volunteer's Details")
+        }
+
+
+        function getSuccessEmail_m(ManagerEmail) {
+            if (ManagerEmail == true) {
+                let apiCall = "../api/Managers?email=" + MyUserDetails.Volunteer_email + "&password=" + MyUserDetails.Volunteer_password;
+                ajaxCall("GET", apiCall, "", getSuccessPassword_m, getErrorPassword_m);
+            }
+            else console.log("The email is incorrect, please try again");
+        }
+
+        function getErrorEmail_m() {
+            console.log("Failed to read manager's email");
+        }
+
+        function getSuccessPassword_m(ManagerPassword) {
+            if (ManagerPassword == true) {
+                SaveUserDetails();
+                window.location.href = "ManagerHome.html";
+            }
+            else comsole.log("The password is incorrect, please try again");
+        }
+
+        function getErrorPassword_m() {
+            console.log("Failed to read manager's passsword");
+        }
+
+
     </script>
 </head>
 <body>

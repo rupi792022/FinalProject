@@ -22,10 +22,10 @@ namespace finalproject.Models
         string gender;
         int phone_number;
         string start_date;
-        string language;
+        string [] language;
        
         public Volunteer() { }
-        public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string language)
+        public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string[] language)
         {
             Volunteer_email = volunteer_email;
             First_name = first_name;
@@ -48,11 +48,11 @@ namespace finalproject.Models
         public string Gender { get => gender; set => gender = value; }
         public int Phone_number { get => phone_number; set => phone_number = value; }
         public string Start_date { get => start_date; set => start_date = value; }
-        public string Language { get => language; set => language = value; }
+        public string [] Language { get => language; set => language = value; }
 
         private static string genereateRandomPassword()
         {
-            string allowedCharecters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!*";
+            string allowedCharecters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!*$&";
             StringBuilder sb = new StringBuilder();
             int randomNumber;
             Random random = new Random();
@@ -97,29 +97,45 @@ namespace finalproject.Models
 
             smtp.Send(fromAddress, toAddress, subject, body);
 
-            return true;
+            return false;
         }
 
         public bool InsertEmail()
         {
             DataServices ds = new DataServices();
             this.Volunteer_password = genereateRandomPassword();
-            bool tosendEmail = ds.InsertEmail(this);
-            if(tosendEmail == true)
+            bool Emailexist = ds.InsertEmail(this);
+            if(Emailexist == false)
             {
-                tosendEmail = sendEmail(this.volunteer_email, this.Volunteer_password);
+                Emailexist = sendEmail(this.Volunteer_email, this.Volunteer_password);
             }
-            return tosendEmail;
+            return Emailexist;
           
         }
-      
-        // check if the user exist in the system and if the password is correct
-        public int ReadEmailPassword(string email, string password)
+
+        // check if the user exist in DB
+        public bool ReadEmail_V(string email)
         {
             DataServices ds = new DataServices();
-            return ds.ReadEmailPassword(email,password);
+            return ds.ReadEmail_V(email);
+
         }
 
+        // check if the user's password is correct
+        public bool ReadPassword_V(string email, string password)
+        {
+            DataServices ds = new DataServices();
+            return ds.ReadPassword_V(email,password);
+
+        }
+
+        // check if there is a need to update the user's details
+        public bool ReadDetails_V(string email)
+        {
+            DataServices ds = new DataServices();
+            return ds.ReadDetails_V(email);
+
+        }
         // update the user details (mandatory fields)
         public void UpdateVolunteerDetails(Volunteer volunteer)
         {
@@ -127,11 +143,6 @@ namespace finalproject.Models
             ds.UpdateVolunteerDetails(volunteer);
         }
 
-        // update the user password 
-        public string Readpassword(string email)
-        {
-            DataServices ds = new DataServices();
-            return ds.Readpassword( email);
-        }
+     
     }
 }

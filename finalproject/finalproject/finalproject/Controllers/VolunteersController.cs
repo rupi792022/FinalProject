@@ -17,10 +17,54 @@ namespace finalproject.Controllers
         }
 
         // GET api/<controller>/5
-        public int Get(string email, string password)
+
+        public bool Get(string email, string password) // check if the volunteer's password is correct
         {
             Volunteer volunteer = new Volunteer();
-            return volunteer.ReadEmailPassword(email, password);
+            return volunteer.ReadPassword_V(email, password);
+        }
+
+
+        [HttpGet]
+        [Route("api/Volunteers/ReadEmail_V")]
+        public HttpResponseMessage ReadEmail_V(string email)
+        {
+            try
+            {
+                Volunteer v = new Volunteer();
+                return Request.CreateResponse(HttpStatusCode.OK, v.ReadEmail_V(email));
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
+
+        }
+        ///{email}
+
+        [HttpGet]
+        [Route("api/Volunteers/ReadDetails_V")]
+        public HttpResponseMessage ReadDetails_V(string email)
+        {
+            try
+            {
+                Volunteer v = new Volunteer();
+                return Request.CreateResponse(HttpStatusCode.OK, v.ReadDetails_V(email));
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
 
         }
 
@@ -39,11 +83,6 @@ namespace finalproject.Controllers
             volunteer.UpdateVolunteerDetails(volunteer);
         }
 
-        public string Get( string email)
-        {
-            Volunteer volunteer = new Volunteer();
-           return volunteer.Readpassword( email);
-        }
 
         // DELETE api/<controller>/5
         public void Delete(int id)

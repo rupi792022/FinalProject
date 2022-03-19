@@ -30,17 +30,22 @@ namespace finalproject.Models
         public string Manager_password { get => manager_password; set => manager_password = value; }
         public string Manager_type { get => manager_type; set => manager_type = value; }
 
-        public int ReadLogInManager(string email, string password)
+        public bool ReadEmail_M(string email)
         {
             DataServices ds = new DataServices();
-            return ds.ReadLogInManager(email, password);
+            return ds.ReadEmail_M(email);
+        }
+        public bool ReadPassword_M(string email, string password)
+        {
+            DataServices ds = new DataServices();
+            return ds.ReadPassword_M(email, password);
         }
 
-        public int UpdateManagerpassword(string password, string email)
-        {
-            DataServices ds = new DataServices();
-            return ds.UpdateManagerpassword(password, email);
-        }
+        //public int UpdateManagerpassword(string password, string email)
+        //{
+        //    DataServices ds = new DataServices();
+        //    return ds.UpdateManagerpassword(password, email);
+        //}
 
     }
 }

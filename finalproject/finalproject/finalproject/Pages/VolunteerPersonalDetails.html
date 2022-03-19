@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
-    <link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />
+    <!--<link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />-->
     <script>
         $(document).ready(function () {
             $("#Save").click(Save);
@@ -44,21 +44,21 @@
 
             let gender = $("input[type=radio][name=gender]:checked").val();
             if (gender) {
-                console(gender);
+                console.log(gender);
             }
             else alert('No gender selected');
 
             let startdate = $("#startdate").val();
             let volunteertype = $("input[type=radio][name=gender]:checked").val();
             if (volunteertype) {
-                console(volunteertype);
+                console.log(volunteertype);
             }
             else alert('No volunteer type selected');
 
-            var arrlanguage = [];
-            let language =$("input:checkbox[name=type]:checked").each(function () {
-                arrlanguage.push($(this).val());
-            });
+            //var arrlanguage = [];
+            //let language =$("input:checkbox[name=type]:checked").each(function () {
+            //    arrlanguage.push($(this).val());
+            //}); // it is not working
           
             let MyVolunteerDetails = {
                 First_name: firstname,
@@ -69,29 +69,28 @@
                 Volunteer_email: email,
                 Start_date: startdate,
                 Volunteer_type: volunteertype,
-                Volunteer_password: password,
-                Language: language
+                Volunteer_password: password
+             /*   Language: language*/
             }
-            ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccessCB, SaveErrorCB)
-            return false;
+            ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccess, SaveError)
+            //return false;
         }
      
-            function SaveSuccessCB(data) {
-                console.log(data);
+            function SaveSuccess() {
                 localStorage.setItem("userDetails", JSON.stringify(MyVolunteerDetails));
                 window.location.href = "VolunteerHome.html";
             }
-            function SaveErrorCB(error) {
+            function SaveError(error) {
                 console.log(error);
             }
 
     </script>
 </head>
 <body>
-    <div class="loginBox">
+    <!--<div class="loginBox">
         <img src="../Images/FOA.png" /><br />
         <form>
-            <div class="inputBox">
+            <div class="inputBox">-->
                 <table>
                     <tr>
                         <td><p>First Name:</p></td>
@@ -161,8 +160,8 @@
                         <td><button type="button" id="Save">Save</button></td>
                     </tr>
                 </table>
-            </div>
+            <!--</div>
         </form>
-    </div>
+    </div>-->
 </body>
     </html>

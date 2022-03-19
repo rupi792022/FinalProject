@@ -45,25 +45,30 @@ namespace finalproject.Models.DAL
                 con = Connect("webOsDB");
                 // C - Create Command
 
-                SqlCommand selectCommand = createSelectCommand_VEmail(con, volunteer.Volunteer_email);
+                //SqlCommand selectCommand = createSelectCommand_VEmail(con, volunteer.Volunteer_email);
 
-                // Execute the command
-                //
-                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                //// Execute the command
+                ////
+                //SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
 
-                if (dr.Read())
-                { 
-                    return false;
+                //if (dr.Read())
+                //{ 
+                //    return false;
+                //}
+                //return true;
+
+                //dr.Close();
+
+                //con.Open();
+                bool emailExist = ReadEmail_V(volunteer.Volunteer_email);
+                if (emailExist == false)
+                {
+                    SqlCommand command = CreateInsert_VEmailVPassword(volunteer, con);
+                    command.ExecuteNonQuery();
+                    return emailExist;
                 }
-                return true;
-
-                dr.Close();
-
-                con.Open();
-
-                SqlCommand command = CreateInsert_VEmailVPassword(volunteer, con);
-                command.ExecuteNonQuery();
+                else return emailExist;
 
             }
 
@@ -89,7 +94,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand CreateInsert_VEmailVPassword(Volunteer volunteer, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Volunteer_2022 ( [email], [password],[first_name]) VALUES('"+ volunteer.Volunteer_email + "', '" + volunteer.Volunteer_password+ "', '" + volunteer.First_name + "')";
+            string insertStr = "INSERT INTO Volunteer_2022 ( [email], [password]) VALUES('"+ volunteer.Volunteer_email + "', '" + volunteer.Volunteer_password+"')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -97,112 +102,129 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        public int ReadEmailPassword(string email,string password)
+        public bool ReadEmail_V(string email)
         {
 
             SqlConnection con = null;
+
             try
             {
-                // Connect
+                // C - Connect
                 con = Connect("webOsDB");
+                // C - Create Command
 
-                // Create the insert command
-                SqlCommand selectCommand =createSelectCommand_VEmail(con, email);
+                SqlCommand selectCommand = createSelectCommand_VEmail(con, email);
+
                 // Execute the command
                 //
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-                string DBpassword = "";
+
 
                 if (dr.Read())
                 {
-                    dr.Close();
-
-                    con.Open();
-                    selectCommand = createSelectCommand_Password(con, email);
-                    SqlDataReader dr2 = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-                    while (dr2.Read())
-                    {
-                        DBpassword = (string)dr["password"];
-                    }
-                    if (DBpassword == password)
-                    {
-                        dr2.Close();
-
-                        con.Open();
-
-                        selectCommand = createSelectCommand_Details(con, email);
-                        SqlDataReader dr3 = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-                        if (dr3.Read())
-                        {
-                            // the password and the email are correct and relates to the volunteer and there is no need to update the user details
-
-                            dr3.Close();
-
-                            con.Open();
-
-                            return 0;
-                        }
-                        //  the password and the email are correct and relates to the volunteer and there is need to update the user details
-
-                        else
-                        {
-                            dr3.Close();
-
-                            con.Open();
-
-                            return 1;
-                        }
-
-                    }
-                    // the email is correct and relates to the volunteer but the password isn't
-                   
-                    else {
-
-                        dr2.Close();
-
-                        con.Open();
-                        return -1; }
-                    
+                    return true;
                 }
-                    
-                else {
-                    dr.Close();
-
-                    con.Open();
-
-                    selectCommand = createSelectCommand_MEmailPassword(con, email);
-                    SqlDataReader dr4 = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-                    if (dr4.Read())
-                    {
-                        DBpassword = (string)dr["password"];
-
-                        if (DBpassword == password)
-                        {
-                            // the email is correct and relates to the manager and the password is correct
-                            return 2;
-                        }
-                        // the email is correct and relates to the manager and the password isn't correct
-                        else return 3;
-                    }
-                    // the email isn't correct
-                    else return 4;
-                    
-                       
-                }
+                return false;
 
             }
+
             catch (Exception ex)
             {
-                // write the error to log
-                throw new Exception("failed in reading volunteer by email", ex);
+
+                throw new Exception("faild in adding new user", ex);
             }
             finally
             {
-                // Close the connection
                 if (con != null)
                     con.Close();
             }
+        }
 
+        public bool ReadPassword_V(string email, string password)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_Password_v(con,email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                string DBpassword = "";
+                while (dr.Read())
+                {
+                    DBpassword = (string)dr["password"];
+                }
+
+                if(DBpassword==password)
+                {
+                    return true;
+                }
+                return false;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in reading password", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        public bool ReadDetails_V(string email)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_Details(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+                string DBdetails = ""; 
+                while (dr.Read())
+                {
+                    if(dr["first_name"] != DBNull.Value)
+                    DBdetails = (string)dr["first_name"]; // all the fields are mandatory so it is enough to check only one field to know if all of them are null
+                }
+                if (DBdetails == "")
+                {
+                    return true;
+                }
+                return false;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in adding new user", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
         }
 
         SqlCommand createSelectCommand_Details(SqlConnection con, string email)
@@ -214,7 +236,7 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        SqlCommand createSelectCommand_Password(SqlConnection con, string email)
+        SqlCommand createSelectCommand_Password_v(SqlConnection con, string email)
         {
             string commandStr = "SELECT password FROM Volunteer_2022 WHERE EMAIL = @email";
             SqlCommand cmd = createCommand(con, commandStr);
@@ -231,7 +253,7 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date/*,volunteer.Team_name*/);
+                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date/*,volunteer.Language*/, volunteer.Volunteer_password);
                 selectCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -246,7 +268,7 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date/*,string Team_name*/)
+        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date/*,string Language*/,string password)
         {
             string commandStr = "UPDATE Volunteer_2022 SET first_name = @First_name" +
                ",last_name = @Last_name" +
@@ -255,8 +277,9 @@ namespace finalproject.Models.DAL
                 ",gender =@Gender "+
                 ",phone_number =@Phone_number" +
                 ",start_date =@Start_date " +
-                //",team_name =@Team_name "+
-                "WHERE email = @email";
+                //",language =@Language " +
+                ",password = @password "+
+                " WHERE email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@Phone_number", SqlDbType.Int);
             cmd.Parameters["@Phone_number"].Value = Phone_number;
@@ -272,59 +295,10 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@Gender"].Value = Gender;
             cmd.Parameters.Add("@Start_date", SqlDbType.NVarChar);
             cmd.Parameters["@Start_date"].Value = Start_date;
-            //cmd.Parameters.Add("@Team_name", SqlDbType.NVarChar);
-            //cmd.Parameters["@Team_name"].Value = Team_name;
-            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
-            cmd.Parameters["@email"].Value = email;
-            return cmd;
-        }
-
-        public string Readpassword( string email)
-        {
-
-
-            SqlConnection con = null;
-
-
-            try
-            {
-                // Connect
-                con = Connect("webOsDB");
-
-
-                // Create the insert command
-                SqlCommand selectCommand = createUpdateCommand_getPassword(con, email);
-
-                // Execute the command
-                //
-                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
-
-                string getpassword = "";
-
-                while (dr.Read())
-                {
-                    getpassword = (string)dr["password"];
-                }
-
-                dr.Close();
-                return getpassword;
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception("failed in update the user password", ex);
-            }
-            finally
-            {
-                if (con != null)
-                    con.Close();
-            }
-        }
-
-        private SqlCommand createUpdateCommand_getPassword(SqlConnection con,  string email) {
-            string commandStr = "select password from Volunteer_2022 where email = @email";
-            SqlCommand cmd = createCommand(con, commandStr);
+            //cmd.Parameters.Add("@Language", SqlDbType.NVarChar);
+            //cmd.Parameters["@Language"].Value = Language;
+            cmd.Parameters.Add("@password", SqlDbType.NVarChar);
+            cmd.Parameters["@password"].Value = password;
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
             return cmd;
@@ -332,7 +306,7 @@ namespace finalproject.Models.DAL
 
         // Relates to the manager
 
-        public int ReadLogInManager(string email, string password)
+        public bool ReadEmail_M(string email)
         {
 
             SqlConnection con = null;
@@ -345,28 +319,18 @@ namespace finalproject.Models.DAL
 
 
                 // Create the insert command
-                SqlCommand selectCommand = createSelectCommand_MEmailPassword(con, email);
+                SqlCommand selectCommand = createSelectCommand_MEmail(con, email);
 
                 // Execute the command
                 //
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
 
-               string Mpassword = "";
-
                 if (dr.Read())
                 {
-                    while (dr.Read())
-                    {
-                        Mpassword = (string)dr["password"];
-                    }
-
-                    dr.Close();
-                    if (Mpassword == password)
-                        return 0; // the Manager's email is exist and the password is correct 
-                    else return -1; // the Manager's email is exist but the password isn't correct
+                    return true;
                 }
-                else return 1; // the Manager's email is not exist in the table
+                return false;
             }
             catch (Exception ex)
             {
@@ -382,47 +346,40 @@ namespace finalproject.Models.DAL
 
         }
 
-        SqlCommand createSelectCommand_MEmailPassword(SqlConnection con, string email)
+        public bool ReadPassword_M(string email, string password)
         {
-            string commandStr = "SELECT password FROM Manager_2022 WHERE EMAIL = @email";
-            SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@email", SqlDbType.VarChar);
-            cmd.Parameters["@email"].Value = email;
-            return cmd;
-        }
-
-        public int UpdateManagerpassword(string password, string email)
-        {
-
             SqlConnection con = null;
 
             try
             {
+                // C - Connect
                 con = Connect("webOsDB");
+                // C - Create Command
 
-                SqlCommand selectCommand = createSelectCommand_MEmailPassword(con, email);
+                SqlCommand selectCommand = createUpdateCommand_getPassword_m(con, email);
 
                 // Execute the command
                 //
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
-
-                if (dr.Read())
+                string DBpassword = "";
+                while (dr.Read())
                 {
-                    //dr.Close();
-
-                    //con.Open();
-
-                    SqlCommand updateCommand = createUpdateCommand_MUpdatePassword(con, password, email);
-                    updateCommand.ExecuteNonQuery();
-                    return 1;
+                    DBpassword = (string)dr["password"];
                 }
-                return 0;
+
+                if (DBpassword == password)
+                {
+                    return true;
+                }
+                return false;
+
             }
+
             catch (Exception ex)
             {
 
-                throw new Exception("failed in update the user password", ex);
+                throw new Exception("faild in reading password", ex);
             }
             finally
             {
@@ -431,16 +388,35 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createUpdateCommand_MUpdatePassword(SqlConnection con, string password, string email)
+        private SqlCommand createUpdateCommand_getPassword_m(SqlConnection con, string email)
         {
-            string commandStr = "UPDATE Manager_2022 SET password = @password" +
-                "WHERE email = @email";
+            string commandStr = "select password from Manager_2022 where email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@password", SqlDbType.NVarChar);
-            cmd.Parameters["@password"].Value = password;
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
             return cmd;
         }
+
+        SqlCommand createSelectCommand_MEmail(SqlConnection con, string email)
+        {
+            string commandStr = "SELECT email FROM Manager_2022 WHERE EMAIL = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.VarChar);
+            cmd.Parameters["@email"].Value = email;
+            return cmd;
+        }
+
+      
+        //private SqlCommand createUpdateCommand_MUpdatePassword(SqlConnection con, string password, string email)
+        //{
+        //    string commandStr = "UPDATE Manager_2022 SET password = @password" +
+        //        "WHERE email = @email";
+        //    SqlCommand cmd = createCommand(con, commandStr);
+        //    cmd.Parameters.Add("@password", SqlDbType.NVarChar);
+        //    cmd.Parameters["@password"].Value = password;
+        //    cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+        //    cmd.Parameters["@email"].Value = email;
+        //    return cmd;
+        //}
     }
 }

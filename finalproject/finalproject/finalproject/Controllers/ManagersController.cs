@@ -17,12 +17,17 @@ namespace finalproject.Controllers
         }
 
         // GET api/<controller>/5
-        public int Get(string email, string password)
+        
+        public bool Get(string email) // check if the manager's email exist in DB
         {
             Manager manager = new Manager();
+            return manager.ReadEmail_M(email);
+        }
 
-            return manager.ReadLogInManager(email, password);
-
+        public bool Get(string email, string password) // check if the manager's email password is correct
+        {
+            Manager manager = new Manager();
+            return manager.ReadPassword_M(email, password);
         }
 
         // POST api/<controller>
@@ -32,11 +37,11 @@ namespace finalproject.Controllers
 
         // PUT api/<controller>/5
 
-        public int Put(string password, string email)
-        {
-            Manager manager = new Manager();
-            return manager.UpdateManagerpassword(password, email);
-        }
+        //public int Put(string password, string email)
+        //{
+        //    Manager manager = new Manager();
+        //    return manager.UpdateManagerpassword(password, email);
+        //}
 
         // DELETE api/<controller>/5
         public void Delete(int id)
