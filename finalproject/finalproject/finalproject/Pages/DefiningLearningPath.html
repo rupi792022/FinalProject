@@ -13,8 +13,7 @@
     <script>
         $(document).ready(function () {
             count = 0;
-            firstTimeAddQuestion = true;
-            $("#QA").hide();
+            num = 0;
             $("#AddQuestion").click(AddQuestion);
             $("#save").click(Save);
             $('#buttonUpload').on('click', function () {
@@ -71,20 +70,12 @@
 
         function AddQuestion() {
             count++;
-            if (firstTimeAddQuestion) {
-                $("#QA").show();
-                firstTimeAddQuestion = false;
-            }
-            else {
                 if (count < 5) {
-                    $("#QA").clone().appendTo("#AddNewQuestion");
-                    $('#Question').attr('id', 'Question' + count) ;
+                    var newDiv = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question">  <input type="text" id="correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id = "Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id = "Answer4" name = "Answer4" required placeholder = "Enter a possible answer" >');
+                    $("body").append(newDiv);
                 }
-                else alert("You can only insert a 4 questions");
-            }
+                else alert("You can only insert a 4 questions"); 
         }
-
-       
 
         function Save() {
             getDatails = JSON.parse(localStorage.getItem('userDetails'));
@@ -100,10 +91,10 @@
                 //Guiding_serial_num: guidingSerialNum,
                 //Date: date,
                 //Content_level: contentLevel,
-                //Question_content_1: question1,
-                //Question_content_2: question2,
-                //Question_content_3: question3,
-                //Question_content_4: question4,
+                Question_content_1: question1,
+                Question_content_2: question2,
+                Question_content_3: question3,
+                Question_content_4: question4,
                 //Answers_1: answers1,
                 //Answers_2: answers_2,
                 //Answers_3: answers_3,
@@ -136,15 +127,7 @@
         <button type="button" id="buttonUpload">Upload files</button>
     </form>
     <div id="ph"></div>
-
     <button type="button" id="AddQuestion">Add Question</button>
-    <div id="QA">
-        <input type="text" id="Question" name="Question" required placeholder="Enter a question">
-        <input type="text" id="correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer">
-        <input type="text" id="Answer2" name="Answer2" required placeholder="Enter a possible answer">
-        <input type="text" id="Answer3" name="Answer3" required placeholder="Enter a possible answer">
-        <input type="text" id="Answer4" name="Answer4" required placeholder="Enter a possible answer">
-    </div>
     <div id="AddNewQuestion"></div>
     <button type="button" id="save">Save</button>
 </body>
