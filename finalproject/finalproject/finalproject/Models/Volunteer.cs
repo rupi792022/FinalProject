@@ -22,10 +22,10 @@ namespace finalproject.Models
         string gender;
         int phone_number;
         string start_date;
-        string [] language;
+        string language;
        
         public Volunteer() { }
-        public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string[] language)
+        public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string language)
         {
             Volunteer_email = volunteer_email;
             First_name = first_name;
@@ -48,7 +48,7 @@ namespace finalproject.Models
         public string Gender { get => gender; set => gender = value; }
         public int Phone_number { get => phone_number; set => phone_number = value; }
         public string Start_date { get => start_date; set => start_date = value; }
-        public string [] Language { get => language; set => language = value; }
+        public string Language { get => language; set => language = value; }
 
         private static string genereateRandomPassword()
         {

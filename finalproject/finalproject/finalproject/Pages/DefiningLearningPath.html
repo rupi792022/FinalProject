@@ -71,8 +71,8 @@
         function AddQuestion() {
             count++;
                 if (count < 5) {
-                    var newDiv = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question">  <input type="text" id="correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id = "Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id = "Answer4" name = "Answer4" required placeholder = "Enter a possible answer" >');
-                    $("body").append(newDiv);
+                    var addQuestion = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"><input type="text" id="correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id = "Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id = "Answer4" name = "Answer4" required placeholder = "Enter a possible answer"><br>');
+                    $(addQuestion).clone().appendTo("#AddNewQuestion");
                 }
                 else alert("You can only insert a 4 questions"); 
         }
@@ -82,7 +82,11 @@
             let managerEmail = getDatails.Manager_email;
             let programName = $("#program_name").val();
             let levelSerialNum = $("#level_serial_num").val();
-           //missing value
+            let question1 = $("#question1").val();
+            let question2 = $("#question2").val();
+            let question3 = $("#question3").val();
+            let question4 = $("#question4").val();
+           //missing values
 
             let MyGuidingProgram = {
                 Manager_email: managerEmail,
@@ -96,9 +100,9 @@
                 Question_content_3: question3,
                 Question_content_4: question4,
                 //Answers_1: answers1,
-                //Answers_2: answers_2,
-                //Answers_3: answers_3,
-                //Answers_4: answers_4
+                //Answers_2: answers2,
+                //Answers_3: answers3,
+                //Answers_4: answers4
             }
             ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), postSuccessCB, postErrorCB);
             return false;

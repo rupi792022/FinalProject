@@ -117,37 +117,14 @@ table {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-
-
-.w-30 {
-    width: 30% !important;
-}
-
-.w-45 {
-    width: 45% !important;
-}
-
-pre{
-    font-family:Calibri !important
-}
-
-.d-md-flex {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-}
-
-table{
-    width:100%;
     /*border:1px solid black;*/
 }
+
 
 tr td {
     width: 150px;
    /* text-align: left;*/
-    padding-top: -30px !important;
+    padding-top:-80px !important;
     /*border: 1px solid black;*/
 }
 

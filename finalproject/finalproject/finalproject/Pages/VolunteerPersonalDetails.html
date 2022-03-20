@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
-    <!--<link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />-->
+    <link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             $("#Save").click(Save);
@@ -31,7 +31,7 @@
             else {
 
                 if (newpassword != "")
-                    password = $("#newpassword").val();
+                    password = $("#NewPassword").val();
                 else
                     password = getDatails.Volunteer_password;
             }
@@ -49,17 +49,20 @@
             else alert('No gender selected');
 
             let startdate = $("#startdate").val();
-            let volunteertype = $("input[type=radio][name=gender]:checked").val();
+            let volunteertype = $("input[type=radio][name=volunteertype]:checked").val();
             if (volunteertype) {
                 console.log(volunteertype);
             }
             else alert('No volunteer type selected');
 
-            //var arrlanguage = [];
-            //let language =$("input:checkbox[name=type]:checked").each(function () {
-            //    arrlanguage.push($(this).val());
-            //}); // it is not working
-          
+
+            var arrLanguage = [];
+            $.each($("input[name='language']:checked"), function () {
+                arrLanguage.push($(this).val());
+            });
+            let strLanguage = arrLanguage.toString();
+        
+
             let MyVolunteerDetails = {
                 First_name: firstname,
                 Last_name: lastname,
@@ -69,8 +72,8 @@
                 Volunteer_email: email,
                 Start_date: startdate,
                 Volunteer_type: volunteertype,
-                Volunteer_password: password
-             /*   Language: language*/
+                Volunteer_password: password,
+                Language: strLanguage
             }
             ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccess, SaveError)
             //return false;
@@ -87,10 +90,10 @@
     </script>
 </head>
 <body>
-    <!--<div class="loginBox">
+    <div class="loginBox">
         <img src="../Images/FOA.png" /><br />
         <form>
-            <div class="inputBox">-->
+            <div class="inputBox">
                 <table>
                     <tr>
                         <td><p>First Name:</p></td>
@@ -102,36 +105,38 @@
                         <td><p>Birthdate:</p></td>
                         <td><input type="date" id="birthdate" name="birthdate" required></td>
                         <td><p>Mobile Phone Number:</p></td>
-                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Mobile Phone Number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
+                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Mobile Phone Number" required pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
                     </tr>
                     <tr>
-                      
                         <td>
-                            <input type="radio" id="woman" name="gender" value="Woman">
+                            <p>Gender:</p>
+                            <input type="radio" id="woman" name="gender" value="Woman" required>
                             <label for="woman"> Woman</label><br>
-                            <input type="radio" id="man" name="gender" value="Man">
+                            <input type="radio" id="man" name="gender" value="Man" required>
                             <label for="man"> Man</label>
                         </td>
                         <td>
                             <p>Volunteer Type:</p>
-                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime">
+                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime" required>
                             <label for="freetime"> Free Time</label><br>
-                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours">
+                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours" required>
                             <label for="againsthours"> Against hours</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="Hebrew" name="language" value="Hebrew">
+                            <p>Choose your language/s:</p>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="Hebrew" name="language" value="Hebrew" required>
                             <label for="Hebrew">Hebrew</label><br>
-                            <input type="checkbox" id="English" name="language" value="English">
+                            <input type="checkbox" id="English" name="language" value="English" required>
                             <label for="English">English</label><br>
-                            <input type="checkbox" id="Russian" name="language" value="Russian">
+                            <input type="checkbox" id="Russian" name="language" value="Russian" required>
                             <label for="Russian">Russian</label><br>
-                            <input type="checkbox" id="French" name="language" value="French">
+                            <input type="checkbox" id="French" name="language" value="French" required>
                             <label for="French">French</label><br>
-                            <input type="checkbox" id="Arabic" name="language" value="Arabic">
+                            <input type="checkbox" id="Arabic" name="language" value="Arabic" required>
                             <label for="Arabic">Arabic</label>
                         </td>
-                        <td></td>
                     </tr>
                     <tr>
                         <td><p>Start Date:</p>
@@ -143,25 +148,25 @@
                     </tr>
                     <tr>
                         <td><p><b>Change Password:</b></p></td>
-                        <td></td>
+                        <td><p>Passwords must be at least 8 characters long.</p></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td><p>New Password:</p></td>
-                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"></td>
+                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password"></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td><p>Verify New Password:</p></td>
-                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern="[a-zA-Z0-9!@#$%^*_|]{8}"></td>
+                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password"></td>
                         <td></td>
                         <td><button type="button" id="Save">Save</button></td>
                     </tr>
                 </table>
-            <!--</div>
+            </div>
         </form>
-    </div>-->
+    </div>
 </body>
     </html>

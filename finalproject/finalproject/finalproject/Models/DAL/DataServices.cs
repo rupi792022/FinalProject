@@ -253,7 +253,7 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date/*,volunteer.Language*/, volunteer.Volunteer_password);
+                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date, volunteer.Language, volunteer.Volunteer_password);
                 selectCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -268,7 +268,7 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date/*,string Language*/,string password)
+        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date, string Language, string password)
         {
             string commandStr = "UPDATE Volunteer_2022 SET first_name = @First_name" +
                ",last_name = @Last_name" +
@@ -277,8 +277,8 @@ namespace finalproject.Models.DAL
                 ",gender =@Gender "+
                 ",phone_number =@Phone_number" +
                 ",start_date =@Start_date " +
-                //",language =@Language " +
-                ",password = @password "+
+                ",language =@Language " +
+                ",password = @password " +
                 " WHERE email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@Phone_number", SqlDbType.Int);
@@ -295,8 +295,8 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@Gender"].Value = Gender;
             cmd.Parameters.Add("@Start_date", SqlDbType.NVarChar);
             cmd.Parameters["@Start_date"].Value = Start_date;
-            //cmd.Parameters.Add("@Language", SqlDbType.NVarChar);
-            //cmd.Parameters["@Language"].Value = Language;
+            cmd.Parameters.Add("@Language", SqlDbType.NVarChar);
+            cmd.Parameters["@Language"].Value = Language;
             cmd.Parameters.Add("@password", SqlDbType.NVarChar);
             cmd.Parameters["@password"].Value = password;
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
