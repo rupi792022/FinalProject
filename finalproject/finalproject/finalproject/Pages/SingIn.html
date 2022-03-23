@@ -4,14 +4,16 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
-    </script>
+    </script>-->
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
     <link href="../css/SingIn.css" rel="stylesheet" />
@@ -41,6 +43,7 @@
             else
                 //ask Anat if we need to use the sffected
                 alert("Password was sent successfuly");
+            window.location.href = "ManagerHome.html";
         }
 
         function postErrorCB() {
@@ -51,8 +54,31 @@
     </script>
 </head>
 <body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="DefiningLearningPath.html">Learning guidance</a></li>
+                <li><a class="space" href="#">Activity time</a></li>
+                <li><a class="space" href="#">Reports</a></li>
+                <li><a class="space" href="#">Deshbord</a></li>
+                <li><a class="space" href="#">Keywords</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">user<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Volunteers</a></li>
+                        <li><a href="#">Log out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="loginBox">
-        <img src="../Images/FOA.png" />
         <p>Please enter an email to create a new user in the system.</p>
         <form>
             <div class="inputBox">

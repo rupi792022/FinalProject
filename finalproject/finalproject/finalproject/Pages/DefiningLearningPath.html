@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <link href="../css/GuidingProgram.css" rel="stylesheet" />
+
     <script>
         $(document).ready(function () {
             count = 0;
@@ -69,11 +70,11 @@
 
         function AddQuestion() {
             count++;
-                if (count < 5) {
-                    var addQuestion = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"><input type="text" id="' + count + '_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id ="' + count + '_Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="' + count + '_Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id ="' + count + '_Answer4" name = "Answer4" required placeholder = "Enter a possible answer"><br>');
-                    $(addQuestion).clone().appendTo("#AddNewQuestion");
-                }
-                else alert("You can only insert a 4 questions"); 
+            if (count < 5) {
+                var addQuestion = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"><input type="text" id="' + count + '_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id ="' + count + '_Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="' + count + '_Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id ="' + count + '_Answer4" name = "Answer4" required placeholder = "Enter a possible answer"><br>');
+                $(addQuestion).clone().appendTo("#AddNewQuestion");
+            }
+            else alert("You can only insert a 4 questions");
         }
 
         function Save() {
@@ -89,7 +90,7 @@
             let strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
             let strAnswers_3 = $("#3_correctAnswer1").val().concat(",", $("#3_Answer2").val(), ",", $("#3_Answer3").val(), ",", $("#3_Answer4").val());
             let strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
-           //missing values
+            //missing values
 
             let MyGuidingProgram = {
                 Manager_email: managerEmail,
@@ -122,21 +123,45 @@
     </script>
 </head>
 <body>
-    <input type="text" id="program_name" name="program_name" required placeholder="Enter the name of the learning path">
-    <input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Enter Steps Number" min="1">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="../Images/FOA.png" />
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a class="space" href="ManagerHome.html">Home</a></li>
+                    <li><a class="space" href="DefiningLearningPath.html">Learning guidance</a></li>
+                    <li><a class="space" href="#">Activity time</a></li>
+                    <li><a class="space" href="#">Reports</a></li>
+                    <li><a class="space" href="#">Deshbord</a></li>
+                    <li><a class="space" href="#">Keywords</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">user<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Volunteers</a></li>
+                            <li><a href="#">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <input type="text" id="program_name" name="program_name" required placeholder="Enter the name of the learning path">
+            <input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Enter Steps Number" min="1">
 
-    <form method="post" enctype="multipart/form-data" id="formUpload">
-        <div>
-            <label for="files">Files</label>
-            <input type="file" id="files" name="files" multiple="multiple" />
+            <form method="post" enctype="multipart/form-data" id="formUpload">
+                <div>
+                    <label for="files">Files</label>
+                    <input type="file" id="files" name="files" multiple="multiple" />
+                </div>
+                <br />
+                <button type="button" id="buttonUpload">Upload files</button><br>
+            </form>
+            <div id="ph"></div>
+            <button type="button" id="AddQuestion">Add Question</button><br>
+            <div id="AddNewQuestion"></div>
+            <button type="button" id="next">Next</button><br>
+            <button type="button" id="save">Save</button><br>
         </div>
-        <br />
-        <button type="button" id="buttonUpload">Upload files</button>
-    </form>
-    <div id="ph"></div>
-    <button type="button" id="AddQuestion">Add Question</button>
-    <div id="AddNewQuestion"></div>
-    <button type="button" id="next">Next</button>
-    <button type="button" id="save">Save</button>
 </body>
 </html>

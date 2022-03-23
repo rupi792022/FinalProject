@@ -192,7 +192,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\GuidingProgram.css" />
     <Content Include="css\LogIn.css" />
+    <Content Include="css\ManagerHome.css" />
     <Content Include="css\SingIn.css" />
+    <Content Include="css\VolunteerHome.css" />
     <Content Include="css\VolunteerPersonalDetails.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

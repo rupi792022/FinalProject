@@ -1,1 +1,93 @@
-﻿
+﻿img {
+    height: 60px;
+}
+
+.container-fluid {
+    background: #E5EDED;
+}
+
+.nav {
+    margin-top: 8px;
+}
+
+body {
+    font-family: Calibri;
+}
+
+.space {
+    width: 145px;
+    text-align: center;
+}
+
+a {
+    color: dimgrey;
+    font-family: Calibri;
+    font-size: 15px;
+}
+
+/*  a:focus {
+        color: #C59636;
+    }*/
+
+
+.navbar {
+    border: none;
+}
+
+.navbar-header {
+    padding-top: 5px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 7px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #E5EDED;
+}
+
+
+
+ /*input[type="text"],
+ input[type="number"] {
+    border: none;
+    border-bottom: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    color: gray;*/
+   /* background: #E5EDED;*/
+    /*font-family: Calibri;
+    border-radius: 30px;
+    font-size: 14px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    width: 180px;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover{
+ border: 1px solid #C59636;
+    border-radius: 40px;
+    box-shadow: 0 0 5px #C59636;
+    font-family: Calibri;
+}
+
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border: 1px solid #C59636;
+    border-radius: 40px;
+    font-family: Calibri;
+}
+
+ button {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 150px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Calibri;
+}*/
