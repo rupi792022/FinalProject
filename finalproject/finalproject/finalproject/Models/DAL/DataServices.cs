@@ -43,24 +43,6 @@ namespace finalproject.Models.DAL
             {
                 // C - Connect
                 con = Connect("webOsDB");
-                // C - Create Command
-
-                //SqlCommand selectCommand = createSelectCommand_VEmail(con, volunteer.Volunteer_email);
-
-                //// Execute the command
-                ////
-                //SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
-
-                //if (dr.Read())
-                //{ 
-                //    return false;
-                //}
-                //return true;
-
-                //dr.Close();
-
-                //con.Open();
                 bool emailExist = ReadEmail_V(volunteer.Volunteer_email);
                 if (emailExist == false)
                 {
@@ -183,6 +165,44 @@ namespace finalproject.Models.DAL
             }
         }
 
+        public string ReadEmail_RpasswordV(string email)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_Password_v(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                string DBpassword = "";
+                while (dr.Read())
+                {
+                    DBpassword = (string)dr["password"];
+                }
+
+                return DBpassword;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in reading password", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
         public bool ReadDetails_V(string email)
         {
 
@@ -373,6 +393,45 @@ namespace finalproject.Models.DAL
                     return true;
                 }
                 return false;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in reading password", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        public string ReadEmail_RpasswordM(string email)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createUpdateCommand_getPassword_m(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                string DBpassword = "";
+                while (dr.Read())
+                {
+                    DBpassword = (string)dr["password"];
+                }
+
+                return DBpassword;
 
             }
 

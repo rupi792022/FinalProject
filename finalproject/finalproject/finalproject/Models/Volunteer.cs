@@ -121,6 +121,14 @@ namespace finalproject.Models
 
         }
 
+        public string ReadEmail_RpasswordV(string email)
+        {
+            DataServices ds = new DataServices();
+            string DBpassword = ds.ReadEmail_RpasswordV(email);
+            bool sendEmailt = sendEmail(email, DBpassword);
+            return DBpassword;
+        }
+
         // check if the user's password is correct
         public bool ReadPassword_V(string email, string password)
         {

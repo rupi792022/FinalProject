@@ -48,7 +48,7 @@
                 ajaxCall("GET", apiCall, "", getSuccessPassword_v, getErrorPassword_v);
             }
             else {
-                let apiCall = "../api/Managers?email=" + MyUserDetails.Volunteer_email;
+                let apiCall = "../api/Managers/ReadEmail_M?email=" + MyUserDetails.Volunteer_email;
                 ajaxCall("GET", apiCall, "", getSuccessEmail_m, getErrorEmail_m);
             }
         }
@@ -65,7 +65,6 @@
             else console.log("The password is incorrect, please try again");
 
         }
-
 
 
         function getErrorPassword_v() {

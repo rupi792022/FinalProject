@@ -24,6 +24,27 @@ namespace finalproject.Controllers
             return volunteer.ReadPassword_V(email, password);
         }
 
+        [HttpGet]
+        [Route("api/Volunteers/ReadEmail_RpasswordV")]
+
+        public HttpResponseMessage ReadEmail_RpasswordV(string email) // forget password
+        {
+            try
+            {
+                Volunteer v = new Volunteer();
+                return Request.CreateResponse(HttpStatusCode.OK, v.ReadEmail_RpasswordV(email));
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
+
+        }
 
         [HttpGet]
         [Route("api/Volunteers/ReadEmail_V")]
