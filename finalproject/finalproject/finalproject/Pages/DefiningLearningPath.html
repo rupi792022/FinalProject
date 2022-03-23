@@ -13,7 +13,6 @@
     <script>
         $(document).ready(function () {
             count = 0;
-            num = 0;
             $("#AddQuestion").click(AddQuestion);
             $("#save").click(Save);
             $('#buttonUpload').on('click', function () {
@@ -71,7 +70,7 @@
         function AddQuestion() {
             count++;
                 if (count < 5) {
-                    var addQuestion = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"><input type="text" id="correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id = "Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id = "Answer4" name = "Answer4" required placeholder = "Enter a possible answer"><br>');
+                    var addQuestion = $('<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"><input type="text" id="' + count + '_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"><input type = "text" id ="' + count + '_Answer2" name = "Answer2" required placeholder = "Enter a possible answer"><input type="text" id="' + count + '_Answer3" name="Answer3" required placeholder="Enter a possible answer"><input type = "text" id ="' + count + '_Answer4" name = "Answer4" required placeholder = "Enter a possible answer"><br>');
                     $(addQuestion).clone().appendTo("#AddNewQuestion");
                 }
                 else alert("You can only insert a 4 questions"); 
@@ -86,6 +85,10 @@
             let question2 = $("#question2").val();
             let question3 = $("#question3").val();
             let question4 = $("#question4").val();
+            let strAnswers_1 = $("#1_correctAnswer1").val().concat(",", $("#1_Answer2").val(), ",", $("#1_Answer3").val(), ",", $("#1_Answer4").val());
+            let strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
+            let strAnswers_3 = $("#3_correctAnswer1").val().concat(",", $("#3_Answer2").val(), ",", $("#3_Answer3").val(), ",", $("#3_Answer4").val());
+            let strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
            //missing values
 
             let MyGuidingProgram = {
@@ -99,10 +102,10 @@
                 Question_content_2: question2,
                 Question_content_3: question3,
                 Question_content_4: question4,
-                //Answers_1: answers1,
-                //Answers_2: answers2,
-                //Answers_3: answers3,
-                //Answers_4: answers4
+                Answers_1: strAnswers_1,
+                Answers_2: strAnswers_2,
+                Answers_3: strAnswers_3,
+                Answers_4: strAnswers_4
             }
             ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), postSuccessCB, postErrorCB);
             return false;
@@ -133,6 +136,7 @@
     <div id="ph"></div>
     <button type="button" id="AddQuestion">Add Question</button>
     <div id="AddNewQuestion"></div>
+    <button type="button" id="next">Next</button>
     <button type="button" id="save">Save</button>
 </body>
 </html>

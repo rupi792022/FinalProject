@@ -123,8 +123,7 @@ table {
 
 tr td {
     width: 150px;
-   /* text-align: left;*/
-    padding-top:-80px !important;
+    vertical-align: text-top;
     /*border: 1px solid black;*/
 }
 

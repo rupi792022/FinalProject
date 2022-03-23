@@ -96,16 +96,16 @@
             <div class="inputBox">
                 <table>
                     <tr>
-                        <td><p>First Name:</p></td>
-                        <td><input type="text" id="firstname" name="firstname" placeholder="First Name" required></td>
-                        <td><p>Last Name:</p></td>
-                        <td><input type="text" id="lastname" name="lastname" placeholder="Last Name" required></td>
+                        <td><p>First name:</p></td>
+                        <td><input type="text" id="firstname" name="firstname" placeholder="First name" required></td>
+                        <td><p>Last name:</p></td>
+                        <td><input type="text" id="lastname" name="lastname" placeholder="Last name" required></td>
                     </tr>
                     <tr>
-                        <td><p>Birthdate:</p></td>
+                        <td><p>Date of birth:</p></td>
                         <td><input type="date" id="birthdate" name="birthdate" required></td>
-                        <td><p>Mobile Phone Number:</p></td>
-                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Mobile Phone Number" required pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
+                        <td><p>Phone:</p></td>
+                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Phone number" required pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
                     </tr>
                     <tr>
                         <td>
@@ -113,12 +113,14 @@
                             <input type="radio" id="woman" name="gender" value="Woman" required>
                             <label for="woman"> Woman</label><br>
                             <input type="radio" id="man" name="gender" value="Man" required>
-                            <label for="man"> Man</label>
+                            <label for="man"> Man</label><br>
+                            <input type="radio" id="other" name="gender" value="Other" required>
+                            <label for="other"> Other</label>
                         </td>
                         <td>
                             <p>Volunteer Type:</p>
                             <input type="radio" id="freetime" name="volunteertype" value="FreeTime" required>
-                            <label for="freetime"> Free Time</label><br>
+                            <label for="freetime"> Free time</label><br>
                             <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours" required>
                             <label for="againsthours"> Against hours</label>
                         </td>
@@ -139,7 +141,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><p>Start Date:</p>
+                        <td><p>Start date:</p>
                         <td>
                             <input type="date" id="startdate" name="startdate" required>
                         </td>
@@ -147,20 +149,18 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><p><b>Change Password:</b></p></td>
-                        <td><p>Passwords must be at least 8 characters long.</p></td>
+                        <td><p><b>Change password:</b></p></td>
+                        <td colspan="2"><p>Passwords must be at least 8 characters long</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>New password:</p></td>
+                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter new password" pattern=".{8,}"></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td><p>New Password:</p></td>
-                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter New Password" pattern=".{8,}"></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><p>Verify New Password:</p></td>
-                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter Verify New Password" pattern=".{8,}"></td>
+                        <td><p>Verify new password:</p></td>
+                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}"></td>
                         <td></td>
                         <td><button type="button" id="Save">Save</button></td>
                     </tr>
