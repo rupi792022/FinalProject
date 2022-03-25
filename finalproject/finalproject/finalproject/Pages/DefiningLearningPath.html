@@ -17,7 +17,7 @@
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
-            count = 0;
+            count = 1;
             NumOfLevel = 0;
             $(".stepDetails").hide();
             $("#AddQuestion").click(AddQuestion);
@@ -90,8 +90,8 @@
 
         function Next() {
             GuidingProgram = "";
-            guidingSerialNum++;
-            if (guidingSerialNum > $("#level_serial_num").val()) {
+            NumOfLevel++;
+            if (NumOfLevel > $("#level_serial_num").val()) {
                 alert("No more steps to edit, click Save");
             }
 
@@ -114,7 +114,7 @@
                 Manager_email: managerEmail,
                 Program_name: programName,
                 Level_serial_num: levelSerialNum,
-                Guiding_serial_num: guidingSerialNum,
+             
                 //Date: date,
                 Content_level: contentLevel,
                 Question_content_1: question1,
@@ -192,7 +192,13 @@
             </form>
             <div id="ph"></div>
             <button type="button" id="AddQuestion">Add Question</button><br>
-            <div id="AddNewQuestion"></div>
+            <div id="AddNewQuestion">
+                <input type="text" id="question1" name="Question" required placeholder="Enter a question">
+                <input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer">
+                <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer">
+                <input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer">
+                <input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer"><br>
+            </div>
             <button type="button" id="back">Back</button><br>
             <button type="button" id="next">Next</button><br>
             <button type="button" id="save">Save</button><br>

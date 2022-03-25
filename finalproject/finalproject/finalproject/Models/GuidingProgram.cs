@@ -7,7 +7,6 @@ namespace finalproject.Models
 {
     public class GuidingProgram
     {
-        int guiding_serial_num;
         string date;
         string program_name;
         string manager_email;
@@ -22,9 +21,8 @@ namespace finalproject.Models
         string answers_3;
         string answers_4;
 
-        public GuidingProgram(int guiding_serial_num, string date, string program_name, string manager_email, int level_serial_num, string content_level, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
+        public GuidingProgram(string date, string program_name, string manager_email, int level_serial_num, string content_level, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
         {
-            Guiding_serial_num = guiding_serial_num;
             Date = date;
             Program_name = program_name;
             Manager_email = manager_email;
@@ -40,7 +38,6 @@ namespace finalproject.Models
             Answers_4 = answers_4;
         }
 
-        public int Guiding_serial_num { get => guiding_serial_num; set => guiding_serial_num = value; }
         public string Date { get => date; set => date = value; }
         public string Program_name { get => program_name; set => program_name = value; }
         public string Manager_email { get => manager_email; set => manager_email = value; }
