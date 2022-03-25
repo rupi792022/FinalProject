@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using finalproject.Models.DAL;
 
 namespace finalproject.Models
 {
@@ -37,7 +38,7 @@ namespace finalproject.Models
             Answers_3 = answers_3;
             Answers_4 = answers_4;
         }
-
+        public GuidingProgram() { }
         public string Date { get => date; set => date = value; }
         public string Program_name { get => program_name; set => program_name = value; }
         public string Manager_email { get => manager_email; set => manager_email = value; }
@@ -51,5 +52,25 @@ namespace finalproject.Models
         public string Answers_2 { get => answers_2; set => answers_2 = value; }
         public string Answers_3 { get => answers_3; set => answers_3 = value; }
         public string Answers_4 { get => answers_4; set => answers_4 = value; }
+
+        public void InsertLevel()
+        {
+            DataServices ds = new DataServices();
+            ds.InsertLevel(this);
+
+        }
+
+        public GuidingProgram Read_GP(int level_num )
+        {
+            DataServices ds = new DataServices();
+            return ds.Read_GP(level_num);
+
+        }
+
+        public void UpdateLevelDetails(GuidingProgram gp)
+        {
+            DataServices ds = new DataServices();
+            ds.UpdateLevelDetails(gp);
+        }
     }
 }

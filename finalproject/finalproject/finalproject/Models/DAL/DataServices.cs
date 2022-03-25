@@ -464,18 +464,166 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@email"].Value = email;
             return cmd;
         }
+        // GuidingProgram
+        public void InsertLevel(GuidingProgram GP) // singIn page
+        {
 
-      
-        //private SqlCommand createUpdateCommand_MUpdatePassword(SqlConnection con, string password, string email)
-        //{
-        //    string commandStr = "UPDATE Manager_2022 SET password = @password" +
-        //        "WHERE email = @email";
-        //    SqlCommand cmd = createCommand(con, commandStr);
-        //    cmd.Parameters.Add("@password", SqlDbType.NVarChar);
-        //    cmd.Parameters["@password"].Value = password;
-        //    cmd.Parameters.Add("@email", SqlDbType.NVarChar);
-        //    cmd.Parameters["@email"].Value = email;
-        //    return cmd;
-        //}
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+              
+                    SqlCommand command = CreateInsert_Level(GP, con);
+                    command.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in adding new user", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        SqlCommand CreateInsert_Level(GuidingProgram GP, SqlConnection con)
+        {
+            string insertStr = "INSERT INTO Guiding_program_2022 ( [date], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.Date + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4+"', '" + GP.Answers_1 + "', '" + GP.Answers_2+ "', '" + GP.Answers_3+ "', '" + GP.Answers_4+ "')";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeout
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
+        }
+
+        public GuidingProgram Read_GP(int level_num)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_LevelDetails(con, level_num);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                GuidingProgram gp = new GuidingProgram();
+                while (dr.Read())
+                {
+                    gp.Date = (string)dr["date"];
+                    gp.Program_name = (string)dr["program_name"];
+                    gp.Manager_email = (string)dr["manager_email"];
+                    gp.Level_serial_num = Convert.ToInt32(dr["level_serial_num"]);
+                    gp.Content_level = (string)dr["content_level"];
+                    gp.Question_content_1 = (string)dr["question_content_1"];
+                    gp.Question_content_2 = (string)dr["question_content_2"];
+                    gp.Question_content_3 = (string)dr["question_content_3"];
+                    gp.Question_content_4 = (string)dr["question_content_4"];
+                    gp.Answers_1 = (string)dr["answers_1"];
+                    gp.Answers_2 = (string)dr["answers_2"];
+                    gp.Answers_3 = (string)dr["answers_3"];
+                    gp.Answers_4 = (string)dr["answers_4"];
+                }
+
+                return gp;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in reading password", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        SqlCommand createSelectCommand_LevelDetails(SqlConnection con, int level_num)
+        {
+            string commandStr = "SELECT * FROM Guiding_program_2022 WHERE level_serial_num = @level_num";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@level_num", SqlDbType.SmallInt);
+            cmd.Parameters["@level_num"].Value = level_num;
+            return cmd;
+        }
+
+        public void UpdateLevelDetails(GuidingProgram gp)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.Date, gp.Content_level,gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
+                selectCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in update the user details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string date, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
+        {
+            string commandStr = "UPDATE Guiding_program_2022 SET manager_email = @email" +
+               ",date = @date" +
+                ",content_level =@content_level" +
+                ",question_content_1 =@question_content_1" +
+                ",question_content_2 =@question_content_2 " +
+                ",question_content_3 =@question_content_3" +
+                ",question_content_4 =@question_content_4 " +
+                ",answers_1 =@answers_1 " +
+                ",answers_2 = @answers_2 " +
+                ",answers_3 = @answers_3 " +
+                ",answers_4 = @answers_4 " +
+                " WHERE level_serial_num = @level_serial_num";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@level_serial_num", SqlDbType.SmallInt);
+            cmd.Parameters["@level_serial_num"].Value = level_serial_num;
+            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+            cmd.Parameters["@email"].Value = email;
+            cmd.Parameters.Add("@date", SqlDbType.NVarChar);
+            cmd.Parameters["@date"].Value = date;
+            cmd.Parameters.Add("@content_level", SqlDbType.NVarChar);
+            cmd.Parameters["@content_level"].Value = content_level;
+            cmd.Parameters.Add("@question_content_1", SqlDbType.NVarChar);
+            cmd.Parameters["@question_content_1"].Value = question_content_1;
+            cmd.Parameters.Add("@question_content_2", SqlDbType.NVarChar);
+            cmd.Parameters["@question_content_2"].Value = question_content_2;
+            cmd.Parameters.Add("@question_content_3", SqlDbType.NVarChar);
+            cmd.Parameters["@question_content_3"].Value = question_content_3;
+            cmd.Parameters.Add("@question_content_4", SqlDbType.NVarChar);
+            cmd.Parameters["@question_content_4"].Value = question_content_4;
+            cmd.Parameters.Add("@answers_1", SqlDbType.NVarChar);
+            cmd.Parameters["@answers_1"].Value = answers_1;
+            cmd.Parameters.Add("@answers_2", SqlDbType.NVarChar);
+            cmd.Parameters["@answers_2"].Value = answers_2;
+            cmd.Parameters.Add("@answers_3", SqlDbType.NVarChar);
+            cmd.Parameters["@answers_3"].Value = answers_3;
+            cmd.Parameters.Add("@answers_4", SqlDbType.NVarChar);
+            cmd.Parameters["@answers_4"].Value = answers_4;
+            return cmd;
+        }
     }
 }

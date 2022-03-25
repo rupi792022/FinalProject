@@ -169,7 +169,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
-    <Compile Include="Controllers\GuidingProgramController.cs" />
+    <Compile Include="Controllers\GuidingProgramsController.cs" />
     <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\VolunteersController.cs" />
     <Compile Include="Global.asax.cs">
