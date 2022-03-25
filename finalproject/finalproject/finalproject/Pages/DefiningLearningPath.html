@@ -18,10 +18,13 @@
             $(user).clone().appendTo(".dropdown");
 
             count = 1;
-            NumOfLevel = 0;
+            NumOfLevel = 1;
+            toUpdate = false;
             $(".stepDetails").hide();
+            $("#edit").hide();
             $("#AddQuestion").click(AddQuestion);
-            $("#next").click(Next);
+            $("#next").attr('disabled', true);
+            $("#save").click(Save);
             $("#back").click(Back);
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
@@ -88,17 +91,11 @@
             else alert("You can only insert a 4 questions");
         }
 
-        function Next() {
+        function Save() {
             GuidingProgram = "";
-            NumOfLevel++;
-            if (NumOfLevel > $("#level_serial_num").val()) {
-                alert("No more steps to edit, click Save");
-            }
-
-
             let managerEmail = getDatails.Manager_email;
             let programName = $("#program_name").val();
-            let levelSerialNum = $("#level_serial_num").val();
+            let levelSerialNum = NumOfLevel;
             let contentLevel = $("#contentLevel").val();
             let question1 = $("#question1").val();
             let question2 = $("#question2").val();
@@ -114,7 +111,6 @@
                 Manager_email: managerEmail,
                 Program_name: programName,
                 Level_serial_num: levelSerialNum,
-             
                 //Date: date,
                 Content_level: contentLevel,
                 Question_content_1: question1,
@@ -126,34 +122,130 @@
                 Answers_3: strAnswers_3,
                 Answers_4: strAnswers_4
             }
-            ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), NextSuccessCB, NextErrorCB);
+
+            if (toUpdate) {
+                ajaxCall("PUT", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), PutSuccessSave, PutErrorSave)
+            }
+            ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), SaveSuccessCB, SaveErrorCB);
             return false;
         }
 
-        function NextSuccessCB(data) {
-            console.log(data);
-            localStorage.setItem("GuidingProgram", JSON.stringify(MyGuidingProgram));
-
-            //לרוקן ערכים
-
+        function PutSuccessSave() {
+            console.log("success to upadte all the details");
         }
-        function NextErrorCB(error) {
+        function PutErrorSave(error) {
             console.log(error);
         }
 
+        function SaveSuccessCB() {
+            console.log("success to insert all the details");
+            localStorage.setItem("GuidingProgram", JSON.stringify(MyGuidingProgram));
+            $("#next").attr('disabled', false);
+        }
+        function SaveErrorCB(error) {
+            console.log(error);
+        }
+
+
+        function Next() {
+            NumOfLevel++;
+            $("#edit").hide();
+            let apiCall = "../api/GuidingProgram/???????";
+            ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
+        }
+
+        function getSuccessNext(DetailsOfLevel) {
+            if (DetailsOfLevel != null) {//אם באותו השלב הערכים מלאים
+                insertDetails(DetailsOfLevel);
+            }
+            else {
+                $(".AddNewQuestion").remove();
+                //empty value
+                $("#contentLevel").val() = "";
+                $("#question1").val() = "";
+                $("#question2").val() = "";
+                $("#question3").val() = "";
+                $("#question4").val() = "";
+
+                $("#1_correctAnswer1").val() = "";
+                $("#1_Answer2").val() = "";
+                $("#1_Answer3").val() = "";
+                $("#1_Answer4").val() = "";
+
+                $("#2_correctAnswer1").val() = "";
+                $("#2_Answer2").val() = "";
+                $("#2_Answer3").val() = "";
+                $("#2_Answer4").val() = "";
+
+                $("#3_correctAnswer1").val() = "";
+                $("#3_Answer2").val() = "";
+                $("#3_Answer3").val() = "";
+                $("#3_Answer4").val() = "";
+
+
+                $("#4_correctAnswer1").val() = "";
+                $("#4_Answer2").val() = "";
+                $("#4_Answer3").val() = "";
+                $("#4_Answer4").val() = "";
+
+            }
+        }
+
+        function getErrorNext() { }
+
+        function Edit() {
+            $(".stepDetails > input").attr("readonly", false);
+        }
+
         function Back() {
+            NumOfLevel--;
             let apiCall = "../api/GuidingProgram/???????";
             ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
         }
 
-        function getSuccessBack(data) {
-            console.log(data);
-            //למלא ערכים רק לקריאה ואם לוחצים עם ערוך שיהיה אפשר לשנות ואחכ put
-
-
+        function getSuccessBack(DetailsOfLevel) {
+            console.log(DetailsOfLevel);
+            insertDetails(DetailsOfLevel);
         }
         function getErrorBack(error) {
             console.log(error);
+        }
+
+        function insertDetails(DetailsOfLevel) {
+            toUpdate = true;
+            $("#edit").show();
+            $(".stepDetails > input").attr("readonly", true);
+            $("#contentLevel").val(DetailsOfLevel.content_level);
+
+            $("#question1").val(DetailsOfLevel.question_content_1);
+
+            arrAnswers_1 = DetailsOfLevel.answers_1.split(",");
+            $("#1_correctAnswer1").val(arrAnswers_1[0]);
+            $("#1_Answer2").val(arrAnswers_1[1]);
+            $("#1_Answer3").val(arrAnswers_1[2]);
+            $("#1_Answer4").val(arrAnswers_1[3]);
+
+            $("#question2").val(DetailsOfLevel.question_content_2);
+
+            arrAnswers_2 = DetailsOfLevel.answers_2.split(",");
+            $("#2_correctAnswer1").val(arrAnswers_2[0]);
+            $("#2_Answer2").val(arrAnswers_2[1]);
+            $("#2_Answer3").val(arrAnswers_2[2]);
+            $("#2_Answer4").val(arrAnswers_2[3]);
+
+            $("#question3").val(DetailsOfLevel.question_content_3);
+
+            arrAnswers_3 = DetailsOfLevel.answers_3.split(",");
+            $("#3_correctAnswer1").val(arrAnswers_3[0]);
+            $("#3_Answer2").val(arrAnswers_3[1]);
+            $("#3_Answer3").val(arrAnswers_3[2]);
+            $("#3_Answer4").val(arrAnswers_3[3]);
+
+            arrAnswers_4 = DetailsOfLevel.answers_4.split(",");
+            $("#4_correctAnswer1").val(arrAnswers_4[0]);
+            $("#4_Answer2").val(arrAnswers_4[1]);
+            $("#4_Answer3").val(arrAnswers_4[2]);
+            $("#4_Answer4").val(arrAnswers_4[3]);
         }
 
 
@@ -192,16 +284,18 @@
             </form>
             <div id="ph"></div>
             <button type="button" id="AddQuestion">Add Question</button><br>
-            <div id="AddNewQuestion">
+            <div>
                 <input type="text" id="question1" name="Question" required placeholder="Enter a question">
                 <input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer">
                 <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer">
                 <input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer">
                 <input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer"><br>
+                <div id="AddNewQuestion"></div>
             </div>
             <button type="button" id="back">Back</button><br>
             <button type="button" id="next">Next</button><br>
             <button type="button" id="save">Save</button><br>
+            <button type="button" id="edit">Edit</button><br>
         </div>
     </div>
 </body>
