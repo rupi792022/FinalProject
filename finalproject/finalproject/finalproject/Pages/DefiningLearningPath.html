@@ -13,9 +13,16 @@
 
     <script>
         $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
             count = 0;
+            NumOfLevel = 0;
+            $(".stepDetails").hide();
             $("#AddQuestion").click(AddQuestion);
-            $("#save").click(Save);
+            $("#next").click(Next);
+            $("#back").click(Back);
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
                 var files = $("#files").get(0).files;
@@ -42,7 +49,12 @@
                 return false;
             });
 
+            $('#level_serial_num').change(function () {
+                $(".stepDetails").show();
+            });
         });
+
+
 
         function showImages(data) {
             console.log(data);
@@ -54,7 +66,6 @@
                 for (var i = 0; i < data.length; i++) {
                     imgStr += "<img src='../" + data[i] + "'/>";
                 }
-
             }
 
             else {
@@ -77,11 +88,18 @@
             else alert("You can only insert a 4 questions");
         }
 
-        function Save() {
-            getDatails = JSON.parse(localStorage.getItem('userDetails'));
+        function Next() {
+            GuidingProgram = "";
+            guidingSerialNum++;
+            if (guidingSerialNum > $("#level_serial_num").val()) {
+                alert("No more steps to edit, click Save");
+            }
+
+
             let managerEmail = getDatails.Manager_email;
             let programName = $("#program_name").val();
             let levelSerialNum = $("#level_serial_num").val();
+            let contentLevel = $("#contentLevel").val();
             let question1 = $("#question1").val();
             let question2 = $("#question2").val();
             let question3 = $("#question3").val();
@@ -95,8 +113,10 @@
             let MyGuidingProgram = {
                 Manager_email: managerEmail,
                 Program_name: programName,
+                Level_serial_num: levelSerialNum,
+                Guiding_serial_num: guidingSerialNum,
                 //Date: date,
-                //Content_level: contentLevel,
+                Content_level: contentLevel,
                 Question_content_1: question1,
                 Question_content_2: question2,
                 Question_content_3: question3,
@@ -106,47 +126,62 @@
                 Answers_3: strAnswers_3,
                 Answers_4: strAnswers_4
             }
-            ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), postSuccessCB, postErrorCB);
+            ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), NextSuccessCB, NextErrorCB);
             return false;
         }
 
-        function SaveSuccessCB(data) {
+        function NextSuccessCB(data) {
             console.log(data);
             localStorage.setItem("GuidingProgram", JSON.stringify(MyGuidingProgram));
-            window.location.href = "VolunteerHome.html";
+
+            //לרוקן ערכים
+
         }
-        function SaveErrorCB(error) {
+        function NextErrorCB(error) {
             console.log(error);
         }
+
+        function Back() {
+            let apiCall = "../api/GuidingProgram/???????";
+            ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
+        }
+
+        function getSuccessBack(data) {
+            console.log(data);
+            //למלא ערכים רק לקריאה ואם לוחצים עם ערוך שיהיה אפשר לשנות ואחכ put
+
+
+        }
+        function getErrorBack(error) {
+            console.log(error);
+        }
+
+
     </script>
 </head>
 <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <img src="../Images/FOA.png" />
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a class="space" href="ManagerHome.html">Home</a></li>
-                    <li><a class="space" href="DefiningLearningPath.html">Learning guidance</a></li>
-                    <li><a class="space" href="#">Activity time</a></li>
-                    <li><a class="space" href="#">Reports</a></li>
-                    <li><a class="space" href="#">Deshbord</a></li>
-                    <li><a class="space" href="#">Keywords</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">user<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Volunteers</a></li>
-                            <li><a href="#">Log out</a></li>
-                        </ul>
-                    </li>
-                </ul>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="../Images/FOA.png" />
             </div>
-        </nav>
-        <div class="container">
-            <input type="text" id="program_name" name="program_name" required placeholder="Enter the name of the learning path">
-            <input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Enter Steps Number" min="1">
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="DefiningLearningPath.html">Learning guidance</a></li>
+                <li><a class="space" href="#">Activity time</a></li>
+                <li><a class="space" href="#">Reports</a></li>
+                <li><a class="space" href="#">Deshbord</a></li>
+                <li><a class="space" href="#">Keywords</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <input type="text" id="program_name" name="program_name" required placeholder="Enter the name of the learning path">
+        <input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Enter Steps Number" min="1">
 
+        <div class="stepDetails">
+            <input type="text" id="contentLevel" name="contentLevel" required placeholder="Enter a content">
             <form method="post" enctype="multipart/form-data" id="formUpload">
                 <div>
                     <label for="files">Files</label>
@@ -158,8 +193,10 @@
             <div id="ph"></div>
             <button type="button" id="AddQuestion">Add Question</button><br>
             <div id="AddNewQuestion"></div>
+            <button type="button" id="back">Back</button><br>
             <button type="button" id="next">Next</button><br>
             <button type="button" id="save">Save</button><br>
         </div>
+    </div>
 </body>
 </html>

@@ -11,13 +11,14 @@
     <link href="../css/VolunteerHome.css" rel="stylesheet" />
 
     <script>
-        getDatails = JSON.parse(localStorage.getItem('userDetails'));
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+        });
     </script>
 </head>
-
-
 <body>
-
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -29,18 +30,10 @@
                 <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="#">Reports</a></li>
                 <li><a class="space" href="#">Keywords</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">user<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Personal details</a></li>
-                        <li><a href="#">Log out</a></li>
-                    </ul>
-                </li>
+                <li class="dropdown"></li>
             </ul>
         </div>
-
     </nav>
-
     <div class="container">
         <h3>Navbar With Dropdown</h3>
         <p>This example adds a dropdown menu for the "Page 1" button in the navigation bar.</p>
