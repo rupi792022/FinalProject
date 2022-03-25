@@ -21,17 +21,18 @@ body {
 
 a {
     color: dimgrey;
-    font-family: Calibri;
+    font-family: Calibri !important;
     font-size: 15px;
 }
-
-  /*  a:focus {
-        color: #C59636;
-    }*/
-
-
-.navbar {
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #C59636;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #C59636;
+}
+    .navbar {
     border: none;
+    font-family:Calibri !important;
 }
 
 .navbar-header {
@@ -43,4 +44,8 @@ a {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     background: #E5EDED;
+}
+
+.dropdown-menu > li > a {
+    color: dimgrey;
 }
