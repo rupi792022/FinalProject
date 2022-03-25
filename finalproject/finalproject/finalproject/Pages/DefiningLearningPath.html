@@ -25,6 +25,7 @@
             $("#AddQuestion").click(AddQuestion);
             $("#next").attr('disabled', true);
             $("#save").click(Save);
+            $("#next").click(Next);
             $("#back").click(Back);
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
@@ -92,8 +93,7 @@
         }
 
         function Save() {
-            GuidingProgram = "";
-            let managerEmail = getDatails.Manager_email;
+            let managerEmail = getDatails.Volunteer_email;
             let programName = $("#program_name").val();
             let levelSerialNum = NumOfLevel;
             let contentLevel = $("#contentLevel").val();
@@ -107,11 +107,11 @@
             let strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
             //missing values
 
-            let MyGuidingProgram = {
+                MyGuidingProgram = {
                 Manager_email: managerEmail,
                 Program_name: programName,
                 Level_serial_num: levelSerialNum,
-                //Date: date,
+                Date: "y",
                 Content_level: contentLevel,
                 Question_content_1: question1,
                 Question_content_2: question2,
@@ -124,9 +124,9 @@
             }
 
             if (toUpdate) {
-                ajaxCall("PUT", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), PutSuccessSave, PutErrorSave)
+                ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), PutSuccessSave, PutErrorSave)
             }
-            ajaxCall("POST", "../api/GuidingProgram", JSON.stringify(MyGuidingProgram), SaveSuccessCB, SaveErrorCB);
+            ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), SaveSuccessCB, SaveErrorCB);
             return false;
         }
 
@@ -139,8 +139,7 @@
 
         function SaveSuccessCB() {
             console.log("success to insert all the details");
-            localStorage.setItem("GuidingProgram", JSON.stringify(MyGuidingProgram));
-            $("#next").attr('disabled', false);
+            $('#next').removeAttr('disabled');
         }
         function SaveErrorCB(error) {
             console.log(error);
@@ -150,8 +149,37 @@
         function Next() {
             NumOfLevel++;
             $("#edit").hide();
-            let apiCall = "../api/GuidingProgram/???????";
+            //empty value
+            $("#contentLevel").val('');
+            $("#question1").val('');
+            $("#question2").val('');
+            $("#question3").val('');
+            $("#question4").val('');
+
+            $("#1_correctAnswer1").val('');
+            $("#1_Answer2").val('');
+            $("#1_Answer3").val('');
+            $("#1_Answer4").val('');
+
+            $("#2_correctAnswer1").val('');
+            $("#2_Answer2").val('');
+            $("#2_Answer3").val('');
+            $("#2_Answer4").val('');
+
+            $("#3_correctAnswer1").val('');
+            $("#3_Answer2").val('');
+            $("#3_Answer3").val('');
+            $("#3_Answer4").val('');
+
+
+            $("#4_correctAnswer1").val('');
+            $("#4_Answer2").val('');
+            $("#4_Answer3").val('');
+            $("#4_Answer4").val('');
+
+            let apiCall = "../api/GuidingPrograms/Read_GP?level_serial_num=" + NumOfLevel;
             ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
+
         }
 
         function getSuccessNext(DetailsOfLevel) {
@@ -159,35 +187,7 @@
                 insertDetails(DetailsOfLevel);
             }
             else {
-                $(".AddNewQuestion").remove();
-                //empty value
-                $("#contentLevel").val() = "";
-                $("#question1").val() = "";
-                $("#question2").val() = "";
-                $("#question3").val() = "";
-                $("#question4").val() = "";
-
-                $("#1_correctAnswer1").val() = "";
-                $("#1_Answer2").val() = "";
-                $("#1_Answer3").val() = "";
-                $("#1_Answer4").val() = "";
-
-                $("#2_correctAnswer1").val() = "";
-                $("#2_Answer2").val() = "";
-                $("#2_Answer3").val() = "";
-                $("#2_Answer4").val() = "";
-
-                $("#3_correctAnswer1").val() = "";
-                $("#3_Answer2").val() = "";
-                $("#3_Answer3").val() = "";
-                $("#3_Answer4").val() = "";
-
-
-                $("#4_correctAnswer1").val() = "";
-                $("#4_Answer2").val() = "";
-                $("#4_Answer3").val() = "";
-                $("#4_Answer4").val() = "";
-
+                $("#AddNewQuestion").remove();
             }
         }
 
@@ -199,7 +199,7 @@
 
         function Back() {
             NumOfLevel--;
-            let apiCall = "../api/GuidingProgram/???????";
+            let apiCall = "../api/GuidingPrograms/Read_GP?level_serial_num=" + NumOfLevel;
             ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
         }
 
