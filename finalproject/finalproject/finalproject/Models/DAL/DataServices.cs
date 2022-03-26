@@ -324,7 +324,7 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        // Relates to the manager
+        /////////////------------- Relates to the manager -------------/////////////
 
         public bool ReadEmail_M(string email)
         {
@@ -464,8 +464,9 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@email"].Value = email;
             return cmd;
         }
-        // GuidingProgram
-        public void InsertLevel(GuidingProgram GP) // singIn page
+
+        /////////////------------- Relates to the Guiding Program -------------/////////////
+        public void InsertLevel(GuidingProgram GP) // insert level into a guiding program 
         {
 
             SqlConnection con = null;
@@ -501,7 +502,7 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        public GuidingProgram Read_GP(int level_num)
+        public GuidingProgram Read_GP(int level_num) // Reading of the values 
         {
 
             SqlConnection con = null;
@@ -523,8 +524,8 @@ namespace finalproject.Models.DAL
                 {
                     gp.Date = (string)dr["date"];
                     gp.Program_name = (string)dr["program_name"];
-                    gp.Manager_email = (string)dr["manager_email"];
-                    gp.Level_serial_num = Convert.ToInt32(dr["level_serial_num"]);
+                    gp.Manager_email = (string)dr["email"];
+                    gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
                     gp.Content_level = (string)dr["content_level"];
                     gp.Question_content_1 = (string)dr["question_content_1"];
                     gp.Question_content_2 = (string)dr["question_content_2"];
@@ -543,7 +544,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading password", ex);
+                throw new Exception("faild in reading level", ex);
             }
             finally
             {
@@ -561,7 +562,7 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        public void UpdateLevelDetails(GuidingProgram gp)
+        public void UpdateLevelDetails(GuidingProgram gp) // Update the values 
         {
 
             SqlConnection con = null;
@@ -569,7 +570,7 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.Date, gp.Content_level,gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
+                SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.Date, gp.Content_level, gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
                 selectCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
