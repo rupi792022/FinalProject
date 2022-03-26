@@ -60,21 +60,21 @@
             numOfQuestion++;
 
             var Question = [];//array of all the questions
-            Question.push(GP_Details.question_content_1, GP_Details.question_content_2, GP_Details.question_content_3, GP_Details.question_content_4);
+            Question.push(GP_Details.Question_content_1, GP_Details.Question_content_2, GP_Details.Question_content_3, GP_Details.Question_content_4);
 
-            arrAnswers_1 = GP_Details.answers_1.split(",");//array for answers to question 1
+            arrAnswers_1 = GP_Details.Answers_1.split(",");//array for answers to question 1
             correct_answer1 = arrAnswers_1[0];//save correct answer for question 1
             arrAnswers_1 = arrAnswers_1.sort(() => Math.random() - 0.5);//shuffle the arr
 
-            arrAnswers_2 = GP_Details.answers_2.split(",");//array for answers to question 2
+            arrAnswers_2 = GP_Details.Answers_2.split(",");//array for answers to question 2
             correct_answer2 = arrAnswers_2[0];//save correct answer for question 2
             arrAnswers_2 = arrAnswers_2.sort(() => Math.random() - 0.5);//shuffle the arr
 
-            arrAnswers_3 = GP_Details.answers_3.split(",");//array for answers to question 3
+            arrAnswers_3 = GP_Details.Answers_3.split(",");//array for answers to question 3
             correct_answer3 = arrAnswers_3[0];//save correct answer for question 3
             arrAnswers_3 = arrAnswers_3.sort(() => Math.random() - 0.5);//shuffle the arr
 
-            arrAnswers_4 = GP_Details.answers_4.split(",");//array for answers to question 4
+            arrAnswers_4 = GP_Details.Answers_4.split(",");//array for answers to question 4
             correct_answer4 = arrAnswers_4[0];//save correct answer for question 4
             arrAnswers_4 = arrAnswers_4.sort(() => Math.random() - 0.5);//shuffle the arr
 
@@ -153,6 +153,5 @@
         <button type="submit" id="check">Check</button><br>
         <button type="submit" id="continue">Continue</button><br>
     </div>
-    
 </body>
 </html>
