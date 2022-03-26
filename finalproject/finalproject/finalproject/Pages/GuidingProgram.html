@@ -62,7 +62,7 @@
                 return false;
             });
 
-           
+
         });
 
 
@@ -89,22 +89,22 @@
             console.log(data);
         }
 
-        
         function AddQuestion() {
             count++;
             if (count <= NumOfAnswers) {
                 str = "";
-                str += '<input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question">';
-                for (var i = 1; i < NumOfAnswers ; i++) {
+                str += '<tr>';
+                str += '<td><input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"></td></tr>';
+                for (var i = 1; i < NumOfAnswers; i++) {
                     if (i == 1) {
-                        str += '<input type="text" id="' + count + '_correctAnswer'+ i +'"name="correctAnswer"'+ i +'"required placeholder="Enter a correct Answer">';
+                        str += '<tr><td><input type="text" id="' + count + '_correctAnswer' + i + '"name="correctAnswer"' + i + '"required placeholder="Enter a correct Answer"></td>';
                     }
-                    str += '<input type="text" id="' + count + '_Answer' + (i+1) + '"name="Answer"' + (i+1) + '"required placeholder="Enter a possible answer">';
+                    str += '<td><input type="text" id="' + count + '_Answer' + (i + 1) + '"name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
                 }
-                str += '</br>';
+                str += '</tr>';
                 $(str).clone().appendTo("#AddNewQuestion");
             }
-            else alert("You can only insert a 4 questions"); 
+            else alert("You can only insert a 4 questions");
         }
 
 
@@ -123,10 +123,10 @@
             let strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
             //missing values
 
-                MyGuidingProgram = {
+            MyGuidingProgram = {
                 Manager_email: managerEmail,
                 Program_name: programName,
-               /* Level_serial_num: NumOfLevel,*/
+                /* Level_serial_num: NumOfLevel,*/
                 Date: "y",
                 Content_level: contentLevel,
                 Question_content_1: question1,
@@ -149,7 +149,7 @@
 
         function putSuccessSave() {
             console.log("success to upadte all the details");
-            
+
         }
 
         function putErrorSave(error) {
@@ -168,7 +168,7 @@
 
 
         function Next() {
-            NumOfLevel++;  
+            NumOfLevel++;
             let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
             ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
 
@@ -176,7 +176,7 @@
 
         function getSuccessNext(DetailsOfLevel) {
             strTitle = "";
-            strTitle +="<h1>Level Number " + NumOfLevel + "</h1>";
+            strTitle += "<h1>Level Number " + NumOfLevel + "</h1>";
             document.getElementById("title").innerHTML = strTitle;
             if (DetailsOfLevel.Content_level != null) {//אם באותו השלב הערכים מלאים
                 insertDetails(DetailsOfLevel);
@@ -216,30 +216,29 @@
             console.log(error);
         }
 
-
         function renderLevelDetails(Question, allAnswersArr) {
             answers = 0;
             idNum = 2
             str = "";
+            str += '<tr>';
             for (var i = 0; i < Question.length; i++) {
                 if (Question[i] != null) {
-                    str += '<input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '">';
+                    str += '<td><input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '"></tr>';
                     for (var k = answers; k < (4 + answers); k++) {
                         if ((k % 4) == 0) {
-                            str += '<input type="text" id="' + idNum + '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '">';
+                            str += '<tr><td><input type="text" id="' + idNum + '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td>';
                         }
                         else {
-                            str += '<input type="text" id="' + (i + 2) + '_Answer' + idNum + '" name="Answer"' + idNum + '" value="' + allAnswersArr[k] + '">';
+                            str += '<td><input type="text" id="' + (i + 2) + '_Answer' + idNum + '" name="Answer"' + idNum + '" value="' + allAnswersArr[k] + '"></td>';
                             idNum++;
                         }
                     }
                     answers += 4;
-                    str += '</br>';
+                    str += '</td>';
                 }
                 document.getElementById("AddNewQuestion").innerHTML = str;
                 /* $(str).clone().appendTo("#AddNewQuestion");*/
             }
-           
         }
 
         function insertDetails(DetailsOfLevel) {
@@ -292,7 +291,7 @@
         <div id="defineTheProgram">
             <input type="text" id="program_name" name="program_name" required placeholder="Enter the name of the learning path">
             <input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Enter Steps Number" min="1">
-            <button type="button" id="buttonStart">Start</button><br>
+            <button type="submit" id="buttonStart">Start</button><br>
         </div>
         <div id="stepDetails">
             <input type="text" id="contentLevel" name="contentLevel" required placeholder="Enter a content">
@@ -305,20 +304,31 @@
                 <button type="button" id="buttonUpload">Upload files</button><br>
             </form>
             <div id="ph"></div>
-            <button type="button" id="AddQuestion">Add Question</button><br>
-            <div>
-                <input type="text" id="question1" name="Question" required placeholder="Enter a question">
-                <input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer">
-                <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer">
-                <input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer">
-                <input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer"><br>
-                <div id="AddNewQuestion"></div>
-            </div>
-            <button type="button" id="back">Back</button><br>
-            <button type="button" id="next">Next</button><br>
-            <button type="button" id="save">Save</button><br>
-            <button type="button" id="edit">Edit</button><br>
+            <table id="AddNewQuestion">
+                <tr>
+                    <td><button type="button" id="AddQuestion">Add Question</button><br></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="question1" name="Question" required placeholder="Enter a question"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"> </td>
+                    <td> <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer"></td>
+                    <td><input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer"></td>
+                    <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer"><br></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td><button type="submit" id="back">Back</button><br></td>
+                    <td></td>
+                    <td><button type="submit" id="save">Save</button><br></td>
+                    <td><button type="submit" id="next">Next</button><br></td>
+                </tr>
+            </table>
+            <button type="submit" id="edit">Edit</button><br>
         </div>
     </div>
 </body>
 </html>
+
