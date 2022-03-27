@@ -25,17 +25,13 @@
 
             $("#stepDetails").hide();
             $("#edit").hide();
+            $("#back").hide();
             $("#AddQuestion").click(AddQuestion);
             $("#next").attr('disabled', true);
             $("#save").click(Save);
-            $("#next").click(Next);
-            $("#back").click(Back);
-            $('#buttonStart').click(function () {
-                $("#stepDetails").show();
-                $("#defineTheProgram").hide();
-                var levelNum = $('<h1>Level Number ' + NumOfLevel + '</h1>');
-                $(levelNum).appendTo("#title");
-            });
+            $("#next").click(Next); 
+            $("#back").click(Back); //need to check
+            $('#buttonStart').click(start);
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
                 var files = $("#files").get(0).files;
@@ -89,6 +85,19 @@
             console.log(data);
         }
 
+        function start() {
+            LevelsAmount = $("#level_serial_num").val();
+            $("#stepDetails").show();
+            $("#defineTheProgram").hide();
+            title(NumOfLevel);
+        }
+
+        function title(level) {
+            strTitle = "";
+            strTitle += "<h1>Level Number " + level + "</h1>";
+            document.getElementById("title").innerHTML = strTitle;
+        }
+
         function AddQuestion() {
             count++;
             if (count <= NumOfAnswers) {
@@ -112,7 +121,6 @@
         function Save() {
             let managerEmail = getDatails.Volunteer_email;
             let programName = $("#program_name").val();
-            /*let levelSerialNum = $("#Level_serial_num").val();*/
             let contentLevel = $("#contentLevel").val();
             let question1 = $("#question1").val();
             let question2 = $("#question2").val();
@@ -122,13 +130,11 @@
             let strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
             let strAnswers_3 = $("#3_correctAnswer1").val().concat(",", $("#3_Answer2").val(), ",", $("#3_Answer3").val(), ",", $("#3_Answer4").val());
             let strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
-            //missing values
 
             MyGuidingProgram = {
                 Manager_email: managerEmail,
                 Program_name: programName,
-                /* Level_serial_num: NumOfLevel,*/
-                Date: "y",
+                Date: "y", //ask anat
                 Content_level: contentLevel,
                 Question_content_1: question1,
                 Question_content_2: question2,
@@ -170,15 +176,17 @@
 
         function Next() {
             NumOfLevel++;
-            let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
-            ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
-
+            if (NumOfLevel <= LevelsAmount) {
+                let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
+                ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
+                $("#back").show();
+            }
+            else
+                alert("You have reached the maximum amount of levels");
         }
 
         function getSuccessNext(DetailsOfLevel) {
-            strTitle = "";
-            strTitle += "<h1>Level Number " + NumOfLevel + "</h1>";
-            document.getElementById("title").innerHTML = strTitle;
+            title(NumOfLevel);
             if (DetailsOfLevel.Content_level != null) {//אם באותו השלב הערכים מלאים
                 insertDetails(DetailsOfLevel);
             }
@@ -193,28 +201,6 @@
                 $("#1_Answer3").val('');
                 $("#1_Answer4").val('');
             }
-        }
-
-        function getErrorNext() {
-            console.log(nexterror);
-        }
-
-        function Edit() {
-            $(".stepDetails > input").attr("readonly", false);
-        }
-
-        function Back() {
-            NumOfLevel--;
-            let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
-            ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
-        }
-
-        function getSuccessBack(DetailsOfLevel) {
-            console.log(DetailsOfLevel);
-            insertDetails(DetailsOfLevel);
-        }
-        function getErrorBack(error) {
-            console.log(error);
         }
 
         function renderLevelDetails(Question, allAnswersArr) {
@@ -254,7 +240,6 @@
             $("#question1").val(DetailsOfLevel.Question_content_1);
             var Question = [];//array of all the questions
             Question.push(/*DetailsOfLevel.Question_content_1,*/ DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
-
             arrAnswers_1 = DetailsOfLevel.Answers_1.split(",");
             $("#1_correctAnswer1").val(arrAnswers_1[0]);
             $("#1_Answer2").val(arrAnswers_1[1]);
@@ -267,6 +252,37 @@
 
             renderLevelDetails(Question, allAnswersArr)
         }
+
+        function getErrorNext() {
+            console.log(nexterror);
+        }
+
+        function Edit() {
+            $(".stepDetails > input").attr("readonly", false);
+        }
+
+        function Back() {
+            NumOfLevel--;
+            if (NumOfLevel == 0) {
+                $("#back").attr('disabled', true);
+            }
+            else {
+                $("#back").attr('disabled', false);
+                let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
+                ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
+            }
+        }
+
+        function getSuccessBack(DetailsOfLevel) {
+            console.log(DetailsOfLevel);
+            title(NumOfLevel);
+            insertDetails(DetailsOfLevel);
+        }
+        function getErrorBack(error) {
+            console.log(error);
+        }
+
+        
 
 
     </script>
