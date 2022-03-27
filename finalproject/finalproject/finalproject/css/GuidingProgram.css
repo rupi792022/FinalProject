@@ -52,47 +52,129 @@ a {
 }
 
 
- /*input[type="text"],
+ input[type="text"],
  input[type="number"] {
     border: none;
     border-bottom: 1px solid #C59636;
     outline: none;
     height: 35px;
-    color: gray;*/
-   /* background: #E5EDED;*/
-    /*font-family: Calibri;
-    border-radius: 30px;
+    color: gray;
+    /*   background: #E5EDED;*/
+    font-family: Calibri;
+    /*    border-radius: 10px;*/
     font-size: 14px;
-    padding-left: 20px;
+    padding-left: 10px;
     box-sizing: border-box;
     width: 180px;
 }
 
-input[type="text"]:hover,
-input[type="number"]:hover{
- border: 1px solid #C59636;
-    border-radius: 40px;
-    box-shadow: 0 0 5px #C59636;
-    font-family: Calibri;
-}
+    input[type="text"]:hover,
+    input[type="number"]:hover {
+        border: 1px solid #C59636;
+        border-radius: 7px;
+        box-shadow: 0 0 5px #C59636;
+        font-family: Calibri;
+    }
 
 
-input[type="text"]:focus,
-input[type="number"]:focus {
+    input[type="text"]:focus,
+    input[type="number"]:focus{
+        border: 1px solid #C59636;
+        border-radius: 7px;
+        font-family: Calibri;
+    }
+
+textarea {
     border: 1px solid #C59636;
-    border-radius: 40px;
+    outline: none;
+    height: 35px;
+    color: gray;
     font-family: Calibri;
+    border-radius: 7px;
+    font-size: 14px;
+    padding-left: 7px;
+    box-sizing: border-box;
+    width: 500px;
+    height: 80px;
+    resize: none;
 }
 
- button {
-    border: none;
+textarea:hover {
+/*border: 1px solid #C59636;*/
+border-radius: 7px;
+box-shadow: 0 0 5px #C59636;
+font-family: Calibri;
+}
+
+button {
+    border: 1px solid #C59636;
     outline: none;
-    height: 40px;
-    width: 150px;
+    height: 35px;
+    width: 70px;
     font-size: 16px;
     background: #C59636;
     color: #fff;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
     font-family: Calibri;
-}*/
+}
+
+table {
+    width: 100%;
+    font-family: Calibri;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+ td {
+    vertical-align: text-top;
+    text-align: center;
+/*    padding-left: 10px;*/
+}
+
+#defineTheProgram p {
+    padding-left: 20px;
+    width: 130px;
+}
+
+p {
+    padding-left: 20px;
+}
+
+.rightSide{
+    padding-left: 30px;
+}
+
+.correctAnswer ::placeholder { 
+    color: red;
+    opacity: 1; 
+}
+
+.correctAnswer input[type="text"] {
+    color: red;
+}
+
+#AddNewQuestion input[type="text"] {
+    width: 400px;
+}
+
+#AddQuestion {
+    width: 120px;
+}
+#buttonUpload {
+    width: 120px;
+}
+
+#btn td{
+    width:270px;
+    text-align:left;
+}
+
+#title{
+    font-family:Calibri;
+    color:dimgray;
+  
+}
+
