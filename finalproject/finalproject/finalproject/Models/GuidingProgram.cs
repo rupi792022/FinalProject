@@ -60,12 +60,20 @@ namespace finalproject.Models
 
         }
 
-        public GuidingProgram Read_GP(int level_num )
+        public GuidingProgram Read_Level(int level_num)
         {
             DataServices ds = new DataServices();
-            return ds.Read_GP(level_num);
+            return ds.Read_Level(level_num);
 
         }
+
+        public List <GuidingProgram> Read_GP()
+        {
+            DataServices ds = new DataServices();
+            return ds.Read_GP();
+
+        }
+
 
         public void UpdateLevelDetails(GuidingProgram gp)
         {

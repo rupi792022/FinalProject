@@ -502,7 +502,7 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        public GuidingProgram Read_GP(int level_num) // Reading of the values 
+        public GuidingProgram Read_Level(int level_num) // Reading of the values 
         {
 
             SqlConnection con = null;
@@ -624,6 +624,59 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@answers_3"].Value = answers_3;
             cmd.Parameters.Add("@answers_4", SqlDbType.NVarChar);
             cmd.Parameters["@answers_4"].Value = answers_4;
+            return cmd;
+        }
+
+        /////////////------------- Relates to the Guiding -------------/////////////
+
+        public List<GuidingProgram> Read_GP()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_GuidingProgram(con);
+                List<GuidingProgram> GP_List = new List<GuidingProgram>();
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dr.Read())
+                {
+                    GuidingProgram gp = new GuidingProgram();
+
+                    gp.Date = (string)dr["date"];
+                    gp.Program_name = (string)dr["program_name"];
+                    gp.Manager_email = (string)dr["email"];
+                    gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
+                    gp.Content_level = (string)dr["content_level"];
+                    gp.Question_content_1 = (string)dr["question_content_1"];
+                    gp.Question_content_2 = (string)dr["question_content_2"];
+                    gp.Question_content_3 = (string)dr["question_content_3"];
+                    gp.Question_content_4 = (string)dr["question_content_4"];
+                    gp.Answers_1 = (string)dr["answers_1"];
+                    gp.Answers_2 = (string)dr["answers_2"];
+                    gp.Answers_3 = (string)dr["answers_3"];
+                    gp.Answers_4 = (string)dr["answers_4"];
+                    GP_List.Add(gp);
+                }
+                return GP_List;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in reading of GuidingProgram", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_GuidingProgram(SqlConnection con)
+        {
+            string commandStr = "SELECT * FROM Guiding_program_2022";
+            SqlCommand cmd = createCommand(con, commandStr);
             return cmd;
         }
     }

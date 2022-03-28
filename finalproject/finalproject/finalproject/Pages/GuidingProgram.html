@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
     <title></title>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -29,9 +29,10 @@
             $("#AddQuestion").click(AddQuestion);
             $("#next").attr('disabled', true);
             $("#save").click(Save);
-            $("#next").click(Next); 
-            $("#back").click(Back); //need to check
+            $("#next").click(Next);
+            $("#back").click(Back);
             $('#buttonStart').click(start);
+
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
                 var files = $("#files").get(0).files;
@@ -103,13 +104,13 @@
             if (count <= NumOfAnswers) {
                 str = "";
                 str += '<tr>';
-                str += '<td><p>Question ' + count +':</p></td>';
+                str += '<td><p>Question ' + count + ':</p></td>';
                 str += '<td><input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"></td></tr>';
                 for (var i = 1; i < NumOfAnswers; i++) {
                     if (i == 1) {
                         str += '<tr><td></td><td></td><td><p>' + i + '.</p></td><td class="correctAnswer"><input type="text"  id="' + count + '_correctAnswer' + i + '" name="correctAnswer"' + i + '"required placeholder="Enter a correct Answer"></td></tr>';
                     }
-                    str += '<tr><td></td><td></td><td><p>' + (i + 1) +'.</p><td><input type="text" id="' + count + '_Answer' + (i + 1) + '"name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
+                    str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="' + count + '_Answer' + (i + 1) + '"name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
                 }
                 str += '</tr>';
                 $(str).clone().appendTo("#AddNewQuestion");
@@ -177,7 +178,7 @@
         function Next() {
             NumOfLevel++;
             if (NumOfLevel <= LevelsAmount) {
-                let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
+                let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
                 ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
                 $("#back").show();
             }
@@ -268,7 +269,7 @@
             }
             else {
                 $("#back").attr('disabled', false);
-                let apiCall = "../api/GuidingPrograms/Read_GP?level_num=" + NumOfLevel;
+                let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
                 ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
             }
         }
@@ -282,7 +283,7 @@
             console.log(error);
         }
 
-        
+
 
 
     </script>

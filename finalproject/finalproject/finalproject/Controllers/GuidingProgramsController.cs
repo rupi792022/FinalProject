@@ -18,13 +18,13 @@ namespace finalproject.Controllers
 
         // GET api/<controller>/5
         [HttpGet]
-        [Route("api/GuidingPrograms/Read_GP")]
-        public HttpResponseMessage Read_GP(int level_num)
+        [Route("api/GuidingPrograms/Read_Level")]
+        public HttpResponseMessage Read_Level(int level_num)
         {
             try
             {
                 GuidingProgram gp = new GuidingProgram();
-                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_GP(level_num));
+                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_Level(level_num));
             }
             catch (Exception ex)
             {
@@ -38,6 +38,27 @@ namespace finalproject.Controllers
 
         }
 
+
+        [HttpGet]
+        [Route("api/GuidingPrograms/Read_GP")]
+        public HttpResponseMessage Read_GP()
+        {
+            try
+            {
+                GuidingProgram gp = new GuidingProgram();
+                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_GP());
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
+
+        }
         // POST api/<controller>
 
         public HttpResponseMessage Post([FromBody] GuidingProgram GP)
