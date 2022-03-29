@@ -16,10 +16,10 @@
     <link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
-            $("#Save").click(Save);
+            $("#SaveDatails").submit(SaveDatails);
         });
 
-        function Save() {
+        function SaveDatails() {
             getDatails = JSON.parse(localStorage.getItem('userDetails'));
 
             let newpassword = $("#NewPassword").val();
@@ -97,53 +97,53 @@
                 <table>
                     <tr>
                         <td><p>First name:</p></td>
-                        <td><input type="text" id="firstname" name="firstname" placeholder="First name" required></td>
+                        <td><input type="text" id="firstname" name="firstname" placeholder="First name" required/></td>
                         <td><p>Last name:</p></td>
-                        <td><input type="text" id="lastname" name="lastname" placeholder="Last name" required></td>
+                        <td><input type="text" id="lastname" name="lastname" placeholder="Last name" required/></td>
                     </tr>
                     <tr>
                         <td><p>Date of birth:</p></td>
-                        <td><input type="date" id="birthdate" name="birthdate" required></td>
+                        <td><input type="date" id="birthdate" name="birthdate" required/></td>
                         <td><p>Phone:</p></td>
-                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Phone number" required pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"></td>
+                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Phone number" required pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"/></td>
                     </tr>
                     <tr>
                         <td>
                             <p>Gender:</p>
-                            <input type="radio" id="woman" name="gender" value="Woman" required>
+                            <input type="radio" id="woman" name="gender" value="Woman"/>
                             <label for="woman"> Woman</label><br>
-                            <input type="radio" id="man" name="gender" value="Man" required>
+                            <input type="radio" id="man" name="gender" value="Man"/>
                             <label for="man"> Man</label><br>
-                            <input type="radio" id="other" name="gender" value="Other" required>
+                            <input type="radio" id="other" name="gender" value="Other"/>
                             <label for="other"> Other</label>
                         </td>
                         <td>
                             <p>Volunteer Type:</p>
-                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime" required>
+                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime"/>
                             <label for="freetime"> Free time</label><br>
-                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours" required>
+                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours"/>
                             <label for="againsthours"> Against hours</label>
                         </td>
                         <td>
                             <p>Choose your language/s:</p>
                         </td>
                         <td>
-                            <input type="checkbox" id="Hebrew" name="language" value="Hebrew" required>
+                            <input type="checkbox" id="Hebrew" name="language" value="Hebrew"/>
                             <label for="Hebrew">Hebrew</label><br>
-                            <input type="checkbox" id="English" name="language" value="English" required>
+                            <input type="checkbox" id="English" name="language" value="English"/>
                             <label for="English">English</label><br>
-                            <input type="checkbox" id="Russian" name="language" value="Russian" required>
+                            <input type="checkbox" id="Russian" name="language" value="Russian"/>
                             <label for="Russian">Russian</label><br>
-                            <input type="checkbox" id="French" name="language" value="French" required>
+                            <input type="checkbox" id="French" name="language" value="French"/>
                             <label for="French">French</label><br>
-                            <input type="checkbox" id="Arabic" name="language" value="Arabic" required>
+                            <input type="checkbox" id="Arabic" name="language" value="Arabic"/>
                             <label for="Arabic">Arabic</label>
                         </td>
                     </tr>
                     <tr>
                         <td><p>Start date:</p>
                         <td>
-                            <input type="date" id="startdate" name="startdate" required>
+                            <input type="date" id="startdate" name="startdate" required/>
                         </td>
                         <td></td>
                         <td></td>
@@ -154,15 +154,15 @@
                     </tr>
                     <tr>
                         <td><p>New password:</p></td>
-                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter new password" pattern=".{8,}"></td>
+                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter new password" pattern=".{8,}"/></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td><p>Verify new password:</p></td>
-                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}"></td>
+                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}"/></td>
                         <td></td>
-                        <td><button type="button" id="Save">Save</button></td>
+                        <td><input type="submit" id="SaveDatails" value="Save"/></td>
                     </tr>
                 </table>
             </div>

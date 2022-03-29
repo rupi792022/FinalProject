@@ -18,7 +18,7 @@
     <script>
 
         $(document).ready(function () {
-            $("#LogIn").click(LogIn);
+            $("#LogIn").submit(LogIn);
         });
 
         function LogIn() {
@@ -116,10 +116,10 @@
         <img src="../Images/FOA.png" /><br />
         <form> 
             <div class="inputBox">
-                <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$">
+                <input type="email" id="email" name="email" placeholder="Enter email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"/>
                 <input type="password" id="password" name="password" placeholder="Enter password" required>
                 <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a><br />
-                <button id="LogIn" type="button">Log In</button>
+                <input id="LogIn" type="submit" value="Log In"/>
             </div>
         </form> 
     </div>

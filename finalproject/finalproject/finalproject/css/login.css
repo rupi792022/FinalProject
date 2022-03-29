@@ -74,7 +74,8 @@ body {
 
     }
 
-.loginBox button {
+
+ input[type="submit"] {
     border: none;
     outline: none;
     height: 40px;

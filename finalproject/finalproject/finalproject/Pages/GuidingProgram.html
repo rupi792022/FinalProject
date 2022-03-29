@@ -12,7 +12,6 @@
     <link href="../css/GuidingProgram.css" rel="stylesheet" />
 
     <script>
-
         $(document).ready(function () {
             getDatails = JSON.parse(localStorage.getItem('userDetails'));
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
@@ -58,8 +57,6 @@
 
                 return false;
             });
-
-
         });
 
 
@@ -284,8 +281,6 @@
         }
 
 
-
-
     </script>
 </head>
 <body>
@@ -311,9 +306,9 @@
             <table>
                 <tr>
                     <td><p>Name of Program:</p></td>
-                    <td> <input type="text" id="program_name" name="program_name" required placeholder="Name of the program"></td>
+                    <td> <input type="text" id="program_name" name="program_name" required placeholder="Name of the program"/></td>
                     <td><p>Number of level:</p></td>
-                    <td><input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Number of level" min="1"></td>
+                    <td><input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Number of level" min="1"/></td>
                     <td class="rightSide"><button type="submit" id="buttonStart">Start</button><br></td>
                 </tr>
             </table>
@@ -329,50 +324,52 @@
                 <button type="button" id="buttonUpload">Upload files</button><br>
             </form>
             <div id="ph"></div><br>
-            <table id="AddNewQuestion">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td> <button type="submit" id="edit">Edit</button></td>
-                </tr>
-                <tr>
-                    <td><button type="button" id="AddQuestion">Add Question</button><br></td>
-                </tr>
-                <tr>
-                    <td><p>Question 1:</p></td>
-                    <td><input type="text" id="question1" name="Question" required placeholder="Enter a question"></td>
-                    <td><p>1.</p></td>
-                    <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><p>2.</p></td>
-                    <td> <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><p>3.</p></td>
-                    <td><input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><p>4.</p></td>
-                    <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer"></td>
-                </tr>
-                
-            </table><br>
-            <table id="btn">
-                <tr>
-                    <td><button type="submit" id="back">Back</button></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="submit" id="save">Save</button>&nbsp;&nbsp;<button type="submit" id="next">Next</button></td>
-                </tr>
-            </table>
+            <form>
+                <table id="AddNewQuestion">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td> <button type="submit" id="edit">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td><button type="button" id="AddQuestion">Add Question</button><br></td>
+                    </tr>
+                    <tr>
+                        <td><p>Question 1:</p></td>
+                        <td><input type="text" id="question1" name="Question" required placeholder="Enter a question" /></td>
+                        <td><p>1.</p></td>
+                        <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><p>2.</p></td>
+                        <td> <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><p>3.</p></td>
+                        <td><input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><p>4.</p></td>
+                        <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer" /></td>
+                    </tr>
+
+                </table><br>
+                <table id="btn">
+                    <tr>
+                        <td><button type="submit" id="back">Back</button></td>
+                        <td></td>
+                        <td></td>
+                        <td><button type="submit" id="save">Save</button>&nbsp;&nbsp;<button type="submit" id="next">Next</button></td>
+                    </tr>
+                </table>
+            </form>
         </div>
     </div>
 </body>

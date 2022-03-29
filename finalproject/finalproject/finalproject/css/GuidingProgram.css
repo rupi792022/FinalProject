@@ -106,7 +106,8 @@ box-shadow: 0 0 5px #C59636;
 font-family: Calibri;
 }
 
-button {
+button, 
+input[type="submit"] {
     border: 1px solid #C59636;
     outline: none;
     height: 35px;
@@ -118,6 +119,7 @@ button {
     cursor: pointer;
     font-family: Calibri;
 }
+
 
 table {
     width: 100%;
