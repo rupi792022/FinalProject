@@ -105,10 +105,10 @@
                 str = "";
                 str += '<tr>';
                 str += '<td><p>Question ' + count + ':</p></td>';
-                str += '<td><input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"></td></tr>';
+                str += '<td><input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"></td>';
                 for (var i = 1; i < NumOfAnswers; i++) {
                     if (i == 1) {
-                        str += '<tr><td></td><td></td><td><p>' + i + '.</p></td><td class="correctAnswer"><input type="text"  id="' + count + '_correctAnswer' + i + '" name="correctAnswer"' + i + '"required placeholder="Enter a correct Answer"></td></tr>';
+                        str += '<td><p>' + i + '.</p></td><td class="correctAnswer"><input type="text"  id="' + count + '_correctAnswer' + i + '" name="correctAnswer"' + i + '"required placeholder="Enter a correct Answer"></td></tr>';
                     }
                     str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="' + count + '_Answer' + (i + 1) + '"name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
                 }
@@ -212,10 +212,10 @@
             for (var i = 0; i < Question.length; i++) {
                 if (Question[i] != null) {
                     str += '<td><p>Question ' + (i + 2) + ':</p></td>';
-                    str += '<td><input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '"></td></tr>';
+                    str += '<td><input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '"></td>';
                     for (var k = answers; k < (4 + answers); k++) {
                         if ((k % 4) == 0) {
-                            str += '<tr><td></td><td></td><td><p>' + idNum + '.</p></td><td><input type="text" id="' + idNum + '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td></tr>';
+                            str += '<td><p>' + idNum + '.</p></td><td><input type="text" id="' + idNum + '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td></tr>';
                         }
                         else {
                             str += '<tr><td></td><td></td><td><p>' + idNum + '.</p></td><td><input type="text" id="' + (i + 2) + '_Answer' + idNum + '" name="Answer"' + idNum + '" value="' + allAnswersArr[k] + '"></td>';
@@ -339,14 +339,9 @@
                 <tr>
                     <td><button type="button" id="AddQuestion">Add Question</button><br></td>
                 </tr>
-
                 <tr>
                     <td><p>Question 1:</p></td>
                     <td><input type="text" id="question1" name="Question" required placeholder="Enter a question"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
                     <td><p>1.</p></td>
                     <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer"></td>
                 </tr>
@@ -368,6 +363,7 @@
                     <td><p>4.</p></td>
                     <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer"></td>
                 </tr>
+                
             </table><br>
             <table id="btn">
                 <tr>
