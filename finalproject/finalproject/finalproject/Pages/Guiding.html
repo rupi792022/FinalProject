@@ -7,11 +7,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <link href="../css/VolunteerLearning.css" rel="stylesheet" />
+    <link href="../css/Guiding.css" rel="stylesheet" />
     <title></title>
     <script>
         $(document).ready(function () {
-             //getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            //getDatails = JSON.parse(localStorage.getItem('userDetails'));
             //ajaxCall("GET", "../api/Volunteers/ReadDetails_V?email=" + userDetails.Volunteer_email, "", getSuccessDetails_v, getErrorDetails_v);
 
             let apiCall = "../api/GuidingPrograms/Read_GP";
@@ -44,12 +44,12 @@
 
         function getSuccessGP(gp) {
             console.log("Success GP")
+            GP = gp;
             str = "";
-            for (var i = 0; i < gp.length; i++) {
+            for (var i = 0; i < GP.length; i++) {
                 str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level' + (i + 1) + '</button >';
             }
             document.getElementById("learning").innerHTML = str;
-
         }
 
         function getErrorGP() {
@@ -60,10 +60,31 @@
 
         function adi() {
             let levelNum = $(this).attr("id");
-            const fileList = event.target.files;            let fileContent = "";            const fr = new FileReader();            fr.onload = () => {                fileContent = fr.result;                console.log('Commands', fileContent);            }            fr.readAsText(fileList[0]);
-
+            str = "";
+            Extantions = [];
+            filesPath = [];
+            allPath = GP[levelNum - 1].File_path.split(",");
+            for (var i = 0; i < (allPath.length-1); i++) {
+                path = allPath[i].split(".");
+            }
+            for (var i = 0; i < path.length; i++) {
+                if(i % 2 !=0)
+                    Extantions.push(path[i]);
+                else filesPath.push(path[i]);
+            }
+            for (var i = 0; i < Extantions.length; i++) {
+                if (Extantions[i] == "pdf" || Extantions[i] == "docx") {
+                    str += '<embed type="text/' + Extantions[i] + '" src="../' + filesPath[i] + '.' + Extantions[i] + '" width="1000" height="600" >';
+                }
+                else if (Extantions[i] == "png" || Extantions[i] == "jpg")
+                    str += '<img class="uploadImage" src="../' + filesPath[i] + '.' + Extantions[i] + '" width="500" height="500" />';
+            }
+           
+            document.getElementById("learning").innerHTML = str;
         }
-
+        //full - frame
+            //< !--< img src = "../Images/FOA.png" /> -->
+       /* uploadedFiles / DDL_solution.pdf,*/
 
 
         function startLearning() {//geting the values from GuidingPrograms
@@ -164,7 +185,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <img src="../Images/FOA.png" />
+                <img class="logoFOA" src="../Images/FOA.png" />
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
@@ -176,13 +197,15 @@
             </ul>
         </div>
     </nav>
+    <!--<img src="../Images/FOA.png" />-->
     <div class="container">
+        <!--<embed type="text/pdf" src="../uploadedFiles/DDL_solution.pdf" width="500" height="200">-->
         <div id="learning"></div>
         <div id="QA"></div>
         <!--<button type="submit" id="startLearning">Start learning</button><br>
-        <button type="submit" id="next">Next</button><br>
-        <button type="submit" id="check">Check</button><br>
-        <button type="submit" id="continue">Continue</button><br>-->
+    <button type="submit" id="next">Next</button><br>
+    <button type="submit" id="check">Check</button><br>
+    <button type="submit" id="continue">Continue</button><br>-->
     </div>
 </body>
 </html>

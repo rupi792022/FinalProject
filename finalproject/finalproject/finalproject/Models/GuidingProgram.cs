@@ -8,7 +8,7 @@ namespace finalproject.Models
 {
     public class GuidingProgram
     {
-        string date;
+        string file_path;
         string program_name;
         string manager_email;
         int level_serial_num;
@@ -22,9 +22,9 @@ namespace finalproject.Models
         string answers_3;
         string answers_4;
 
-        public GuidingProgram(string date, string program_name, string manager_email, int level_serial_num, string content_level, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
+        public GuidingProgram(string file_path, string program_name, string manager_email, int level_serial_num, string content_level, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
         {
-            Date = date;
+            File_path = file_path;
             Program_name = program_name;
             Manager_email = manager_email;
             Level_serial_num = level_serial_num;
@@ -39,7 +39,7 @@ namespace finalproject.Models
             Answers_4 = answers_4;
         }
         public GuidingProgram() { }
-        public string Date { get => date; set => date = value; }
+        public string File_path { get => file_path; set => file_path = value; }
         public string Program_name { get => program_name; set => program_name = value; }
         public string Manager_email { get => manager_email; set => manager_email = value; }
         public int Level_serial_num { get => level_serial_num; set => level_serial_num = value; }

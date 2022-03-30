@@ -494,7 +494,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand CreateInsert_Level(GuidingProgram GP, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Guiding_program_2022 ( [date], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.Date + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4+"', '" + GP.Answers_1 + "', '" + GP.Answers_2+ "', '" + GP.Answers_3+ "', '" + GP.Answers_4+ "')";
+            string insertStr = "INSERT INTO Guiding_program_2022 ( [file_path], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4+"', '" + GP.Answers_1 + "', '" + GP.Answers_2+ "', '" + GP.Answers_3+ "', '" + GP.Answers_4+ "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -522,7 +522,7 @@ namespace finalproject.Models.DAL
                 GuidingProgram gp = new GuidingProgram();
                 while (dr.Read())
                 {
-                    gp.Date = (string)dr["date"];
+                    gp.File_path = (string)dr["file_path"];
                     gp.Program_name = (string)dr["program_name"];
                     gp.Manager_email = (string)dr["email"];
                     gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
@@ -570,7 +570,7 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.Date, gp.Content_level, gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
+                SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.File_path, gp.Content_level, gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
                 selectCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -585,10 +585,10 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string date, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
+        private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string file_path, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
         {
             string commandStr = "UPDATE Guiding_program_2022 SET manager_email = @email" +
-               ",date = @date" +
+               ",file_path = @file_path" +
                 ",content_level =@content_level" +
                 ",question_content_1 =@question_content_1" +
                 ",question_content_2 =@question_content_2 " +
@@ -604,8 +604,8 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@level_serial_num"].Value = level_serial_num;
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
-            cmd.Parameters.Add("@date", SqlDbType.NVarChar);
-            cmd.Parameters["@date"].Value = date;
+            cmd.Parameters.Add("@file_path", SqlDbType.NVarChar);
+            cmd.Parameters["@file_path"].Value = file_path;
             cmd.Parameters.Add("@content_level", SqlDbType.NVarChar);
             cmd.Parameters["@content_level"].Value = content_level;
             cmd.Parameters.Add("@question_content_1", SqlDbType.NVarChar);
@@ -644,7 +644,7 @@ namespace finalproject.Models.DAL
                 {
                     GuidingProgram gp = new GuidingProgram();
 
-                    gp.Date = (string)dr["date"];
+                    gp.File_path = (string)dr["file_path"];
                     gp.Program_name = (string)dr["program_name"];
                     gp.Manager_email = (string)dr["email"];
                     gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
