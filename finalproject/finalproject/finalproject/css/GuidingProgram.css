@@ -158,15 +158,19 @@ p {
     color: red;
 }
 
-#AddNewQuestion input[type="text"] {
+#AddNewQuestion input[type="text"],
+#renderQA input[type="text"] {
     width: 400px;
 }
 
-#AddQuestion {
+#AddQuestion, 
+#buttonUpload,
+#finishProgram {
     width: 120px;
 }
-#buttonUpload {
-    width: 120px;
+#editProgram,
+#addNewProgram {
+    width: 150px;
 }
 
 #btn td{

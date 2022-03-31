@@ -16,7 +16,7 @@
     <link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
-            $("#SaveDatails").submit(SaveDatails);
+            $("#SaveDatails").click(SaveDatails);
         });
 
         function SaveDatails() {
@@ -92,7 +92,7 @@
 <body>
     <div class="loginBox">
         <img src="../Images/FOA.png" /><br />
-        <form>
+        <!--<form>-->
             <div class="inputBox">
                 <table>
                     <tr>
@@ -162,11 +162,11 @@
                         <td><p>Verify new password:</p></td>
                         <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}"/></td>
                         <td></td>
-                        <td><input type="submit" id="SaveDatails" value="Save"/></td>
+                        <td><!--<input type="submit" id="SaveDatails" value="Save"/>--><button type="button" id="SaveDatails">Save</button></td>
                     </tr>
                 </table>
             </div>
-        </form>
+        <!--</form>-->
     </div>
 </body>
     </html>

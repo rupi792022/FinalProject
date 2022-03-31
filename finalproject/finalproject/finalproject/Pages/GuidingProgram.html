@@ -22,15 +22,21 @@
             NumOfAnswers = 4;
             toUpdate = false;
 
+            $("#defineTheProgram").hide();
             $("#stepDetails").hide();
             $("#edit").hide();
             $("#back").hide();
+            $("#finishProgram").hide();
             $("#AddQuestion").click(AddQuestion);
             $("#next").attr('disabled', true);
             $("#save").click(Save);
             $("#next").click(Next);
             $("#back").click(Back);
             $('#buttonStart').click(start);
+            $('#editProgram').click(EditProgram);
+            $('#addNewProgram').click(AddNewProgram);
+            $('#finishProgram').click(FinishProgram);
+            $('#remove').click(Remove);
 
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
@@ -85,11 +91,21 @@
             console.log(data);
         }
 
+        function AddNewProgram() {
+            $("#defineTheProgram").show();
+            $("#btnChoose").hide();
+        }
+
         function start() {
-            LevelsAmount = $("#level_serial_num").val();
-            $("#stepDetails").show();
-            $("#defineTheProgram").hide();
-            title(NumOfLevel);
+            if ($("#level_serial_num").val() == "" || $("#program_name").val() == "") {
+                alert("Required fields")
+            }
+            else {
+                LevelsAmount = $("#level_serial_num").val();
+                $("#stepDetails").show();
+                $("#defineTheProgram").hide();
+                title(NumOfLevel);
+            }
         }
 
         function title(level) {
@@ -102,8 +118,7 @@
             count++;
             if (count <= NumOfAnswers) {
                 str = "";
-                str += '<tr>';
-                str += '<td><p>Question ' + count + ':</p></td>';
+                str += '<tr><td><p>Question ' + count + ':</p></td>';
                 str += '<td><input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"></td>';
                 for (var i = 1; i < NumOfAnswers; i++) {
                     if (i == 1) {
@@ -112,11 +127,16 @@
                     str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="' + count + '_Answer' + (i + 1) + '"name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
                 }
                 str += '</tr>';
-                $(str).clone().appendTo("#AddNewQuestion");
+                $(str).clone().appendTo("#renderQA");
             }
             else alert("You can only insert a 4 questions");
         }
 
+        function Remove() {//remove question 
+        /*    $(str).remove().clone().appendTo('#renderQA');*/
+            /*$("#renderQA:last").remove();*/
+           
+        }
 
         function Save() {
             let managerEmail = getDatails.Volunteer_email;
@@ -165,7 +185,8 @@
 
         function postSuccessSave() {
             console.log("success to insert all the details");
-            alert("The level was successfully saved")
+            alert("The level was successfully saved");
+
             $('#next').removeAttr('disabled');
         }
 
@@ -181,8 +202,11 @@
                 ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
                 $("#back").show();
             }
-            else
-                alert("You have reached the maximum amount of levels");
+            else {
+                $("#finishProgram").show();
+                $("#next").hide();
+                alert("You have reached the maximum amount of levels. Click finish if you share");
+            }         
         }
 
         function getSuccessNext(DetailsOfLevel) {
@@ -206,40 +230,43 @@
         function renderLevelDetails(Question, allAnswersArr) {
             answers = 0;
             idNum = 2
+            NumOfAnswer = 1;
             str = "";
-            str += '<tr>';
             for (var i = 0; i < Question.length; i++) {
                 if (Question[i] != null) {
-                    str += '<td><p>Question ' + (i + 2) + ':</p></td>';
+                    str += '<tr><td><p>Question ' + (i + 2) + ':</p></td>';
                     str += '<td><input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '"></td>';
+                    NumOfAnswer = 1;
                     for (var k = answers; k < (4 + answers); k++) {
                         if ((k % 4) == 0) {
-                            str += '<td><p>' + idNum + '.</p></td><td><input type="text" id="' + idNum + '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td></tr>';
+                            str += '<td><p>' + NumOfAnswer + '.</p></td><td class="correctAnswer"><input type="text" id="' + (i + 2)+ '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td></tr>';
                         }
                         else {
-                            str += '<tr><td></td><td></td><td><p>' + idNum + '.</p></td><td><input type="text" id="' + (i + 2) + '_Answer' + idNum + '" name="Answer"' + idNum + '" value="' + allAnswersArr[k] + '"></td>';
+                            str += '<tr><td></td><td></td><td><p>' + NumOfAnswer + '.</p></td><td><input type="text" id="' + (i + 2) + '_Answer' + NumOfAnswer + '" name="Answer"' + NumOfAnswer + '" value="' + allAnswersArr[k] + '"></td></tr>';
                             idNum++;
                         }
+                        NumOfAnswer++;
                     }
                     answers += 4;
-                    str += '</tr>';
                 }
-                document.getElementById("AddNewQuestion").innerHTML = str;
-                /* $(str).clone().appendTo("#AddNewQuestion");*/
-            }
+
+                document.getElementById("renderQA").innerHTML = str;
+                
+            
+            } /*$(str).insertAfter('#AddNewQuestion');*/  
         }
 
         function insertDetails(DetailsOfLevel) {
             toUpdate = true;
             $("#edit").show();
             str = "";
-            document.getElementById("AddNewQuestion").innerHTML = str;
+            document.getElementById("renderQA").innerHTML = str;
 
             $("#stepDetails > input").attr("readonly", true);
             $("#contentLevel").val(DetailsOfLevel.Content_level);
             $("#question1").val(DetailsOfLevel.Question_content_1);
             var Question = [];//array of all the questions
-            Question.push(/*DetailsOfLevel.Question_content_1,*/ DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
+            Question.push(DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
             arrAnswers_1 = DetailsOfLevel.Answers_1.split(",");
             $("#1_correctAnswer1").val(arrAnswers_1[0]);
             $("#1_Answer2").val(arrAnswers_1[1]);
@@ -248,7 +275,7 @@
             arrAnswers_2 = DetailsOfLevel.Answers_2.split(",");
             arrAnswers_3 = DetailsOfLevel.Answers_3.split(",");
             arrAnswers_4 = DetailsOfLevel.Answers_4.split(",");
-            allAnswersArr = arrAnswers_2.concat(/*arrAnswers_2,*/ arrAnswers_3, arrAnswers_4);
+            allAnswersArr = arrAnswers_2.concat( arrAnswers_3, arrAnswers_4);
 
             renderLevelDetails(Question, allAnswersArr)
         }
@@ -282,6 +309,27 @@
             console.log(error);
         }
 
+        function EditProgram() {
+            $("#btnChoose").hide();
+            NumOfLevel == 1;
+            let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
+            ajaxCall("GET", apiCall, "", getSuccessEP, getErrorEP);
+
+        }
+
+        function getSuccessEP(DetailsOfLevel) {
+            $("#stepDetails").show();
+            title(NumOfLevel);
+            insertDetails(DetailsOfLevel);
+        }
+
+        function getErrorEP(error) {
+            console.log(error);
+        }
+
+        function FinishProgram() {
+            window.location.href = "GuidingProgram.html";
+        }
 
     </script>
 </head>
@@ -303,14 +351,18 @@
         </div>
     </nav>
     <div class="container">
+        <div id="btnChoose">
+            <button type="button" id="editProgram">Edit Program</button>
+            <button type="button" id="addNewProgram">Add New Program</button>
+        </div>
         <div id="title"></div>
         <div id="defineTheProgram">
             <table>
                 <tr>
                     <td><p>Name of Program:</p></td>
-                    <td> <input type="text" id="program_name" name="program_name" required placeholder="Name of the program"/></td>
+                    <td> <input type="text" id="program_name" name="program_name" required placeholder="Name of the program" /></td>
                     <td><p>Number of level:</p></td>
-                    <td><input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Number of level" min="1"/></td>
+                    <td><input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Number of level" min="1" /></td>
                     <td class="rightSide"><button type="submit" id="buttonStart">Start</button><br></td>
                 </tr>
             </table>
@@ -325,53 +377,43 @@
                 <br />
                 <button type="button" id="buttonUpload">Upload files</button><br>
             </form>
-            <div id="ph"></div><br>
-            <form>
-                <table id="AddNewQuestion">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td> <button type="submit" id="edit">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td><button type="button" id="AddQuestion">Add Question</button><br></td>
-                    </tr>
-                    <tr>
-                        <td><p>Question 1:</p></td>
-                        <td><input type="text" id="question1" name="Question" required placeholder="Enter a question" /></td>
-                        <td><p>1.</p></td>
-                        <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer" /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><p>2.</p></td>
-                        <td> <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer" /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><p>3.</p></td>
-                        <td><input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer" /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><p>4.</p></td>
-                        <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer" /></td>
-                    </tr>
-
-                </table><br>
-                <table id="btn">
-                    <tr>
-                        <td><button type="button" id="back">Back</button></td>
-                        <td></td>
-                        <td></td>
-                        <td><button type="button" id="save">Save</button>&nbsp;&nbsp;<button type="button" id="next">Next</button></td>
-                    </tr>
-                </table>
-            </form>
+            <div id="ph"></div>
+            <br><button type="button" id="AddQuestion">Add Question</button><button type="button" id="remove">Remove</button><br>
+            <table id="AddNewQuestion">
+                <tr>
+                    <td><p>Question 1:</p></td>
+                    <td><input type="text" id="question1" name="Question" required placeholder="Enter a question" /></td>
+                    <td><p>1.</p></td>
+                    <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><p>2.</p></td>
+                    <td> <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><p>3.</p></td>
+                    <td><input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><p>4.</p></td>
+                    <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer" /></td>
+                </tr>
+            </table><br>
+            <table id="renderQA"></table>
+            <table id="btn">
+                <tr>
+                    <td><button type="button" id="back">Back</button></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" id="save">Save</button>&nbsp;&nbsp;<button type="button" id="next">Next</button><button type="button" id="finishProgram">FinishProgram</button></td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>
