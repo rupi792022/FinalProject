@@ -61,7 +61,15 @@
                 arrLanguage.push($(this).val());
             });
             let strLanguage = arrLanguage.toString();
-        
+
+            //if (firstname == "" || lastname == "" || birthdate == "" || mobilephone == "" || startdate == "" || gender == undefined || volunteertype == undefined || strLanguage == "") {
+            //    str = '';
+            //    str += '*You must enter all fields to continue';
+            //    document.getElementById("alertMessage").innerHTML = str;
+            //} 
+            // need to add "else" for the "if" and writing design for the alert
+            //the alert in the lable in line 174
+
 
             let MyVolunteerDetails = {
                 First_name: firstname,
@@ -162,7 +170,10 @@
                         <td><p>Verify new password:</p></td>
                         <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}"/></td>
                         <td></td>
-                        <td><!--<input type="submit" id="SaveDatails" value="Save"/>--><button type="button" id="SaveDatails">Save</button></td>
+                        <td>
+                            <!--<input type="submit" id="SaveDatails" value="Save"/>--><!--<label id="alertMessage"></label><br />-->
+                            <button type="button" id="SaveDatails">Save</button>
+                        </td>
                     </tr>
                 </table>
             </div>
