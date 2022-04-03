@@ -98,7 +98,9 @@
 
         function start() {
             if ($("#level_serial_num").val() == "" || $("#program_name").val() == "") {
-                alert("Required fields")
+                str = '';
+                str += '*You must enter program name and number of levels to continue';
+                document.getElementById("alertMessage").innerHTML = str;
             }
             else {
                 LevelsAmount = $("#level_serial_num").val();
@@ -217,7 +219,7 @@
             else {
                 $("#edit").hide();
                 str = "";
-                document.getElementById("AddNewQuestion").innerHTML = str;
+                document.getElementById("renderQA").innerHTML = str;
                 $("#contentLevel").val('');
                 $("#question1").val('');
                 $("#1_correctAnswer1").val('');
@@ -366,6 +368,7 @@
                     <td class="rightSide"><button type="submit" id="buttonStart">Start</button><br></td>
                 </tr>
             </table>
+            <label id="alertMessage"></label> <!--//check the bold and move to the name line-->
         </div>
         <div id="stepDetails">
             <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" required placeholder="Enter a content"></textarea>

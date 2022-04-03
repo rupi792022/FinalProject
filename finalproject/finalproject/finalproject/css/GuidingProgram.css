@@ -141,6 +141,11 @@ table {
     width: 130px;
 }
 
+#defineTheProgram label {
+    color: red;
+    font-size: 14px;
+}
+
 p {
     padding-left: 20px;
 }
