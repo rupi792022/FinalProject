@@ -141,10 +141,15 @@ table {
     width: 130px;
 }
 
-#defineTheProgram label {
+#defineTheProgram label , 
+#alertMessage2{
     color: red;
     font-size: 14px;
+    font-family: Calibri;
+    padding-left: 20px;
+    font-weight: normal;
 }
+
 
 p {
     padding-left: 20px;
@@ -187,4 +192,5 @@ p {
     font-family:Calibri;
     color:dimgray;
 }
+
 

@@ -41,35 +41,20 @@
             let birthdate = $("#birthdate").val();
             let mobilephone = $("#mobilephone").val();
             let email = getDatails.Volunteer_email;
-
             let gender = $("input[type=radio][name=gender]:checked").val();
-            if (gender) {
-                console.log(gender);
-            }
-            else alert('No gender selected');
-
             let startdate = $("#startdate").val();
             let volunteertype = $("input[type=radio][name=volunteertype]:checked").val();
-            if (volunteertype) {
-                console.log(volunteertype);
-            }
-            else alert('No volunteer type selected');
-
-
             var arrLanguage = [];
             $.each($("input[name='language']:checked"), function () {
                 arrLanguage.push($(this).val());
             });
             let strLanguage = arrLanguage.toString();
 
-            //if (firstname == "" || lastname == "" || birthdate == "" || mobilephone == "" || startdate == "" || gender == undefined || volunteertype == undefined || strLanguage == "") {
-            //    str = '';
-            //    str += '*You must enter all fields to continue';
-            //    document.getElementById("alertMessage").innerHTML = str;
-            //} 
-            // need to add "else" for the "if" and writing design for the alert
-            //the alert in the lable in line 174
-
+            if (firstname == "" || lastname == "" || birthdate == "" || mobilephone == "" || startdate == "" || gender == undefined || volunteertype == undefined || strLanguage == "") {
+                str = '';
+                str += '*You must enter all fields to continue';
+                document.getElementById("alertMessage").innerHTML = str;
+            } 
 
             let MyVolunteerDetails = {
                 First_name: firstname,
@@ -100,20 +85,19 @@
 <body>
     <div class="loginBox">
         <img src="../Images/FOA.png" /><br />
-        <!--<form>-->
             <div class="inputBox">
                 <table>
                     <tr>
                         <td><p>First name:</p></td>
-                        <td><input type="text" id="firstname" name="firstname" placeholder="First name" required/></td>
+                        <td><input type="text" id="firstname" name="firstname" placeholder="First name" /></td>
                         <td><p>Last name:</p></td>
-                        <td><input type="text" id="lastname" name="lastname" placeholder="Last name" required/></td>
+                        <td><input type="text" id="lastname" name="lastname" placeholder="Last name"/></td>
                     </tr>
                     <tr>
                         <td><p>Date of birth:</p></td>
-                        <td><input type="date" id="birthdate" name="birthdate" required/></td>
+                        <td><input type="date" id="birthdate" name="birthdate"/></td>
                         <td><p>Phone:</p></td>
-                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Phone number" required pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"/></td>
+                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Phone number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}"/></td>
                     </tr>
                     <tr>
                         <td>
@@ -151,7 +135,7 @@
                     <tr>
                         <td><p>Start date:</p>
                         <td>
-                            <input type="date" id="startdate" name="startdate" required/>
+                            <input type="date" id="startdate" name="startdate"/>
                         </td>
                         <td></td>
                         <td></td>
@@ -163,21 +147,18 @@
                     <tr>
                         <td><p>New password:</p></td>
                         <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter new password" pattern=".{8,}"/></td>
-                        <td></td>
+                        <td colspan="2"><label id="alertMessage"></label><br /></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td><p>Verify new password:</p></td>
-                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}"/></td>
+                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}" /></td>
                         <td></td>
-                        <td>
-                            <!--<input type="submit" id="SaveDatails" value="Save"/>--><!--<label id="alertMessage"></label><br />-->
-                            <button type="button" id="SaveDatails">Save</button>
+                        <td><button type="button" id="SaveDatails">Save</button>
                         </td>
                     </tr>
                 </table>
             </div>
-        <!--</form>-->
     </div>
 </body>
     </html>

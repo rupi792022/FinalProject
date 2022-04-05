@@ -24,7 +24,6 @@
 
             $("#defineTheProgram").hide();
             $("#stepDetails").hide();
-            $("#edit").hide();
             $("#back").hide();
             $("#finishProgram").hide();
             $("#AddQuestion").click(AddQuestion);
@@ -100,7 +99,7 @@
             if ($("#level_serial_num").val() == "" || $("#program_name").val() == "") {
                 str = '';
                 str += '*You must enter program name and number of levels to continue';
-                document.getElementById("alertMessage").innerHTML = str;
+                document.getElementById("alertMessage1").innerHTML = str;
             }
             else {
                 LevelsAmount = $("#level_serial_num").val();
@@ -134,25 +133,62 @@
             else alert("You can only insert a 4 questions");
         }
 
-        function Remove() {//remove question 
-        /*    $(str).remove().clone().appendTo('#renderQA');*/
-            /*$("#renderQA:last").remove();*/
-           
-        }
+        function Remove() {//remove question             var table = document.getElementById("renderQA");            var rowCount = table.rows.length;            for (let i = 1; i < 5; i++) {                table.deleteRow(rowCount - i);            }            count--;        }
+
 
         function Save() {
-            let managerEmail = getDatails.Volunteer_email;
-            let programName = $("#program_name").val();
-            let contentLevel = $("#contentLevel").val();
-            let question1 = $("#question1").val();
-            let question2 = $("#question2").val();
-            let question3 = $("#question3").val();
-            let question4 = $("#question4").val();
-            let strAnswers_1 = $("#1_correctAnswer1").val().concat(",", $("#1_Answer2").val(), ",", $("#1_Answer3").val(), ",", $("#1_Answer4").val());
-            let strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
-            let strAnswers_3 = $("#3_correctAnswer1").val().concat(",", $("#3_Answer2").val(), ",", $("#3_Answer3").val(), ",", $("#3_Answer4").val());
-            let strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
 
+            managerEmail = getDatails.Volunteer_email;
+            programName = $("#program_name").val();
+            contentLevel = $("#contentLevel").val();
+            question1 = $("#question1").val();
+            question2 = $("#question2").val();
+            question3 = $("#question3").val();
+            question4 = $("#question4").val();
+            strAnswers_1 = $("#1_correctAnswer1").val().concat(",", $("#1_Answer2").val(), ",", $("#1_Answer3").val(), ",", $("#1_Answer4").val());
+            if (question2 == undefined) {
+                question2 = "-";
+                question3 = "-";
+                question4 = "-";
+                strAnswers_2 = "-";
+                strAnswers_3 = "-";
+                strAnswers_4 = "-";
+                putObject(managerEmail, programName, contentLevel, question1, question2, question3, question4, strAnswers_1, strAnswers_2, strAnswers_3, strAnswers_4);
+            }
+            else if (question3 == undefined) {
+                question3 = "-";
+                question4 = "-";
+                strAnswers_3 = "-";
+                strAnswers_4 = "-";
+                strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
+                putObject(managerEmail, programName, contentLevel, question1, question2, question3, question4, strAnswers_1, strAnswers_2, strAnswers_3, strAnswers_4);
+            }
+            else if (question4 == undefined) {
+                question4 = "-";
+                strAnswers_4 = "-";
+                strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
+                strAnswers_3 = $("#3_correctAnswer1").val().concat(",", $("#3_Answer2").val(), ",", $("#3_Answer3").val(), ",", $("#3_Answer4").val());
+                putObject(managerEmail, programName, contentLevel, question1, question2, question3, question4, strAnswers_1, strAnswers_2, strAnswers_3, strAnswers_4);
+            }
+            else {
+                strAnswers_2 = $("#2_correctAnswer1").val().concat(",", $("#2_Answer2").val(), ",", $("#2_Answer3").val(), ",", $("#2_Answer4").val());
+                strAnswers_3 = $("#3_correctAnswer1").val().concat(",", $("#3_Answer2").val(), ",", $("#3_Answer3").val(), ",", $("#3_Answer4").val());
+                strAnswers_4 = $("#4_correctAnswer1").val().concat(",", $("#4_Answer2").val(), ",", $("#4_Answer3").val(), ",", $("#4_Answer4").val());
+                putObject(managerEmail, programName, contentLevel, question1, question2, question3, question4, strAnswers_1, strAnswers_2, strAnswers_3, strAnswers_4);
+            }
+        }
+
+
+        function putObject(managerEmail, programName, contentLevel, question1, question2, question3, question4, strAnswers_1, strAnswers_2, strAnswers_3, strAnswers_4) {
+
+            if (contentLevel == "" || question1 == "") {
+                strAnswers_1 = "-";
+                str = '';
+                str += '*You must enter content level, uploaded files and question 1';
+                document.getElementById("alertMessage2").innerHTML = str;
+            }
+
+            else {
             MyGuidingProgram = {
                 Manager_email: managerEmail,
                 Program_name: programName,
@@ -172,7 +208,8 @@
                 ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
             }
             ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSave, postErrorSave);
-            return false;
+                return false;
+            }
         }
 
 
@@ -217,15 +254,17 @@
                 insertDetails(DetailsOfLevel);
             }
             else {
-                $("#edit").hide();
                 str = "";
                 document.getElementById("renderQA").innerHTML = str;
+                document.getElementById("ph").innerHTML = str;
+                $("#files").val('');
                 $("#contentLevel").val('');
                 $("#question1").val('');
                 $("#1_correctAnswer1").val('');
                 $("#1_Answer2").val('');
                 $("#1_Answer3").val('');
                 $("#1_Answer4").val('');
+                count = 1;
             }
         }
 
@@ -235,7 +274,7 @@
             NumOfAnswer = 1;
             str = "";
             for (var i = 0; i < Question.length; i++) {
-                if (Question[i] != null) {
+                if (Question[i] != "-") {
                     str += '<tr><td><p>Question ' + (i + 2) + ':</p></td>';
                     str += '<td><input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '"></td>';
                     NumOfAnswer = 1;
@@ -260,11 +299,9 @@
 
         function insertDetails(DetailsOfLevel) {
             toUpdate = true;
-            $("#edit").show();
             str = "";
             document.getElementById("renderQA").innerHTML = str;
 
-            $("#stepDetails > input").attr("readonly", true);
             $("#contentLevel").val(DetailsOfLevel.Content_level);
             $("#question1").val(DetailsOfLevel.Question_content_1);
             var Question = [];//array of all the questions
@@ -286,9 +323,6 @@
             console.log(nexterror);
         }
 
-        function Edit() {
-            $(".stepDetails > input").attr("readonly", false);
-        }
 
         function Back() {
             NumOfLevel--;
@@ -362,16 +396,16 @@
             <table>
                 <tr>
                     <td><p>Name of Program:</p></td>
-                    <td> <input type="text" id="program_name" name="program_name" required placeholder="Name of the program" /></td>
+                    <td> <input type="text" id="program_name" name="program_name" placeholder="Name of the program" /></td>
                     <td><p>Number of level:</p></td>
-                    <td><input type="number" id="level_serial_num" name="level_serial_num" required placeholder="Number of level" min="1" /></td>
+                    <td><input type="number" id="level_serial_num" name="level_serial_num" placeholder="Number of level" min="1" /></td>
                     <td class="rightSide"><button type="submit" id="buttonStart">Start</button><br></td>
                 </tr>
             </table>
-            <label id="alertMessage"></label> <!--//check the bold and move to the name line-->
+            <label id="alertMessage1"></label> <!--//check the bold and move to the name line-->
         </div>
         <div id="stepDetails">
-            <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" required placeholder="Enter a content"></textarea>
+            <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" placeholder="Enter a content"></textarea>
             <form method="post" enctype="multipart/form-data" id="formUpload">
                 <div>
                     <label for="files">Select file</label>
@@ -385,31 +419,37 @@
             <table id="AddNewQuestion">
                 <tr>
                     <td><p>Question 1:</p></td>
-                    <td><input type="text" id="question1" name="Question" required placeholder="Enter a question" /></td>
+                    <td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td>
                     <td><p>1.</p></td>
-                    <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" required placeholder="Enter a correct Answer" /></td>
+                    <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" placeholder="Enter a correct Answer" /></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><p>2.</p></td>
-                    <td> <input type="text" id="1_Answer2" name="Answer2" required placeholder="Enter a possible answer" /></td>
+                    <td> <input type="text" id="1_Answer2" name="Answer2" placeholder="Enter a possible answer" /></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><p>3.</p></td>
-                    <td><input type="text" id="1_Answer3" name="Answer3" required placeholder="Enter a possible answer" /></td>
+                    <td><input type="text" id="1_Answer3" name="Answer3" placeholder="Enter a possible answer" /></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><p>4.</p></td>
-                    <td><input type="text" id="1_Answer4" name="Answer4" required placeholder="Enter a possible answer" /></td>
+                    <td><input type="text" id="1_Answer4" name="Answer4" placeholder="Enter a possible answer" /></td>
                 </tr>
             </table><br>
             <table id="renderQA"></table>
             <table id="btn">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"><label id="alertMessage2"></label><br /></td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td><button type="button" id="back">Back</button></td>
                     <td></td>
