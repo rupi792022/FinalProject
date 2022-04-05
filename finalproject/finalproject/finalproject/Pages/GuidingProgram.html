@@ -133,7 +133,14 @@
             else alert("You can only insert a 4 questions");
         }
 
-        function Remove() {//remove question             var table = document.getElementById("renderQA");            var rowCount = table.rows.length;            for (let i = 1; i < 5; i++) {                table.deleteRow(rowCount - i);            }            count--;        }
+        function Remove() {//remove question 
+            var table = document.getElementById("renderQA");
+            var rowCount = table.rows.length;
+            for (let i = 1; i < 5; i++) {
+                table.deleteRow(rowCount - i);
+            }
+            count--;
+        }
 
 
         function Save() {
@@ -340,6 +347,8 @@
             console.log(DetailsOfLevel);
             title(NumOfLevel);
             insertDetails(DetailsOfLevel);
+            $("#next").show();
+            $("#finishProgram").hide();
         }
         function getErrorBack(error) {
             console.log(error);
@@ -402,7 +411,7 @@
                     <td class="rightSide"><button type="submit" id="buttonStart">Start</button><br></td>
                 </tr>
             </table>
-            <label id="alertMessage1"></label> <!--//check the bold and move to the name line-->
+            <label id="alertMessage1"></label> 
         </div>
         <div id="stepDetails">
             <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" placeholder="Enter a content"></textarea>
@@ -415,7 +424,7 @@
                 <button type="button" id="buttonUpload">Upload files</button><br>
             </form>
             <div id="ph"></div>
-            <br><button type="button" id="AddQuestion">Add Question</button><button type="button" id="remove">Remove</button><br>
+            <br><button type="button" id="AddQuestion">Add Question</button><br>
             <table id="AddNewQuestion">
                 <tr>
                     <td><p>Question 1:</p></td>
@@ -443,18 +452,18 @@
                 </tr>
             </table><br>
             <table id="renderQA"></table>
+            <button type="button" id="remove">Remove</button>
             <table id="btn">
                 <tr>
                     <td></td>
                     <td></td>
-                    <td colspan="2"><label id="alertMessage2"></label><br /></td>
-                    <td></td>
+                    <td colspan="2"><label id="alertMessage2"></label></td>
                 </tr>
                 <tr>
                     <td><button type="button" id="back">Back</button></td>
                     <td></td>
                     <td></td>
-                    <td><button type="button" id="save">Save</button>&nbsp;&nbsp;<button type="button" id="next">Next</button><button type="button" id="finishProgram">FinishProgram</button></td>
+                    <td><button type="button" id="save">Save</button>&nbsp;&nbsp;<button type="button" id="next">Next</button><button type="button" id="finishProgram">Finish Program</button></td>
                 </tr>
             </table>
         </div>

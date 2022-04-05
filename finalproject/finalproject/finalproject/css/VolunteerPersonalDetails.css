@@ -88,7 +88,7 @@
         position: absolute;
     }
 
-.loginBox button, input[type="submit"] {
+.loginBox button{
     border: none;
     outline: none;
     height: 40px;
@@ -99,6 +99,7 @@
     border-radius: 20px;
     cursor: pointer;
     font-family: Calibri;
+    margin-left:118px;
 }
 
 #alertMessage {
@@ -106,7 +107,7 @@
     font-size: 14px;
     font-family: Calibri;
     font-weight: normal;
-    padding-left: 100px;
+    padding-left: 118px;
 }
 
 

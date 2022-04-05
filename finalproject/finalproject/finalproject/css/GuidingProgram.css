@@ -106,8 +106,7 @@ box-shadow: 0 0 5px #C59636;
 font-family: Calibri;
 }
 
-button, 
-input[type="submit"] {
+button {
     border: 1px solid #C59636;
     outline: none;
     height: 35px;
@@ -141,13 +140,20 @@ table {
     width: 130px;
 }
 
-#defineTheProgram label , 
-#alertMessage2{
+#defineTheProgram label,
+#btn label {
     color: red;
     font-size: 14px;
     font-family: Calibri;
-    padding-left: 20px;
     font-weight: normal;
+}
+
+#alertMessage1 {
+    padding-left: 20px;
+}
+
+#alertMessage2 {
+    padding-left: 60px;
 }
 
 
@@ -184,7 +190,7 @@ p {
 }
 
 #btn td{
-    width:270px;
+    width:258px;
     text-align:left;
 }
 
