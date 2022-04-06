@@ -3,14 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous">
-    </script>
+            crossorigin="anonymous"></script>
 
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/ajaxCallsWithKey.js"></script>
@@ -22,8 +21,8 @@
         });
 
         function LogIn() {
-            let email = $("#email").val();
-            let password = $("#password").val();
+            email = $("#email").val();
+            password = $("#password").val();
 
             if (email == "" || password == "") {
                 str = '';
@@ -32,33 +31,29 @@
             }
 
             else {
-            MyUserDetails = {
-                Volunteer_email: email,
-                Volunteer_password: password
-            }
-            let apiCall = "../api/Volunteers/ReadEmail_V?email=" + email;
+                let apiCall = "../api/Volunteers/ReadEmail_V?email=" + email;
                 ajaxCall("GET", apiCall, "", getSuccessEmail_v, getErrorEmail_v);
             }
         }
 
-
-
         function SaveUserDetails() {
             if (typeof (Storage) !== "undefined") {
-                localStorage.setItem('userDetails', JSON.stringify(MyUserDetails));
+                localStorage.setItem('userDetails', JSON.stringify(email));
             }
             else {
                 alert("web storage not supported!");
             }
         }
 
+
+
         function getSuccessEmail_v(VolunteerEmail) {
             if (VolunteerEmail == true) {
-                let apiCall = "../api/Volunteers?email=" + MyUserDetails.Volunteer_email + "&password=" + MyUserDetails.Volunteer_password;
+                let apiCall = "../api/Volunteers?email=" + email + "&password=" + password;
                 ajaxCall("GET", apiCall, "", getSuccessPassword_v, getErrorPassword_v);
             }
             else {
-                let apiCall = "../api/Managers/ReadEmail_M?email=" + MyUserDetails.Volunteer_email;
+                let apiCall = "../api/Managers/ReadEmail_M?email=" + email;
                 ajaxCall("GET", apiCall, "", getSuccessEmail_m, getErrorEmail_m);
             }
         }
@@ -69,7 +64,7 @@
 
         function getSuccessPassword_v(VolunteerPassword) {
             if (VolunteerPassword == true) {
-                let apiCall = "../api/Volunteers/ReadDetails_V?email=" + MyUserDetails.Volunteer_email;
+                let apiCall = "../api/Volunteers/ReadDetails_V?email=" + email;
                 ajaxCall("GET", apiCall, "", getSuccessDetails_v, getErrorDetails_v);
             }
             else console.log("The password is incorrect, please try again");
@@ -96,7 +91,7 @@
 
         function getSuccessEmail_m(ManagerEmail) {
             if (ManagerEmail == true) {
-                let apiCall = "../api/Managers?email=" + MyUserDetails.Volunteer_email + "&password=" + MyUserDetails.Volunteer_password;
+                let apiCall = "../api/Managers?email=" + email + "&password=" + password;
                 ajaxCall("GET", apiCall, "", getSuccessPassword_m, getErrorPassword_m);
             }
             else console.log("The email is incorrect, please try again");
@@ -124,14 +119,13 @@
 <body>
     <div class="loginBox">
         <img src="../Images/FOA.png" /><br />
-         <div class="inputBox">
-         <input type="email" id="email" name="email" placeholder="Enter email" pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$" />
-         <input type="password" id="password" name="password" placeholder="Enter password">
-         <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a><br />
-         <label id="alertMessage"></label>
-         <button id="LogIn" type="button">Log In</button>
-         </div>
+        <div class="inputBox">
+            <input type="email" id="email" name="email" placeholder="Enter email" pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$" />
+            <input type="password" id="password" name="password" placeholder="Enter password">
+            <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a><br />
+            <label id="alertMessage"></label>
+            <button id="LogIn" type="button">Log In</button>
+        </div>
     </div>
 </body>
 </html>
-

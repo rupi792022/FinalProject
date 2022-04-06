@@ -23,7 +23,7 @@ namespace finalproject.Models
         int phone_number;
         string start_date;
         string language;
-       
+
         public Volunteer() { }
         public Volunteer(string volunteer_email, string first_name, string last_name, string date_of_birth, string volunteer_password, string volunteer_type, string gender, int phone_number, string start_date, string language)
         {
@@ -105,12 +105,12 @@ namespace finalproject.Models
             DataServices ds = new DataServices();
             this.Volunteer_password = genereateRandomPassword();
             bool Emailexist = ds.InsertEmail(this);
-            if(Emailexist == false)
+            if (Emailexist == false)
             {
                 Emailexist = sendEmail(this.Volunteer_email, this.Volunteer_password);
             }
             return Emailexist;
-          
+
         }
 
         // check if the user exist in DB
@@ -133,7 +133,7 @@ namespace finalproject.Models
         public bool ReadPassword_V(string email, string password)
         {
             DataServices ds = new DataServices();
-            return ds.ReadPassword_V(email,password);
+            return ds.ReadPassword_V(email, password);
 
         }
 
@@ -144,6 +144,15 @@ namespace finalproject.Models
             return ds.ReadDetails_V(email);
 
         }
+
+        public Volunteer ReadVolunteer_V(string email)
+        {
+            DataServices ds = new DataServices();
+            return ds.ReadVolunteer_V(email);
+
+        }
+
+
         // update the user details (mandatory fields)
         public void UpdateVolunteerDetails(Volunteer volunteer)
         {
@@ -151,6 +160,6 @@ namespace finalproject.Models
             ds.UpdateVolunteerDetails(volunteer);
         }
 
-     
+
     }
 }

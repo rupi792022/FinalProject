@@ -90,6 +90,27 @@ namespace finalproject.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/Volunteers/ReadVolunteer_V")]
+        public HttpResponseMessage ReadVolunteer_V(string email)
+        {
+            try
+            {
+                Volunteer v = new Volunteer();
+                return Request.CreateResponse(HttpStatusCode.OK, v.ReadVolunteer_V(email));
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
+
+        }
+
         // POST api/<controller>
         public HttpResponseMessage Post([FromBody] Volunteer volunteer)
         {

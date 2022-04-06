@@ -8,21 +8,44 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
     <link href="../css/VolunteerHome.css" rel="stylesheet" />
 
     <script>
         $(document).ready(function () {
             getDatails = JSON.parse(localStorage.getItem('userDetails'));
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
-            $(user).clone().appendTo(".dropdown");
+            ajaxCall("GET", "../api/Volunteers/ReadVolunteer_V?email=" + getDatails, "", getSuccessDetails_v, getErrorDetails_v);
         });
+
+        function getSuccessDetails_v(volunteerDetails) {
+            console.log(volunteerDetails);
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem('VolunteerDetails', JSON.stringify(volunteerDetails));
+            }
+            else {
+                alert("web storage not supported!");
+            }
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + volunteerDetails.First_name.toUpperCase() + ' ' + volunteerDetails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+        }
+
+        function getErrorDetails_v(error) {
+            console.log(error)
+        }
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+
     </script>
 </head>
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                    <img src="../Images/FOA.png" />
+                <img src="../Images/FOA.png" />
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>

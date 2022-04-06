@@ -16,18 +16,14 @@
 
             let apiCall = "../api/GuidingPrograms/Read_GP";
             ajaxCall("GET", apiCall, "", getSuccessGP, getErrorGP);
+            $(document).on("click", ".btnLevel", startLevel);
+            $("#nextContent").hide();
+            $(document).on("click", "#uploadRender", uploadRender);
+            $(document).on("click", "#checkAnswer", checkAnswer);
+            $(document).on("click", "#nextUpload", nextUpload);
+            $(document).on("click", "#createQuestion", createQuestion);
+            $(document).on("click", "#nextAnswer", renderQuestions);
 
-            $(document).on("click", ".btnLevel", adi);
-
-            //$("#next").hide();
-            //$("#check").hide();
-            //$("#continue").hide();
-            //$("#startLearning").click(startLearning);
-            //$("#next").click(Next);
-            //$("#check").click(Check);
-            //$("#continue").click(Continue);
-            //NumOfLevel = 0;
-            //numOfQuestion = 0;
 
         });
 
@@ -45,9 +41,13 @@
         function getSuccessGP(gp) {
             console.log("Success GP")
             GP = gp;
+            renderLevels();
+        }
+
+        function renderLevels() {
             str = "";
             for (var i = 0; i < GP.length; i++) {
-                str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level' + (i + 1) + '</button >';
+                str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
             }
             document.getElementById("learning").innerHTML = str;
         }
@@ -57,126 +57,116 @@
         }
 
 
+        function startLevel() {
+            levelNum = $(this).attr("id");
+            str = "";
+            str += '<p>' + GP[levelNum - 1].Content_level + '</p>';
+            str += '<div id="renderNext"><button id="uploadRender">Next</button></div>';
+            document.getElementById("learning").innerHTML = str;
+        }
 
-        function adi() {
-            let levelNum = $(this).attr("id");
-
+        function uploadRender() {
+            index = 0;
             str = "";
             Extantions = [];
             filesPath = [];
             allPath = GP[levelNum - 1].File_path.split(",");
-            for (var i = 0; i < (allPath.length-1); i++) {
+            for (var i = 0; i < (allPath.length - 1); i++) {
                 path = allPath[i].split(".");
-            }
-            for (var i = 0; i < path.length; i++) {
-                if(i % 2 !=0)
-                    Extantions.push(path[i]);
-                else filesPath.push(path[i]);
-            }
-            for (var i = 0; i < Extantions.length; i++) {
-                if (Extantions[i] == "pdf" || Extantions[i] == "docx") {
-                    str += '<embed type="text/' + Extantions[i] + '" src="../' + filesPath[i] + '.' + Extantions[i] + '" width="1000" height="600" >';
+                for (var j = 0; j < path.length; j++) {
+                    if (j % 2 != 0)
+                        Extantions.push(path[j]);
+                    else filesPath.push(path[j]);
                 }
-                else if (Extantions[i] == "png" || Extantions[i] == "jpg")
-                    str += '<img class="uploadImage" src="../' + filesPath[i] + '.' + Extantions[i] + '" width="500" height="500" />';
             }
-           
+            nextUpload();
+        }
+
+
+        function nextUpload() {
+            str = "";
+            if (index == (allPath.length - 1)) {
+
+                str += '<p>Now you are required to take an exam.</br>A number of questions will appear on the exam.</br> When you click on the "Next" button you will start the exam and you will not be able to go back.</br>At the end of each question, click on the "Check" button and then "Next" to continue to the next question.</p>';
+                str += '<div id="renderNext"><button id="createQuestion">Next</button></div>';
+            }
+            else {
+                if (Extantions[index] == "pdf" || Extantions[index] == "docx") {
+                    str += '<embed type="text/' + Extantions[index] + '" src="../' + filesPath[index] + '.' + Extantions[index] + '" width="1000" height="600" >';
+                }
+                else if (Extantions[index] == "png" || Extantions[index] == "jpg")
+                    str += '<img class="uploadImage" src="../' + filesPath[index] + '.' + Extantions[index] + '" width="500" height="500" />';
+                str += '<div id="renderNext"><button id="nextUpload">Next</button></div>';
+                index++;
+            }
             document.getElementById("learning").innerHTML = str;
         }
 
 
 
-        function startLearning() {//geting the values from GuidingPrograms
-            NumOfLevel++;
-            let apiCall = "../api/GuidingPrograms/Read_GP?level_serial_num=" + NumOfLevel;
-            ajaxCall("GET", apiCall, "", getSuccess, getError);
-        }
+        function createQuestion() {
 
-        //function getSuccess(GP_Details) {//render on a html the content and file
-        //    console.log(GP_Details);
-        //    $("#next").show();
-        //    let str = "";
-        //    str += "<p>" + GP_Details.Content_level + "</p>";
-        //      /*    str += "<p>" + GP_Details.+ "</p>";*/
+            Question = [];//array of all the questions
+            Question.push(GP[levelNum - 1].Question_content_1, GP[levelNum - 1].Question_content_2, GP[levelNum - 1].Question_content_3, GP[levelNum - 1].Question_content_4);
 
-        //    $("#learning").html(str);
-        //}
-
-        function getError() {
-            console.log("err");
-        }
-
-        function Next(GP_Details) {
-            $("#learning").remove();//remove the content and file
-            numOfQuestion++;
-
-            var Question = [];//array of all the questions
-            Question.push(GP_Details.Question_content_1, GP_Details.Question_content_2, GP_Details.Question_content_3, GP_Details.Question_content_4);
-
-            arrAnswers_1 = GP_Details.Answers_1.split(",");//array for answers to question 1
+            arrAnswers_1 = GP[levelNum - 1].Answers_1.split(",");//array for answers to question 1
             correct_answer1 = arrAnswers_1[0];//save correct answer for question 1
             arrAnswers_1 = arrAnswers_1.sort(() => Math.random() - 0.5);//shuffle the arr
 
-            arrAnswers_2 = GP_Details.Answers_2.split(",");//array for answers to question 2
+            arrAnswers_2 = GP[levelNum - 1].Answers_2.split(",");//array for answers to question 2
             correct_answer2 = arrAnswers_2[0];//save correct answer for question 2
             arrAnswers_2 = arrAnswers_2.sort(() => Math.random() - 0.5);//shuffle the arr
 
-            arrAnswers_3 = GP_Details.Answers_3.split(",");//array for answers to question 3
+            arrAnswers_3 = GP[levelNum - 1].Answers_3.split(",");//array for answers to question 3
             correct_answer3 = arrAnswers_3[0];//save correct answer for question 3
             arrAnswers_3 = arrAnswers_3.sort(() => Math.random() - 0.5);//shuffle the arr
 
-            arrAnswers_4 = GP_Details.Answers_4.split(",");//array for answers to question 4
+            arrAnswers_4 = GP[levelNum - 1].Answers_4.split(",");//array for answers to question 4
             correct_answer4 = arrAnswers_4[0];//save correct answer for question 4
             arrAnswers_4 = arrAnswers_4.sort(() => Math.random() - 0.5);//shuffle the arr
 
             allAnswersArr = arrAnswers_1.concat(arrAnswers_2, arrAnswers_3, arrAnswers_4);//arr for all the answers.
             allCorrectAnswersArr = [];//arr for all the correct answers.
             allCorrectAnswersArr.push(correct_answer1, correct_answer2, correct_answer3, correct_answer4);
-
-            startPoint = 0;
-            endPoint = 4;
-            count = 0;//count the number of answer
-            str = "";//render on a html the question and answers
-            for (var i = 0; i < Question.length; i++) {
-                if (Question[i] != null) {
-                    str += "<p>" + Question[i] + "</p>";
-                    for (startPoint; i < endPoint; i++) {
-                        str += '<input type="radio" id="answer' + count + '" name="answer" value="' + allAnswersArr[i] + '"><label for="answer' + count + '">' + allAnswersArr[i] + '</label><br>';
-                        count++;
-                    }
-                    startPoint += 4;
-                    endPoint += 4;
-                }
-            }
-            document.getElementById("QA").innerHTML = str;
-            $("#next").hide();
-            $("#check").show();
+            indexAnswer = 0;
+            indexQuestion = 0;
+            endpoint = 4;
+            startpoint = 0;
+            renderQuestions()
         }
 
-        function Check() {//check if the answer is correct
-            let SelectedAnswer = $("input[type=radio][name=answer]:checked").val();//get the value from the checkbox
-            if (SelectedAnswer) {
-                console.log(SelectedAnswer);
+        function renderQuestions() {
+            count = 0;//count the number of answer
+            str = "";//render on a html the question and answers
+            if (Question[indexQuestion] != "-" && indexAnswer != allCorrectAnswersArr.length) {
+                str += "<p>Select the <b>correct<b> answer</p>";
+                str += "<p>" + Question[indexQuestion] + "</p>";
+                for (j = startpoint; j < endpoint; j++) {
+                    str += '<input type="radio" id="answer' + count + '" name="answer" value="' + allAnswersArr[j] + '"><label for="answer' + count + '">' + allAnswersArr[j] + '</label><br>';
+                    count++;
+                }
+                str += '<button id="checkAnswer">Check</button><br>';
+                str += '<div id="renderNext"><button id="nextAnswer">Next</button></div>';
+                indexQuestion++;
+                startpoint += 4;
+                endpoint += 4;
+                document.getElementById("learning").innerHTML = str;
             }
-            else alert('No Answer selected');
+            else renderLevels();
 
-            for (var i = 0; i < length; i++) {
-                if (SelectedAnswer == allCorrectAnswersArr[i]) {//check if the answer is correct
+        }
+
+        function checkAnswer() {//check if the answer is correct
+            let SelectedAnswer = $("input[type=radio][name=answer]:checked").val();//get the value from the checkbox
+            if (indexAnswer != allCorrectAnswersArr.length) {
+                if (SelectedAnswer == allCorrectAnswersArr[indexAnswer]) {//check if the answer is correct
                     alert("Good Job! The answer is correct")
                 }
                 else alert("Sorry, The answer is incorrect")
+                indexAnswer++;
             }
-
-            //if (numOfQuestion == /*Question.length*/) {//check if the level is finish
-            //    $("#continue").show();
-            //    $("#next").hide();
-            //}
-            //$("#next").show();
         }
 
-        function Continue() {
-            startLearning();
-        }
 
     </script>
 </head>
@@ -196,15 +186,11 @@
             </ul>
         </div>
     </nav>
-    <!--<img src="../Images/FOA.png" />-->
-    <div class="container">
-        <!--<embed type="text/pdf" src="../uploadedFiles/DDL_solution.pdf" width="500" height="200">-->
+    <!--<div class="container">-->
+    <div class="loginBox">
         <div id="learning"></div>
         <div id="QA"></div>
-        <!--<button type="submit" id="startLearning">Start learning</button><br>
-    <button type="submit" id="next">Next</button><br>
-    <button type="submit" id="check">Check</button><br>
-    <button type="submit" id="continue">Continue</button><br>-->
     </div>
+    <!--</div>-->
 </body>
 </html>

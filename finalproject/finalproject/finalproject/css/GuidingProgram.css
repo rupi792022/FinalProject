@@ -12,6 +12,7 @@
 
 body {
     font-family: Calibri;
+    background: #3E8C84;
 }
 
 .space {
@@ -52,8 +53,8 @@ a {
 }
 
 
- input[type="text"],
- input[type="number"] {
+input[type="text"],
+input[type="number"] {
     border: none;
     border-bottom: 1px solid #C59636;
     outline: none;
@@ -66,6 +67,7 @@ a {
     padding-left: 10px;
     box-sizing: border-box;
     width: 180px;
+    background: #E5EDED;
 }
 
     input[type="text"]:hover,
@@ -97,6 +99,7 @@ textarea {
     width: 500px;
     height: 80px;
     resize: none;
+    background: #E5EDED;
 }
 
 textarea:hover {
@@ -185,12 +188,13 @@ p {
     width: 120px;
 }
 #editProgram,
-#addNewProgram {
+#addNewProgram,
+#remove {
     width: 150px;
 }
 
 #btn td{
-    width:258px;
+    width:280px;
     text-align:left;
 }
 
@@ -200,3 +204,24 @@ p {
 }
 
 
+.loginBox {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 600px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box;
+    border: 1px solid #C59636;
+}
+
+#btnChoose {
+    text-align: center;
+}
+
+#defineTheProgram {
+   padding-left:100px;
+}

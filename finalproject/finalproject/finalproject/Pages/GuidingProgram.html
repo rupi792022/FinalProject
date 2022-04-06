@@ -13,9 +13,9 @@
 
     <script>
         $(document).ready(function () {
-            getDatails = JSON.parse(localStorage.getItem('userDetails'));
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
-            $(user).clone().appendTo(".dropdown");
+            //getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            //var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
+            //$(user).clone().appendTo(".dropdown");
 
             count = 1;
             NumOfLevel = 1;
@@ -26,6 +26,7 @@
             $("#stepDetails").hide();
             $("#back").hide();
             $("#finishProgram").hide();
+            $("#remove").hide();
             $("#AddQuestion").click(AddQuestion);
             $("#next").attr('disabled', true);
             $("#save").click(Save);
@@ -129,8 +130,11 @@
                 }
                 str += '</tr>';
                 $(str).clone().appendTo("#renderQA");
+                $(".loginBox").css({ "height": "+=145"});
+                $(".loginBox").css({ "top": "+=12%" });
             }
             else alert("You can only insert a 4 questions");
+            $("#remove").show();
         }
 
         function Remove() {//remove question 
@@ -140,11 +144,14 @@
                 table.deleteRow(rowCount - i);
             }
             count--;
+            $(".loginBox").css({ "height": "-=145" });
+            $(".loginBox").css({ "top": "-=10%" });
+            if (count == 1)
+                $("#remove").hide();
         }
 
 
         function Save() {
-
             managerEmail = getDatails.Volunteer_email;
             programName = $("#program_name").val();
             contentLevel = $("#contentLevel").val();
@@ -232,7 +239,6 @@
         function postSuccessSave() {
             console.log("success to insert all the details");
             alert("The level was successfully saved");
-
             $('#next').removeAttr('disabled');
         }
 
@@ -247,6 +253,7 @@
                 let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
                 ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
                 $("#back").show();
+                $("#back").attr('disabled', false);
             }
             else {
                 $("#finishProgram").show();
@@ -297,11 +304,8 @@
                     }
                     answers += 4;
                 }
-
                 document.getElementById("renderQA").innerHTML = str;
-                
-            
-            } /*$(str).insertAfter('#AddNewQuestion');*/  
+            } 
         }
 
         function insertDetails(DetailsOfLevel) {
@@ -329,7 +333,6 @@
         function getErrorNext() {
             console.log(nexterror);
         }
-
 
         function Back() {
             NumOfLevel--;
@@ -359,7 +362,6 @@
             NumOfLevel == 1;
             let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
             ajaxCall("GET", apiCall, "", getSuccessEP, getErrorEP);
-
         }
 
         function getSuccessEP(DetailsOfLevel) {
@@ -395,7 +397,7 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="loginBox">
         <div id="btnChoose">
             <button type="button" id="editProgram">Edit Program</button>
             <button type="button" id="addNewProgram">Add New Program</button>
@@ -411,7 +413,7 @@
                     <td class="rightSide"><button type="submit" id="buttonStart">Start</button><br></td>
                 </tr>
             </table>
-            <label id="alertMessage1"></label> 
+            <label id="alertMessage1"></label>
         </div>
         <div id="stepDetails">
             <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" placeholder="Enter a content"></textarea>
@@ -452,10 +454,9 @@
                 </tr>
             </table><br>
             <table id="renderQA"></table>
-            <button type="button" id="remove">Remove</button>
             <table id="btn">
                 <tr>
-                    <td></td>
+                    <td><button type="button" id="remove">Remove question</button></td>
                     <td></td>
                     <td colspan="2"><label id="alertMessage2"></label></td>
                 </tr>

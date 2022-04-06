@@ -64,7 +64,7 @@ namespace finalproject.Models.DAL
                 if (con != null)
                     con.Close();
             }
-         }
+        }
         SqlCommand createSelectCommand_VEmail(SqlConnection con, string v_email)
         {
             string commandStr = "SELECT email FROM Volunteer_2022 WHERE email = @v_email";
@@ -76,7 +76,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand CreateInsert_VEmailVPassword(Volunteer volunteer, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Volunteer_2022 ( [email], [password]) VALUES('"+ volunteer.Volunteer_email + "', '" + volunteer.Volunteer_password+"')";
+            string insertStr = "INSERT INTO Volunteer_2022 ( [email], [password]) VALUES('" + volunteer.Volunteer_email + "', '" + volunteer.Volunteer_password + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -133,7 +133,7 @@ namespace finalproject.Models.DAL
                 con = Connect("webOsDB");
                 // C - Create Command
 
-                SqlCommand selectCommand = createSelectCommand_Password_v(con,email);
+                SqlCommand selectCommand = createSelectCommand_Password_v(con, email);
 
                 // Execute the command
                 //
@@ -145,7 +145,7 @@ namespace finalproject.Models.DAL
                     DBpassword = (string)dr["password"];
                 }
 
-                if(DBpassword==password)
+                if (DBpassword == password)
                 {
                     return true;
                 }
@@ -221,11 +221,11 @@ namespace finalproject.Models.DAL
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
 
-                string DBdetails = ""; 
+                string DBdetails = "";
                 while (dr.Read())
                 {
-                    if(dr["first_name"] != DBNull.Value)
-                    DBdetails = (string)dr["first_name"]; // all the fields are mandatory so it is enough to check only one field to know if all of them are null
+                    if (dr["first_name"] != DBNull.Value)
+                        DBdetails = (string)dr["first_name"]; // all the fields are mandatory so it is enough to check only one field to know if all of them are null
                 }
                 if (DBdetails == "")
                 {
@@ -249,7 +249,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand createSelectCommand_Details(SqlConnection con, string email)
         {
-            string commandStr = "SELECT first_name FROM Volunteer_2022 WHERE EMAIL = @email";
+            string commandStr = "SELECT first_name,last_name FROM Volunteer_2022 WHERE EMAIL = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.VarChar);
             cmd.Parameters["@email"].Value = email;
@@ -273,7 +273,7 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con,volunteer.Volunteer_email ,volunteer.First_name, volunteer.Last_name,volunteer.Date_of_birth,volunteer.Volunteer_type,volunteer.Gender,volunteer.Phone_number,volunteer.Start_date, volunteer.Language, volunteer.Volunteer_password);
+                SqlCommand selectCommand = createSelectCommand_UpdateDetails(con, volunteer.Volunteer_email, volunteer.First_name, volunteer.Last_name, volunteer.Date_of_birth, volunteer.Volunteer_type, volunteer.Gender, volunteer.Phone_number, volunteer.Start_date, volunteer.Language, volunteer.Volunteer_password);
                 selectCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -288,13 +288,13 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con,string email ,string First_name, string Last_name,string Date_of_birth,string Volunteer_type,string Gender,int Phone_number,string Start_date, string Language, string password)
+        private SqlCommand createSelectCommand_UpdateDetails(SqlConnection con, string email, string First_name, string Last_name, string Date_of_birth, string Volunteer_type, string Gender, int Phone_number, string Start_date, string Language, string password)
         {
             string commandStr = "UPDATE Volunteer_2022 SET first_name = @First_name" +
                ",last_name = @Last_name" +
                 ",date_of_birth =@Date_of_birth" +
                 ",volunteer_type =@Volunteer_type" +
-                ",gender =@Gender "+
+                ",gender =@Gender " +
                 ",phone_number =@Phone_number" +
                 ",start_date =@Start_date " +
                 ",language =@Language " +
@@ -306,11 +306,11 @@ namespace finalproject.Models.DAL
             cmd.Parameters.Add("@First_name", SqlDbType.NVarChar);
             cmd.Parameters["@First_name"].Value = First_name;
             cmd.Parameters.Add("@Last_name", SqlDbType.NVarChar);
-            cmd.Parameters["@Last_name"].Value = Last_name; 
+            cmd.Parameters["@Last_name"].Value = Last_name;
             cmd.Parameters.Add("@Date_of_birth", SqlDbType.NVarChar);
-            cmd.Parameters["@Date_of_birth"].Value = Date_of_birth; 
+            cmd.Parameters["@Date_of_birth"].Value = Date_of_birth;
             cmd.Parameters.Add("@Volunteer_type", SqlDbType.NVarChar);
-            cmd.Parameters["@Volunteer_type"].Value = Volunteer_type; 
+            cmd.Parameters["@Volunteer_type"].Value = Volunteer_type;
             cmd.Parameters.Add("@Gender", SqlDbType.NVarChar);
             cmd.Parameters["@Gender"].Value = Gender;
             cmd.Parameters.Add("@Start_date", SqlDbType.NVarChar);
@@ -322,6 +322,47 @@ namespace finalproject.Models.DAL
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
             return cmd;
+        }
+
+        public Volunteer ReadVolunteer_V(string email)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_Details(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+                Volunteer v = new Volunteer();
+                while (dr.Read())
+                {
+                    v.First_name = (string)dr["first_name"]; // all the fields are mandatory so it is enough to check only one field to know if all of them are null
+                    v.Last_name = (string)dr["last_name"];
+                }
+
+                return v;
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in reading volunteer details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+
         }
 
         /////////////------------- Relates to the manager -------------/////////////
@@ -475,9 +516,9 @@ namespace finalproject.Models.DAL
             {
                 // C - Connect
                 con = Connect("webOsDB");
-              
-                    SqlCommand command = CreateInsert_Level(GP, con);
-                    command.ExecuteNonQuery();
+
+                SqlCommand command = CreateInsert_Level(GP, con);
+                command.ExecuteNonQuery();
             }
 
             catch (Exception ex)
@@ -494,7 +535,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand CreateInsert_Level(GuidingProgram GP, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Guiding_program_2022 ( [file_path], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4+"', '" + GP.Answers_1 + "', '" + GP.Answers_2+ "', '" + GP.Answers_3+ "', '" + GP.Answers_4+ "')";
+            string insertStr = "INSERT INTO Guiding_program_2022 ( [file_path], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4 + "', '" + GP.Answers_1 + "', '" + GP.Answers_2 + "', '" + GP.Answers_3 + "', '" + GP.Answers_4 + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;

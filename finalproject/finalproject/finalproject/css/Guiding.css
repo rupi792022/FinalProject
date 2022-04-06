@@ -13,6 +13,7 @@
 
 body {
     font-family: Calibri;
+    background: #3E8C84;
 }
 
 .space {
@@ -54,3 +55,86 @@ a {
     color: dimgrey;
 }
 
+.btnLevel{
+    border: 1px solid #C59636;
+    outline: none;
+    height: 130px;
+    width: 110px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+}
+
+.loginBox {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 850px;
+    height: 540px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box;
+    border: 1px solid #C59636;
+}
+
+#learning {
+ padding-left:30px;
+}
+
+#learning p{
+    color:gray;
+    font-size:16px;
+    font-family:Calibri;
+}
+
+#uploadRender,
+#nextUpload,
+#createQuestion,
+#nextAnswer {
+    border: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    width: 70px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+}
+
+/*#checkAnswer {
+    margin-left: 700px;
+    border: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    width: 70px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+}*/
+
+.uploadImage {
+    width: 300px;
+    height: 300px;
+}
+
+.btnRadio {
+    color:black ;
+    font-weight: normal;
+    padding-left:7px;
+}
+
+#renderNext {
+    position: absolute;
+    bottom:15px;
+    right: 15px;
+}
