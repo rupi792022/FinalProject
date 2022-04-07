@@ -11,8 +11,10 @@
     <title></title>
     <script>
         $(document).ready(function () {
-            //getDatails = JSON.parse(localStorage.getItem('userDetails'));
-            //ajaxCall("GET", "../api/Volunteers/ReadDetails_V?email=" + userDetails.Volunteer_email, "", getSuccessDetails_v, getErrorDetails_v);
+            getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name.toUpperCase() + ' ' + getDatails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+           
 
             let apiCall = "../api/GuidingPrograms/Read_GP";
             ajaxCall("GET", apiCall, "", getSuccessGP, getErrorGP);
@@ -27,17 +29,11 @@
 
         });
 
-        //function getSuccessDetails_v(volunteerDetails) {
-        //    console.log(volunteerDetails);
-        //    var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + volunteerDetails.first_name + ' ' + volunteerDetails.last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
-        //    $(user).clone().appendTo(".dropdown");
-        //}
-
-        //function getErrorDetails_v(error) {
-        //    console.log(error)
-        //}
-
-
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+      
         function getSuccessGP(gp) {
             console.log("Success GP")
             GP = gp;
@@ -47,7 +43,7 @@
         function renderLevels() {
             str = "";
             for (var i = 0; i < GP.length; i++) {
-                str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
+                str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
             }
             document.getElementById("learning").innerHTML = str;
         }
@@ -139,10 +135,10 @@
             count = 0;//count the number of answer
             str = "";//render on a html the question and answers
             if (Question[indexQuestion] != "-" && indexAnswer != allCorrectAnswersArr.length) {
-                str += "<p>Select the <b>correct<b> answer</p>";
-                str += "<p>" + Question[indexQuestion] + "</p>";
+                str += "<p>Please select the <b>correct<b> answer</p>";
+                str += "<p class='questionP'>" + Question[indexQuestion] + "</p>";
                 for (j = startpoint; j < endpoint; j++) {
-                    str += '<input type="radio" id="answer' + count + '" name="answer" value="' + allAnswersArr[j] + '"><label for="answer' + count + '">' + allAnswersArr[j] + '</label><br>';
+                    str += '<input type="radio" id="answer' + count + '" name="answer" value="' + allAnswersArr[j] + '"><label class="lableRadio" for="answer' + count + '">' + allAnswersArr[j] + '</label><br>';
                     count++;
                 }
                 str += '<button id="checkAnswer">Check</button><br>';

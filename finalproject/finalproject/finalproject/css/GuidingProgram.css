@@ -135,7 +135,6 @@ table {
  td {
     vertical-align: text-top;
     text-align: center;
-/*    padding-left: 10px;*/
 }
 
 #defineTheProgram p {
@@ -188,7 +187,12 @@ p {
     width: 120px;
 }
 #editProgram,
-#addNewProgram,
+#addNewProgram{
+    width: 180px;
+    height:95px;
+    font-size:20px;
+}
+
 #remove {
     width: 150px;
 }
@@ -201,6 +205,8 @@ p {
 #title{
     font-family:Calibri;
     color:dimgray;
+    text-align:center;
+    padding-top:-20px;
 }
 
 
@@ -213,15 +219,24 @@ p {
     height: 600px;
     background: #E5EDED;
     border-radius: 10px;
-    padding: 40px;
+    padding: 30px;
     box-sizing: border-box;
     border: 1px solid #C59636;
 }
 
 #btnChoose {
-    text-align: center;
+    text-align: center;   
+    padding-top:170px;
 }
 
 #defineTheProgram {
    padding-left:100px;
 }
+
+
+form label {
+    color: black;
+    font-weight: normal;
+    font-size:16px;
+}
+

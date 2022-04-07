@@ -13,7 +13,7 @@
 
     <script>
         $(document).ready(function () {
-            //getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            getDatails = JSON.parse(localStorage.getItem('userDetails'));
             //var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
             //$(user).clone().appendTo(".dropdown");
 
@@ -152,7 +152,7 @@
 
 
         function Save() {
-            managerEmail = getDatails.Volunteer_email;
+            managerEmail = getDatails/*.Volunteer_email*/;
             programName = $("#program_name").val();
             contentLevel = $("#contentLevel").val();
             question1 = $("#question1").val();
@@ -399,10 +399,10 @@
     </nav>
     <div class="loginBox">
         <div id="btnChoose">
-            <button type="button" id="editProgram">Edit Program</button>
+            <button type="button" id="editProgram">Edit Program</button>&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" id="addNewProgram">Add New Program</button>
         </div>
-        <div id="title"></div>
+        <div id="title"></div><br>
         <div id="defineTheProgram">
             <table>
                 <tr>
@@ -419,7 +419,7 @@
             <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" placeholder="Enter a content"></textarea>
             <form method="post" enctype="multipart/form-data" id="formUpload">
                 <div>
-                    <label for="files">Select file</label>
+                    <label for="files">Please select file - can you choose more than one.</label>
                     <input type="file" id="files" name="files" multiple="multiple" />
                 </div>
                 <br />
