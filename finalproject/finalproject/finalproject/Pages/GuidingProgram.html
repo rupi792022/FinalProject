@@ -20,6 +20,7 @@
             count = 1;
             NumOfLevel = 1;
             NumOfAnswers = 4;
+            clickUpload = 0;
             toUpdate = false;
 
             $("#defineTheProgram").hide();
@@ -39,17 +40,20 @@
             $('#remove').click(Remove);
 
             $('#buttonUpload').on('click', function () {
+                clickUpload++;
                 var data = new FormData();
                 var files = $("#files").get(0).files;
 
                 // Add the uploaded file to the form data collection
                 if (files.length > 0) {
                     for (f = 0; f < files.length; f++) {
-                        data.append("uploadedFiles", files[f]);
+                        data.append("uploadedFiles", files[f]); 
                     }
                     data.append("name", "FOAfiles"); // append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
-
+                if (clickUpload == 1)
+                    $(".loginBox").css({ "height": "+=50" });
+                
                 // Ajax upload
                 $.ajax({
                     type: "POST",
@@ -130,8 +134,8 @@
                 }
                 str += '</tr>';
                 $(str).clone().appendTo("#renderQA");
-                $(".loginBox").css({ "height": "+=145"});
-                $(".loginBox").css({ "top": "+=12%" });
+                $(".loginBox").css({ "height": "+=165"});
+                $(".loginBox").css({ "top": "+=14%" });
             }
             else alert("You can only insert a 4 questions");
             $("#remove").show();
@@ -144,8 +148,8 @@
                 table.deleteRow(rowCount - i);
             }
             count--;
-            $(".loginBox").css({ "height": "-=145" });
-            $(".loginBox").css({ "top": "-=10%" });
+            $(".loginBox").css({ "height": "-=160" });
+            $(".loginBox").css({ "top": "-=14%" });
             if (count == 1)
                 $("#remove").hide();
         }
