@@ -21,6 +21,7 @@
             NumOfLevel = 1;
             NumOfAnswers = 4;
             clickUpload = 0;
+            countLevel = 1;
             toUpdate = false;
 
             $("#defineTheProgram").hide();
@@ -98,6 +99,16 @@
         function AddNewProgram() {
             $("#defineTheProgram").show();
             $("#btnChoose").hide();
+
+            ajaxCall("DELETE", "../api/GuidingPrograms", deleteSuccess, deleteErrorCB);
+        }
+
+        function deleteSuccess() {
+            console.log("Success delete");
+        }
+
+        function deleteErrorCB() {
+            console.log("Error delete");
         }
 
         function start() {
@@ -210,6 +221,7 @@
             MyGuidingProgram = {
                 Manager_email: managerEmail,
                 Program_name: programName,
+                Level_serial_num:countLevel,
                 File_path: filePath,
                 Content_level: contentLevel,
                 Question_content_1: question1,
@@ -224,16 +236,18 @@
 
             if (toUpdate) {
                 ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
-            }
-            ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSave, postErrorSave);
-                return false;
+                }
+                else
+                    ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSave, postErrorSave);
+                    return false;
             }
         }
 
 
         function putSuccessSave() {
             console.log("success to upadte all the details");
-
+            alert("The level was successfully saved");
+            $('#next').removeAttr('disabled');
         }
 
         function putErrorSave(error) {
@@ -241,6 +255,7 @@
         }
 
         function postSuccessSave() {
+            countLevel++;
             console.log("success to insert all the details");
             alert("The level was successfully saved");
             $('#next').removeAttr('disabled');
@@ -362,8 +377,9 @@
         }
 
         function EditProgram() {
+            toUpdate = true;
             $("#btnChoose").hide();
-            NumOfLevel == 1;
+            NumOfLevel = 1;
             let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
             ajaxCall("GET", apiCall, "", getSuccessEP, getErrorEP);
         }
@@ -372,6 +388,17 @@
             $("#stepDetails").show();
             title(NumOfLevel);
             insertDetails(DetailsOfLevel);
+
+            let apiCall = "../api/GuidingPrograms/Read_maxLevel";
+            ajaxCall("GET", apiCall, "", getSuccessMaxLevel, getErrorMaxLevel);
+        }
+
+        function getSuccessMaxLevel(maxLevel) {
+            LevelsAmount = maxLevel;
+        }
+
+        function getErrorMaxLevel() {
+            console.log(error);
         }
 
         function getErrorEP(error) {

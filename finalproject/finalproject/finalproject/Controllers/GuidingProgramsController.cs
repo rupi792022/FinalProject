@@ -38,6 +38,28 @@ namespace finalproject.Controllers
 
         }
 
+        
+        [HttpGet]
+        [Route("api/GuidingPrograms/Read_maxLevel")]
+        public HttpResponseMessage Read_maxLevel()
+        {
+            try
+            {
+                GuidingProgram gp = new GuidingProgram();
+                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_maxLevel());
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
+
+        }
+
 
         [HttpGet]
         [Route("api/GuidingPrograms/Read_GP")]
@@ -75,8 +97,11 @@ namespace finalproject.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public void Delete()
         {
+            GuidingProgram gp = new GuidingProgram();
+            gp.DeleteProgram();
         }
+       
     }
 }

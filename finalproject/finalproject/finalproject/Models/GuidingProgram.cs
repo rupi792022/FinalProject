@@ -67,6 +67,13 @@ namespace finalproject.Models
 
         }
 
+        public int Read_maxLevel()
+        {
+            DataServices ds = new DataServices();
+            return ds.Read_maxLevel();
+
+        }
+
         public List <GuidingProgram> Read_GP()
         {
             DataServices ds = new DataServices();
@@ -79,6 +86,12 @@ namespace finalproject.Models
         {
             DataServices ds = new DataServices();
             ds.UpdateLevelDetails(gp);
+        }
+
+        public void DeleteProgram ()
+        {
+            DataServices ds = new DataServices();
+            ds.DeleteProgram();
         }
     }
 }

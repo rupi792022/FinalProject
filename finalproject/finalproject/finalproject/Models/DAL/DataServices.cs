@@ -535,7 +535,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand CreateInsert_Level(GuidingProgram GP, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Guiding_program_2022 ( [file_path], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4 + "', '" + GP.Answers_1 + "', '" + GP.Answers_2 + "', '" + GP.Answers_3 + "', '" + GP.Answers_4 + "')";
+            string insertStr = "INSERT INTO Guiding_program_2022 ( [level_serial_num],[file_path], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.Level_serial_num + "', '" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4 + "', '" + GP.Answers_1 + "', '" + GP.Answers_2 + "', '" + GP.Answers_3 + "', '" + GP.Answers_4 + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -628,7 +628,7 @@ namespace finalproject.Models.DAL
 
         private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string file_path, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
         {
-            string commandStr = "UPDATE Guiding_program_2022 SET manager_email = @email" +
+            string commandStr = "UPDATE Guiding_program_2022 SET email = @email" +
                ",file_path = @file_path" +
                 ",content_level =@content_level" +
                 ",question_content_1 =@question_content_1" +
@@ -718,6 +718,84 @@ namespace finalproject.Models.DAL
         {
             string commandStr = "SELECT * FROM Guiding_program_2022";
             SqlCommand cmd = createCommand(con, commandStr);
+            return cmd;
+        }
+
+        
+        
+        public int Read_maxLevel()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_maxLevel(con);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int maxLevel = 0;
+
+                while (dr.Read())
+                {
+                    maxLevel = Convert.ToInt16(dr["level_serial_num"]);
+                }
+                return maxLevel;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in reading of GuidingProgram", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_maxLevel(SqlConnection con)
+        {
+            string commandStr = "SELECT max(level_serial_num) as 'level_serial_num'  FROM Guiding_program_2022";
+            SqlCommand cmd = createCommand(con, commandStr);
+            return cmd;
+        }
+
+        public void DeleteProgram()
+        {
+            
+            SqlConnection con = null;
+            
+
+            try
+            {
+                con = Connect("webOsDB");
+                List<GuidingProgram> GP_List = new List<GuidingProgram>();
+                GP_List = Read_GP();
+                foreach (var g in GP_List)
+                {
+                    SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, g.Level_serial_num);
+                    selectCommand.ExecuteNonQuery();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in delete the program", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_DeleteProgram(SqlConnection con, int LevelNum)
+        {
+            string commandStr = "DELETE FROM Guiding_program_2022 WHERE level_serial_num = @LevelNum";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@LevelNum", SqlDbType.SmallInt);
+            cmd.Parameters["@LevelNum"].Value = LevelNum;
+            
             return cmd;
         }
     }
