@@ -13,9 +13,9 @@
 
     <script>
         $(document).ready(function () {
-            getDatails = JSON.parse(localStorage.getItem('userDetails'));
-            //var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a href="#">Log out</a></li></ul>');
-            //$(user).clone().appendTo(".dropdown");
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name.toUpperCase() + ' ' + getDatails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
 
             count = 1;
             NumOfLevel = 1;
@@ -52,6 +52,7 @@
                     }
                     data.append("name", "FOAfiles"); // append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
+
                 if (clickUpload == 1)
                     $(".loginBox").css({ "height": "+=50" });
                 
@@ -70,6 +71,10 @@
             });
         });
 
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
 
         function showImages(data) {
             console.log(data);
@@ -145,6 +150,7 @@
                 }
                 str += '</tr>';
                 $(str).clone().appendTo("#renderQA");
+
                 $(".loginBox").css({ "height": "+=165"});
                 $(".loginBox").css({ "top": "+=14%" });
             }
@@ -255,7 +261,6 @@
         }
 
         function postSuccessSave() {
-            countLevel++;
             console.log("success to insert all the details");
             alert("The level was successfully saved");
             $('#next').removeAttr('disabled');
@@ -268,17 +273,21 @@
 
         function Next() {
             NumOfLevel++;
+            countLevel++;
             if (NumOfLevel <= LevelsAmount) {
                 let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
                 ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
                 $("#back").show();
                 $("#back").attr('disabled', false);
+                $("#remove").hide();
             }
             else {
+                alert("You have reached the maximum amount of levels. Click finish if you share");
+            }
+            if (NumOfLevel == LevelsAmount) {
                 $("#finishProgram").show();
                 $("#next").hide();
-                alert("You have reached the maximum amount of levels. Click finish if you share");
-            }         
+            }
         }
 
         function getSuccessNext(DetailsOfLevel) {
@@ -303,11 +312,13 @@
 
         function renderLevelDetails(Question, allAnswersArr) {
             answers = 0;
-            idNum = 2
+            howMach = 1;
+            //idNum = 2;
             NumOfAnswer = 1;
             str = "";
             for (var i = 0; i < Question.length; i++) {
                 if (Question[i] != "-") {
+                    howMach++;
                     str += '<tr><td><p>Question ' + (i + 2) + ':</p></td>';
                     str += '<td><input type="text" id="question' + (i + 2) + '" name="Question" value="' + Question[i] + '"></td>';
                     NumOfAnswer = 1;
@@ -317,14 +328,21 @@
                         }
                         else {
                             str += '<tr><td></td><td></td><td><p>' + NumOfAnswer + '.</p></td><td><input type="text" id="' + (i + 2) + '_Answer' + NumOfAnswer + '" name="Answer"' + NumOfAnswer + '" value="' + allAnswersArr[k] + '"></td></tr>';
-                            idNum++;
+                        //    idNum++;
                         }
                         NumOfAnswer++;
                     }
                     answers += 4;
+                    $(".loginBox").css({ "height": "+=160" });
+                    $(".loginBox").css({ "top": "+=14%" });
                 }
                 document.getElementById("renderQA").innerHTML = str;
-            } 
+            }
+            if (howMach == 1) {
+                count = 1;
+            }
+            else
+                count = howMach;
         }
 
         function insertDetails(DetailsOfLevel) {
@@ -333,6 +351,11 @@
             document.getElementById("renderQA").innerHTML = str;
 
             $("#contentLevel").val(DetailsOfLevel.Content_level);
+
+            //$("#formUpload").val(DetailsOfLevel.File_path);
+            //$(DetailsOfLevel.File_path).appendTo("#formUpload");
+            //$('input#files')[0].files[0];
+
             $("#question1").val(DetailsOfLevel.Question_content_1);
             var Question = [];//array of all the questions
             Question.push(DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
@@ -355,13 +378,13 @@
 
         function Back() {
             NumOfLevel--;
-            if (NumOfLevel == 0) {
+            $("#back").attr('disabled', false);
+            let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
+            ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
+            $("#remove").hide();
+
+            if (NumOfLevel == 1) {
                 $("#back").attr('disabled', true);
-            }
-            else {
-                $("#back").attr('disabled', false);
-                let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
-                ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
             }
         }
 
@@ -372,6 +395,7 @@
             $("#next").show();
             $("#finishProgram").hide();
         }
+
         function getErrorBack(error) {
             console.log(error);
         }
@@ -487,7 +511,7 @@
             <table id="renderQA"></table>
             <table id="btn">
                 <tr>
-                    <td><button type="button" id="remove">Remove question</button></td>
+                    <td><button type="button" id="remove">Remove question</button><br></td>
                     <td></td>
                     <td colspan="2"><label id="alertMessage2"></label></td>
                 </tr>

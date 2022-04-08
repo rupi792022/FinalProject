@@ -38,7 +38,16 @@ namespace finalproject.Controllers
 
         }
 
-        
+        //[HttpGet]
+        //[Route("api/GuidingPrograms/Read_Level")]
+        //public GuidingProgram Read_Level(int level_num)
+        //{
+        //        GuidingProgram gp = new GuidingProgram();
+        //        return gp.Read_Level(level_num);
+        //}
+
+
+
         [HttpGet]
         [Route("api/GuidingPrograms/Read_maxLevel")]
         public HttpResponseMessage Read_maxLevel()
@@ -60,6 +69,14 @@ namespace finalproject.Controllers
 
         }
 
+        //[HttpGet]
+        //[Route("api/GuidingPrograms/Read_maxLevel")]
+        //public int Read_maxLevel()
+        //{
+        //      GuidingProgram gp = new GuidingProgram();
+        //        return gp.Read_maxLevel();
+        //}
+
 
         [HttpGet]
         [Route("api/GuidingPrograms/Read_GP")]
@@ -79,8 +96,18 @@ namespace finalproject.Controllers
                 else
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
             }
-
         }
+
+
+        //[HttpGet]
+        //[Route("api/GuidingPrograms/Read_GP")]
+        //public IEnumerable<GuidingProgram> Read_GP()
+        //{
+        //        GuidingProgram gp = new GuidingProgram();
+        //        return gp.Read_GP();
+        //}
+
+
         // POST api/<controller>
 
         public HttpResponseMessage Post([FromBody] GuidingProgram GP)

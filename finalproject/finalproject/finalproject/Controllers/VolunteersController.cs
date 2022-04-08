@@ -24,93 +24,128 @@ namespace finalproject.Controllers
             return volunteer.ReadPassword_V(email, password);
         }
 
+        //[HttpGet]
+        //[Route("api/Volunteers/ReadEmail_RpasswordV")]
+
+        //public HttpResponseMessage ReadEmail_RpasswordV(string email) // forget password
+        //{
+        //    try
+        //    {
+        //        Volunteer v = new Volunteer();
+        //        return Request.CreateResponse(HttpStatusCode.OK, v.ReadEmail_RpasswordV(email));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.Message == "failed to connect to the server")
+        //        {
+        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+        //        }
+        //        else
+        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+        //    }
+
+        //}
+
+
         [HttpGet]
         [Route("api/Volunteers/ReadEmail_RpasswordV")]
 
-        public HttpResponseMessage ReadEmail_RpasswordV(string email) // forget password
+        public string ReadEmail_RpasswordV(string email) // forget password
         {
-            try
-            {
-                Volunteer v = new Volunteer();
-                return Request.CreateResponse(HttpStatusCode.OK, v.ReadEmail_RpasswordV(email));
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
-
+            Volunteer v = new Volunteer();
+            return v.ReadEmail_RpasswordV(email);
         }
+
+        //[HttpGet]
+        //[Route("api/Volunteers/ReadEmail_V")]
+        //public HttpResponseMessage ReadEmail_V(string email)
+        //{
+        //    try
+        //    {
+        //        Volunteer v = new Volunteer();
+        //        return Request.CreateResponse(HttpStatusCode.OK, v.ReadEmail_V(email));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.Message == "failed to connect to the server")
+        //        {
+        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+        //        }
+        //        else
+        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+        //    }
+
+        //}
+
 
         [HttpGet]
         [Route("api/Volunteers/ReadEmail_V")]
-        public HttpResponseMessage ReadEmail_V(string email)
+        public bool ReadEmail_V(string email)
         {
-            try
-            {
-                Volunteer v = new Volunteer();
-                return Request.CreateResponse(HttpStatusCode.OK, v.ReadEmail_V(email));
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
-
+            Volunteer v = new Volunteer();
+            return v.ReadEmail_V(email);
         }
+
+
         ///{email}
+
+        //[HttpGet]
+        //[Route("api/Volunteers/ReadDetails_V")]
+        //public HttpResponseMessage ReadDetails_V(string email)
+        //{
+        //    try
+        //    {
+        //        Volunteer v = new Volunteer();
+        //        return Request.CreateResponse(HttpStatusCode.OK, v.ReadDetails_V(email));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.Message == "failed to connect to the server")
+        //        {
+        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+        //        }
+        //        else
+        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+        //    }
+
+        //}
 
         [HttpGet]
         [Route("api/Volunteers/ReadDetails_V")]
-        public HttpResponseMessage ReadDetails_V(string email)
+        public bool ReadDetails_V(string email)
         {
-            try
-            {
-                Volunteer v = new Volunteer();
-                return Request.CreateResponse(HttpStatusCode.OK, v.ReadDetails_V(email));
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
-
+            Volunteer v = new Volunteer();
+            return v.ReadDetails_V(email);
         }
 
+
+        //[HttpGet]
+        //[Route("api/Volunteers/ReadVolunteer_V")]
+        //public HttpResponseMessage ReadVolunteer_V(string email)
+        //{
+        //    try
+        //    {
+        //        Volunteer v = new Volunteer();
+        //        return Request.CreateResponse(HttpStatusCode.OK, v.ReadVolunteer_V(email));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (ex.Message == "failed to connect to the server")
+        //        {
+        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+        //        }
+        //        else
+        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+        //    }
+        //}
 
         [HttpGet]
         [Route("api/Volunteers/ReadVolunteer_V")]
-        public HttpResponseMessage ReadVolunteer_V(string email)
+        public Volunteer ReadVolunteer_V(string email)
         {
-            try
-            {
                 Volunteer v = new Volunteer();
-                return Request.CreateResponse(HttpStatusCode.OK, v.ReadVolunteer_V(email));
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
-
+                return v.ReadVolunteer_V(email);     
         }
-
         // POST api/<controller>
         public HttpResponseMessage Post([FromBody] Volunteer volunteer)
         {

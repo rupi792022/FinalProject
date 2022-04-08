@@ -87,5 +87,11 @@ namespace finalproject.Models
 
         }
 
+        public Manager ReadManager_M(string email)
+        {
+            DataServices ds = new DataServices();
+            return ds.ReadManager_M(email);
+
+        }
     }
 }

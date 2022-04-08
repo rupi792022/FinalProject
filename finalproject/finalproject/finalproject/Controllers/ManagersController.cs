@@ -47,7 +47,18 @@ namespace finalproject.Controllers
 
         }
 
-       
+        //[HttpGet]
+        //[Route("api/Managers/ReadEmail_M")]
+
+        //public bool ReadEmail_M(string email) // check if the manager's email exist in DB
+        //{
+        //        Manager m = new Manager();
+        //        return m.ReadEmail_M(email);
+        //}
+
+
+
+
         [HttpGet]
         [Route("api/Managers/ReadEmail_RpasswordM")]
 
@@ -70,19 +81,54 @@ namespace finalproject.Controllers
 
         }
 
+        //[HttpGet]
+        //[Route("api/Managers/ReadEmail_RpasswordM")]
+
+        //public string ReadEmail_RpasswordM(string email) // forget password
+        //{
+        //        Manager m = new Manager();
+        //        return m.ReadEmail_RpasswordM(email);
+        //}
+
+
+        [HttpGet]
+        [Route("api/Managers/ReadManager_M")]
+
+        public HttpResponseMessage ReadManager_M(string email) 
+        {
+            try
+            {
+                Manager m = new Manager();
+                return Request.CreateResponse(HttpStatusCode.OK, m.ReadManager_M(email));
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "failed to connect to the server")
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+                else
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+            }
+
+        }
+
+        //[HttpGet]
+        //[Route("api/Managers/ReadManager_M")]
+
+        //public Manager ReadManager_M(string email)
+        //{
+        //        Manager m = new Manager();
+        //        return m.ReadManager_M(email);
+        //}
+
 
         // POST api/<controller>
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<controller>/5
-
-        //public int Put(string password, string email)
-        //{
-        //    Manager manager = new Manager();
-        //    return manager.UpdateManagerpassword(password, email);
-        //}
+      
 
         // DELETE api/<controller>/5
         public void Delete(int id)

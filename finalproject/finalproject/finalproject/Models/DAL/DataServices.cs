@@ -506,7 +506,60 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
+        public Manager ReadManager_M(string email)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_DetailsManager(con, email);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+                Manager m = new Manager();
+                while (dr.Read())
+                {
+                    m.First_name = (string)dr["first_name"]; 
+                    m.Last_name = (string)dr["last_name"];
+                }
+
+                return m;
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in reading manager details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+
+        }
+
+        SqlCommand createSelectCommand_DetailsManager(SqlConnection con, string email)
+        {
+            string commandStr = "SELECT first_name,last_name FROM Manager_2022 WHERE EMAIL = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.VarChar);
+            cmd.Parameters["@email"].Value = email;
+            return cmd;
+        }
+
+
+
         /////////////------------- Relates to the Guiding Program -------------/////////////
+        ///
         public void InsertLevel(GuidingProgram GP) // insert level into a guiding program 
         {
 
