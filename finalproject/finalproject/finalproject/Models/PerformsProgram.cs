@@ -31,10 +31,18 @@ namespace finalproject.Models
             ds.InsertPerforms(this);
         }
 
-        public int Read_maxLevelsPerforms (string email)
+        public int Read_maxLevelsPerforms(string email)
         {
             DataServices ds = new DataServices();
             return ds.Read_maxLevelsPerforms(email);
         }
+
+        public List <int> Read_scores(string email)
+        {
+            DataServices ds = new DataServices();
+            return ds.Read_scores(email);
+        }
+
+        
     }
 }

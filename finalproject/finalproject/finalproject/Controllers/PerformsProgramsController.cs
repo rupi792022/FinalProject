@@ -19,11 +19,19 @@ namespace finalproject.Controllers
         // GET api/<controller>/5
 
         [HttpGet]
-        [Route("api/Volunteers/Read_maxLevelsPerforms")]
+        [Route("api/PerformsPrograms/Read_maxLevelsPerforms")]
         public int Read_maxLevelsPerforms(string email)
         {
            PerformsProgram p = new PerformsProgram();
-            return p.Read_maxLevelsPerforms (email);
+            return p.Read_maxLevelsPerforms(email);
+        }
+        
+        [HttpGet]
+        [Route("api/PerformsPrograms/Read_scores")]
+        public List <int> Read_scores(string email)
+        {
+            PerformsProgram p = new PerformsProgram();
+            return p.Read_scores(email);
         }
 
         // POST api/<controller>

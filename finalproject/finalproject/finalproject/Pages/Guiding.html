@@ -19,7 +19,7 @@
             let apiCall = "../api/GuidingPrograms/Read_GP";
             ajaxCall("GET", apiCall, "", getSuccessGP, getErrorGP);
             $(document).on("click", ".btnLevel", startLevel);
-            $("#nextContent").hide();
+           /* $("#nextContent").hide();*/
             $(document).on("click", "#uploadRender", uploadRender);
             $(document).on("click", "#checkAnswer", checkAnswer);
             $(document).on("click", "#nextUpload", nextUpload);
@@ -37,16 +37,19 @@
         function getSuccessGP(gp) {
             console.log("Success GP")
             GP = gp;
-            let apiCall = "../api/PerformsPrograms/Read_maxLevelsPerforms?email =" + getDatails.Volunteer_email;
-            ajaxCall("GET", apiCall, "", getSuccessP, getErrorP);
-           
+            performs();
         }
 
+        function performs() {
+        let apiCall = "../api/PerformsPrograms/Read_maxLevelsPerforms?email=" + getDatails.Volunteer_email;
+        ajaxCall("GET", apiCall, "", getSuccessP, getErrorP);
+        }
+        
         function renderLevels() {
             str = "";
             for (var i = 0; i < GP.length; i++) {
                 if ((i + 1) <= themaxlevel) {
-                    str += '<button type="button" class="btnLevel" disabled id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
+                    str += '<button type="button" style="background:green" class="btnLevel" disabled id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
                 }
                 else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
             }
@@ -55,18 +58,16 @@
         }
 
         function getErrorGP() {
-            console.log("the GP is not read")
+            console.log("the GP is not read");
         }
 
         function getSuccessP(maxlevels) {
             themaxlevel = maxlevels;
             renderLevels();
-
         }
         function getErrorP() {
-            console.log("the GP is not read")
+            console.log("the Performs is not read");
         }
-
 
 
         function startLevel() {
@@ -182,14 +183,35 @@
         }
 
         function postSuccessSave() {
-            renderLevels();
+            score = 0;
+            if (levelNum == GP.length) {
+                let apiCall = "../api/PerformsPrograms/Read_scores?email=" + getDatails.Volunteer_email;
+                ajaxCall("GET", apiCall, "", getSuccessScore, getErrorScore);
+            }
+            else performs();
+        }
+
+        function getSuccessScore(AllScores) {
+            finalScore = 0;
+            for (var i = 0; i < AllScores.length; i++) {
+                finalScore += AllScores[i] * ((100 / AllScores.length)/100);
+            }
+            str = '';
+            str += '*You have completed the program! Your final score is:' + finalScore ;
+            document.getElementById("alertMessage").innerHTML = str;
+            performs();
+        }
+
+        function getErrorScore() {
+            console.log("ErrorScore");
         }
 
         function postErrorSave() {
             console.log("failed in saving performs details");
         }
 
-        function checkAnswer() {//check if the answer is correct
+        function checkAnswer() {
+            //check if the answer is correct
             let SelectedAnswer = $("input[type=radio][name=answer]:checked").val();//get the value from the checkbox
             if (indexAnswer != allCorrectAnswersArr.length) {
                 if (SelectedAnswer == allCorrectAnswersArr[indexAnswer]) {//check if the answer is correct
@@ -224,6 +246,7 @@
     <!--<div class="container">-->
     <div class="loginBox">
         <div id="learning"></div>
+        <div id="alertMessage"></div>
         <div id="QA"></div>
     </div>
     <!--</div>-->

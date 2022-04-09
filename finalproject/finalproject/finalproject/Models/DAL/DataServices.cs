@@ -890,6 +890,7 @@ namespace finalproject.Models.DAL
             command.CommandType = System.Data.CommandType.Text;
             return command;
         }
+
              public int Read_maxLevelsPerforms(string email)
         {
             SqlConnection con = null;
@@ -903,7 +904,8 @@ namespace finalproject.Models.DAL
 
                 while (dr.Read())
                 {
-                    maxLevel = Convert.ToInt16(dr["maxlevel"]);
+                    if (dr["maxlevel"] != DBNull.Value)
+                        maxLevel = Convert.ToInt16(dr["maxlevel"]);
                 }
                 return maxLevel;
             }
@@ -925,7 +927,47 @@ namespace finalproject.Models.DAL
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
+            return cmd;
+        }
 
+        
+        public List <int> Read_scores(string email)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_Read_scores(con, email);
+                List<int> Score_List = new List<int>();
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dr.Read())
+                {
+                    int score;
+                    score = Convert.ToInt16(dr["score"]);
+                    Score_List.Add(score);
+                }
+                return Score_List;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in reading of GuidingProgram", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_Read_scores(SqlConnection con, string email)
+        {
+            string commandStr = "SELECT score FROM Performs_program_2022 where email = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+            cmd.Parameters["@email"].Value = email;
             return cmd;
         }
     }
