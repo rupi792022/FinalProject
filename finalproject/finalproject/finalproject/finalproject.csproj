@@ -171,12 +171,13 @@
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\GuidingProgramsController.cs" />
     <Compile Include="Controllers\ManagersController.cs" />
+    <Compile Include="Controllers\PerformsProgramsController.cs" />
     <Compile Include="Controllers\VolunteersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityTime.cs" />
-    <Compile Include="Models\Answered.cs" />
+    <Compile Include="Models\PerformsProgram.cs" />
     <Compile Include="Models\AntisemiticContent.cs" />
     <Compile Include="Models\DAL\DataServices.cs" />
     <Compile Include="Models\GuidingProgram.cs" />

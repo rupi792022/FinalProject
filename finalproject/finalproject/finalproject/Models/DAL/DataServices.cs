@@ -249,7 +249,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand createSelectCommand_Details(SqlConnection con, string email)
         {
-            string commandStr = "SELECT first_name,last_name FROM Volunteer_2022 WHERE EMAIL = @email";
+            string commandStr = "SELECT first_name,last_name,email FROM Volunteer_2022 WHERE EMAIL = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.VarChar);
             cmd.Parameters["@email"].Value = email;
@@ -347,6 +347,7 @@ namespace finalproject.Models.DAL
                 {
                     v.First_name = (string)dr["first_name"]; // all the fields are mandatory so it is enough to check only one field to know if all of them are null
                     v.Last_name = (string)dr["last_name"];
+                    v.Volunteer_email = (string)dr["email"];
                 }
 
                 return v;
@@ -851,5 +852,83 @@ namespace finalproject.Models.DAL
             
             return cmd;
         }
+
+        ////////////////
+
+        public void InsertPerforms(PerformsProgram p)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+
+                SqlCommand command = Create_InsertPerforms(p, con);
+                command.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("faild in adding new user", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        SqlCommand Create_InsertPerforms(PerformsProgram p, SqlConnection con)
+        {
+            string insertStr = "INSERT INTO Performs_program_2022 ( [level_serial_num],[score],[email]) VALUES('" + p.Level_serial_num + "', '" + p.Score + "', '" + p.Volunteer_email +  "')";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeout
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
+        }
+             public int Read_maxLevelsPerforms(string email)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_maxLevelsPerforms(con, email);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                int maxLevel = 0;
+
+                while (dr.Read())
+                {
+                    maxLevel = Convert.ToInt16(dr["maxlevel"]);
+                }
+                return maxLevel;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed in reading of GuidingProgram", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_maxLevelsPerforms(SqlConnection con, string email)
+        {
+            string commandStr = "SELECT max(level_serial_num) as 'maxlevel'  FROM Performs_program_2022 where email = @email";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+            cmd.Parameters["@email"].Value = email;
+
+            return cmd;
+        }
     }
+
+
 }

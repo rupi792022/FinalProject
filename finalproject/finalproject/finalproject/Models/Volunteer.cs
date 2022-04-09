@@ -113,6 +113,7 @@ namespace finalproject.Models
 
         }
 
+
         // check if the user exist in DB
         public bool ReadEmail_V(string email)
         {

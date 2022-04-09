@@ -15,7 +15,7 @@
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name.toUpperCase() + ' ' + getDatails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
            
-
+            score = 0;
             let apiCall = "../api/GuidingPrograms/Read_GP";
             ajaxCall("GET", apiCall, "", getSuccessGP, getErrorGP);
             $(document).on("click", ".btnLevel", startLevel);
@@ -37,20 +37,36 @@
         function getSuccessGP(gp) {
             console.log("Success GP")
             GP = gp;
-            renderLevels();
+            let apiCall = "../api/PerformsPrograms/Read_maxLevelsPerforms?email =" + getDatails.Volunteer_email;
+            ajaxCall("GET", apiCall, "", getSuccessP, getErrorP);
+           
         }
 
         function renderLevels() {
             str = "";
             for (var i = 0; i < GP.length; i++) {
-                str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
+                if ((i + 1) <= themaxlevel) {
+                    str += '<button type="button" class="btnLevel" disabled id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
+                }
+                else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '"> Level ' + (i + 1) + '</button >&nbsp;&nbsp;&nbsp;';
             }
             document.getElementById("learning").innerHTML = str;
+            
         }
 
         function getErrorGP() {
             console.log("the GP is not read")
         }
+
+        function getSuccessP(maxlevels) {
+            themaxlevel = maxlevels;
+            renderLevels();
+
+        }
+        function getErrorP() {
+            console.log("the GP is not read")
+        }
+
 
 
         function startLevel() {
@@ -101,7 +117,7 @@
 
 
         function createQuestion() {
-
+            counter = 0;
             Question = [];//array of all the questions
             Question.push(GP[levelNum - 1].Question_content_1, GP[levelNum - 1].Question_content_2, GP[levelNum - 1].Question_content_3, GP[levelNum - 1].Question_content_4);
 
@@ -124,6 +140,10 @@
             allAnswersArr = arrAnswers_1.concat(arrAnswers_2, arrAnswers_3, arrAnswers_4);//arr for all the answers.
             allCorrectAnswersArr = [];//arr for all the correct answers.
             allCorrectAnswersArr.push(correct_answer1, correct_answer2, correct_answer3, correct_answer4);
+            for (var i = 0; i < allCorrectAnswersArr.length; i++) {
+                if (allCorrectAnswersArr[i] != "-")
+                    counter++;
+            }
             indexAnswer = 0;
             indexQuestion = 0;
             endpoint = 4;
@@ -148,8 +168,25 @@
                 endpoint += 4;
                 document.getElementById("learning").innerHTML = str;
             }
-            else renderLevels();
+            else {
+                MyPerforms = {
+                    Volunteer_email: getDatails.Volunteer_email,
+                    Level_serial_num: levelNum,
+                    Score: score
+                }
+                ajaxCall("POST", "../api/PerformsPrograms", JSON.stringify(MyPerforms), postSuccessSave, postErrorSave);
+                return false;
+                
+            }
 
+        }
+
+        function postSuccessSave() {
+            renderLevels();
+        }
+
+        function postErrorSave() {
+            console.log("failed in saving performs details");
         }
 
         function checkAnswer() {//check if the answer is correct
@@ -157,9 +194,11 @@
             if (indexAnswer != allCorrectAnswersArr.length) {
                 if (SelectedAnswer == allCorrectAnswersArr[indexAnswer]) {//check if the answer is correct
                     alert("Good Job! The answer is correct")
+                    score += (100 / counter);
                 }
                 else alert("Sorry, The answer is incorrect")
                 indexAnswer++;
+                score += 0;
             }
         }
 
