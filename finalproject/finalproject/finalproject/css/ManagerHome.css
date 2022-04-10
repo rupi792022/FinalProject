@@ -12,6 +12,7 @@
 
 body {
     font-family: Calibri;
+    background: #F2F2F2;
 }
 
 .space {
@@ -55,17 +56,14 @@ a {
     transition: 0.3s;
     width: 300px;
     height: 250px;
+    border: 1px solid #C59636;
+    border-radius: 5px;
+    background: white;
 }
 
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
-/*
-.container {
-    margin-left: auto;
-    margin-right: auto;
-}
-*/
 
 .imgCard {
     width: 280px;
@@ -75,25 +73,27 @@ a {
     margin-right: auto;
 }
 
-#main {
-    padding-left: 20px;
-    padding-top: 15px;
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
 }
 
-.btnCard {
-    font-size: 24px;
+.textCard p {
+    font-size: 20px;
     font-family: Calibri;
     color: #C59636;
     text-decoration: none;
-    
+    text-align: center;
 }
 
-    .btnCard:hover {
-        font-weight: bold;
-        color: #C59636;
-        text-decoration: none;
-    }
+.btnCard:hover {
+    font-weight: bold;
+    color: #C59636;
+    text-decoration: none;
+}
 
 td {
     padding-left: 20px;
+    padding-top:20px;
 }

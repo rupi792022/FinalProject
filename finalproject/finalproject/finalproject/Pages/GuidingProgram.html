@@ -53,9 +53,11 @@
                     data.append("name", "FOAfiles"); // append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
 
-                if (clickUpload == 1)
+                if (clickUpload == 1) {
                     $(".loginBox").css({ "height": "+=50" });
-                
+                    $(".loginBox").css({ "top": "+=5%" });
+                }
+                    
                 // Ajax upload
                 $.ajax({
                     type: "POST",
@@ -173,7 +175,8 @@
 
 
         function Save() {
-            managerEmail = getDatails/*.Volunteer_email*/;
+            getEmail = JSON.parse(localStorage.getItem('userDetails'));
+            managerEmail = getEmail/*.Volunteer_email*/;
             programName = $("#program_name").val();
             contentLevel = $("#contentLevel").val();
             question1 = $("#question1").val();
@@ -291,6 +294,7 @@
         }
 
         function getSuccessNext(DetailsOfLevel) {
+            $(".loginBox").css({ "height": "650px", "width": "1000px", "top": "65%" });
             title(NumOfLevel);
             if (DetailsOfLevel.Content_level != null) {//אם באותו השלב הערכים מלאים
                 insertDetails(DetailsOfLevel);
@@ -389,6 +393,7 @@
         }
 
         function getSuccessBack(DetailsOfLevel) {
+            $(".loginBox").css({ "height": "650px", "width": "1000px", "top": "65%" });
             console.log(DetailsOfLevel);
             title(NumOfLevel);
             insertDetails(DetailsOfLevel);

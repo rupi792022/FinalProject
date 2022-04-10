@@ -10,8 +10,9 @@
     margin-top:8px;
 }
 
-body{
-    font-family:Calibri; 
+body {
+    font-family: Calibri;
+    background: #F2F2F2;
 }
 
  .space {
@@ -53,18 +54,16 @@ a {
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    width:300px;
-    height:250px;
+    width: 300px;
+    height: 250px;
+    border: 1px solid #C59636;
+    border-radius: 5px;
+    background: white;
 }
 
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
-
-/*.container {
-    padding: 2px 16px;
-}*/
-
 
 .imgCard {
     width: 280px;
@@ -74,17 +73,18 @@ a {
     margin-right: auto;
 }
 
-#main{
-    padding-left:20px;
-    padding-top:15px;
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
 }
 
-.btnCard {
-    font-size: 24px;
+.textCard p {
+    font-size: 20px;
     font-family: Calibri;
     color: #C59636;
     text-decoration: none;
-/*    padding:100px;*/
+    text-align: center;
 }
 
 .btnCard:hover {
@@ -95,4 +95,5 @@ a {
 
 td {
     padding-left: 20px;
+    padding-top: 20px;
 }

@@ -202,9 +202,13 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Activity time.png" />
     <Content Include="Images\FOA.png" />
     <Content Include="Images\guiding.png" />
+    <Content Include="Images\keywoeds.png" />
+    <Content Include="Images\Learning.png" />
     <Content Include="Images\reports.png" />
+    <Content Include="Images\social media.png" />
     <Content Include="Images\volunteer.png" />
     <Content Include="Pages\GuidingProgram.html" />
     <Content Include="Pages\ForgotPassword.html" />
