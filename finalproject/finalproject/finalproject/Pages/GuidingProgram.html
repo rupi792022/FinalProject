@@ -48,7 +48,7 @@
                 // Add the uploaded file to the form data collection
                 if (files.length > 0) {
                     for (f = 0; f < files.length; f++) {
-                        data.append("uploadedFiles", files[f]); 
+                        data.append("uploadedFiles", files[f]);
                     }
                     data.append("name", "FOAfiles"); // append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
@@ -57,7 +57,7 @@
                     $(".loginBox").css({ "height": "+=50" });
                     $(".loginBox").css({ "top": "+=5%" });
                 }
-                    
+
                 // Ajax upload
                 $.ajax({
                     type: "POST",
@@ -153,14 +153,14 @@
                 str += '</tr>';
                 $(str).clone().appendTo("#renderQA");
 
-                $(".loginBox").css({ "height": "+=165"});
+                $(".loginBox").css({ "height": "+=165" });
                 $(".loginBox").css({ "top": "+=14%" });
             }
             else alert("You can only insert a 4 questions");
             $("#remove").show();
         }
 
-        function Remove() {//remove question 
+        function Remove() {//remove question
             var table = document.getElementById("renderQA");
             var rowCount = table.rows.length;
             for (let i = 1; i < 5; i++) {
@@ -176,7 +176,7 @@
 
         function Save() {
             getEmail = JSON.parse(localStorage.getItem('userDetails'));
-            managerEmail = getEmail/*.Volunteer_email*/;
+            managerEmail = getEmail;
             programName = $("#program_name").val();
             contentLevel = $("#contentLevel").val();
             question1 = $("#question1").val();
@@ -227,28 +227,28 @@
             }
 
             else {
-            MyGuidingProgram = {
-                Manager_email: managerEmail,
-                Program_name: programName,
-                Level_serial_num:countLevel,
-                File_path: filePath,
-                Content_level: contentLevel,
-                Question_content_1: question1,
-                Question_content_2: question2,
-                Question_content_3: question3,
-                Question_content_4: question4,
-                Answers_1: strAnswers_1,
-                Answers_2: strAnswers_2,
-                Answers_3: strAnswers_3,
-                Answers_4: strAnswers_4
-            }
+                MyGuidingProgram = {
+                    Manager_email: managerEmail,
+                    Program_name: programName,
+                    Level_serial_num: countLevel,
+                    File_path: filePath,
+                    Content_level: contentLevel,
+                    Question_content_1: question1,
+                    Question_content_2: question2,
+                    Question_content_3: question3,
+                    Question_content_4: question4,
+                    Answers_1: strAnswers_1,
+                    Answers_2: strAnswers_2,
+                    Answers_3: strAnswers_3,
+                    Answers_4: strAnswers_4
+                }
 
-            if (toUpdate) {
-                ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
+                if (toUpdate) {
+                    ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
                 }
                 else
                     ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSave, postErrorSave);
-                    return false;
+                return false;
             }
         }
 
@@ -328,11 +328,11 @@
                     NumOfAnswer = 1;
                     for (var k = answers; k < (4 + answers); k++) {
                         if ((k % 4) == 0) {
-                            str += '<td><p>' + NumOfAnswer + '.</p></td><td class="correctAnswer"><input type="text" id="' + (i + 2)+ '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td></tr>';
+                            str += '<td><p>' + NumOfAnswer + '.</p></td><td class="correctAnswer"><input type="text" id="' + (i + 2) + '_correctAnswer1" name="correctAnswer1" value="' + allAnswersArr[k] + '"></td></tr>';
                         }
                         else {
                             str += '<tr><td></td><td></td><td><p>' + NumOfAnswer + '.</p></td><td><input type="text" id="' + (i + 2) + '_Answer' + NumOfAnswer + '" name="Answer"' + NumOfAnswer + '" value="' + allAnswersArr[k] + '"></td></tr>';
-                        //    idNum++;
+                            //    idNum++;
                         }
                         NumOfAnswer++;
                     }
@@ -353,13 +353,9 @@
             toUpdate = true;
             str = "";
             document.getElementById("renderQA").innerHTML = str;
-
+            strFile = "You must upload the relevant files for this step again.";
+            document.getElementById("alertMessageFile").innerHTML = strFile;
             $("#contentLevel").val(DetailsOfLevel.Content_level);
-
-            //$("#formUpload").val(DetailsOfLevel.File_path);
-            //$(DetailsOfLevel.File_path).appendTo("#formUpload");
-            //$('input#files')[0].files[0];
-
             $("#question1").val(DetailsOfLevel.Question_content_1);
             var Question = [];//array of all the questions
             Question.push(DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
@@ -371,7 +367,7 @@
             arrAnswers_2 = DetailsOfLevel.Answers_2.split(",");
             arrAnswers_3 = DetailsOfLevel.Answers_3.split(",");
             arrAnswers_4 = DetailsOfLevel.Answers_4.split(",");
-            allAnswersArr = arrAnswers_2.concat( arrAnswers_3, arrAnswers_4);
+            allAnswersArr = arrAnswers_2.concat(arrAnswers_3, arrAnswers_4);
 
             renderLevelDetails(Question, allAnswersArr)
         }
@@ -477,9 +473,10 @@
         </div>
         <div id="stepDetails">
             <textarea id="contentLevel" name="contentLevel" cols="40" rows="5" placeholder="Enter a content"></textarea>
+            <div id="alertMessageFile"></div>
             <form method="post" enctype="multipart/form-data" id="formUpload">
                 <div>
-                    <label for="files">Please select file - can you choose more than one.</label>
+                    <label for="files">Please select file - you can choose more than one.</label>
                     <input type="file" id="files" name="files" multiple="multiple" />
                 </div>
                 <br />
@@ -531,4 +528,3 @@
     </div>
 </body>
 </html>
-

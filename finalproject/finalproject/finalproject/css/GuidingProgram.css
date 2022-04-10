@@ -143,7 +143,7 @@ table {
 }
 
 #defineTheProgram label,
-#btn label {
+#btn label, #alertMessageFile {
     color: red;
     font-size: 14px;
     font-family: Calibri;

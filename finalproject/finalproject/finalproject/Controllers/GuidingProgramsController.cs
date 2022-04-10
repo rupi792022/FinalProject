@@ -17,95 +17,33 @@ namespace finalproject.Controllers
         }
 
         // GET api/<controller>/5
+
+
         [HttpGet]
         [Route("api/GuidingPrograms/Read_Level")]
-        public HttpResponseMessage Read_Level(int level_num)
+        public GuidingProgram Read_Level(int level_num)
         {
-            try
-            {
-                GuidingProgram gp = new GuidingProgram();
-                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_Level(level_num));
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
-
+            GuidingProgram gp = new GuidingProgram();
+            return gp.Read_Level(level_num);
         }
-
-        //[HttpGet]
-        //[Route("api/GuidingPrograms/Read_Level")]
-        //public GuidingProgram Read_Level(int level_num)
-        //{
-        //        GuidingProgram gp = new GuidingProgram();
-        //        return gp.Read_Level(level_num);
-        //}
-
 
 
         [HttpGet]
         [Route("api/GuidingPrograms/Read_maxLevel")]
-        public HttpResponseMessage Read_maxLevel()
+        public int Read_maxLevel()
         {
-            try
-            {
-                GuidingProgram gp = new GuidingProgram();
-                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_maxLevel());
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
-
+            GuidingProgram gp = new GuidingProgram();
+            return gp.Read_maxLevel();
         }
-
-        //[HttpGet]
-        //[Route("api/GuidingPrograms/Read_maxLevel")]
-        //public int Read_maxLevel()
-        //{
-        //      GuidingProgram gp = new GuidingProgram();
-        //        return gp.Read_maxLevel();
-        //}
 
 
         [HttpGet]
         [Route("api/GuidingPrograms/Read_GP")]
-        public HttpResponseMessage Read_GP()
+        public IEnumerable<GuidingProgram> Read_GP()
         {
-            try
-            {
-                GuidingProgram gp = new GuidingProgram();
-                return Request.CreateResponse(HttpStatusCode.OK, gp.Read_GP());
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message == "failed to connect to the server")
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-                }
-                else
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-            }
+            GuidingProgram gp = new GuidingProgram();
+            return gp.Read_GP();
         }
-
-
-        //[HttpGet]
-        //[Route("api/GuidingPrograms/Read_GP")]
-        //public IEnumerable<GuidingProgram> Read_GP()
-        //{
-        //        GuidingProgram gp = new GuidingProgram();
-        //        return gp.Read_GP();
-        //}
 
 
         // POST api/<controller>

@@ -25,28 +25,6 @@ namespace finalproject.Controllers
         }
 
 
-        //[HttpGet]
-        //[Route("api/Managers/ReadEmail_M")]
-
-        //public HttpResponseMessage ReadEmail_M(string email) // check if the manager's email exist in DB
-        //{
-        //    try
-        //    {
-        //        Manager m = new Manager();
-        //        return Request.CreateResponse(HttpStatusCode.OK, m.ReadEmail_M(email));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.Message == "failed to connect to the server")
-        //        {
-        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-        //        }
-        //        else
-        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-        //    }
-
-        //}
-
         [HttpGet]
         [Route("api/Managers/ReadEmail_M")]
 
@@ -57,30 +35,6 @@ namespace finalproject.Controllers
         }
 
 
-
-
-        //[HttpGet]
-        //[Route("api/Managers/ReadEmail_RpasswordM")]
-
-        //public HttpResponseMessage ReadEmail_RpasswordM(string email) // forget password
-        //{
-        //    try
-        //    {
-        //        Manager m = new Manager();
-        //        return Request.CreateResponse(HttpStatusCode.OK, m.ReadEmail_RpasswordM(email));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.Message == "failed to connect to the server")
-        //        {
-        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-        //        }
-        //        else
-        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-        //    }
-
-        //}
-
         [HttpGet]
         [Route("api/Managers/ReadEmail_RpasswordM")]
 
@@ -89,29 +43,6 @@ namespace finalproject.Controllers
             Manager m = new Manager();
             return m.ReadEmail_RpasswordM(email);
         }
-
-
-        //[HttpGet]
-        //[Route("api/Managers/ReadManager_M")]
-
-        //public HttpResponseMessage ReadManager_M(string email) 
-        //{
-        //    try
-        //    {
-        //        Manager m = new Manager();
-        //        return Request.CreateResponse(HttpStatusCode.OK, m.ReadManager_M(email));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.Message == "failed to connect to the server")
-        //        {
-        //            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-        //        }
-        //        else
-        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
-        //    }
-
-        //}
 
         [HttpGet]
         [Route("api/Managers/ReadManager_M")]
@@ -122,13 +53,11 @@ namespace finalproject.Controllers
             return m.ReadManager_M(email);
         }
 
-
         // POST api/<controller>
         public void Post([FromBody] string value)
         {
         }
 
-      
 
         // DELETE api/<controller>/5
         public void Delete(int id)

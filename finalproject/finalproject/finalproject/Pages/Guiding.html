@@ -19,7 +19,6 @@
             let apiCall = "../api/GuidingPrograms/Read_GP";
             ajaxCall("GET", apiCall, "", getSuccessGP, getErrorGP);
             $(document).on("click", ".btnLevel", startLevel);
-           /* $("#nextContent").hide();*/
             $(document).on("click", "#uploadRender", uploadRender);
             $(document).on("click", "#checkAnswer", checkAnswer);
             $(document).on("click", "#nextUpload", nextUpload);
@@ -163,7 +162,7 @@
                     count++;
                 }
                 str += '<button id="checkAnswer">Check</button><br>';
-                str += '<div id="renderNext"><button id="nextAnswer">Next</button></div>';
+                str += '<div id="renderNext"><button id="nextAnswer" disabled>Next</button></div>';
                 indexQuestion++;
                 startpoint += 4;
                 endpoint += 4;
@@ -197,7 +196,7 @@
                 finalScore += AllScores[i] * ((100 / AllScores.length)/100);
             }
             str = '';
-            str += '*You have completed the program! Your final score is:' + finalScore ;
+            str += 'You have completed the program! Your final score is: ' + finalScore ;
             document.getElementById("alertMessage").innerHTML = str;
             performs();
         }
@@ -221,6 +220,7 @@
                 else alert("Sorry, The answer is incorrect")
                 indexAnswer++;
                 score += 0;
+                $("#nextAnswer").attr('disabled', false);
             }
         }
 

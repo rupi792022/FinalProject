@@ -151,3 +151,11 @@ a {
 .questionP{
     color:black;
 }
+
+#alertMessage {
+    color: teal;
+    font-size: 16px;
+    font-family: Calibri;
+    font-weight: bold;
+    
+}
