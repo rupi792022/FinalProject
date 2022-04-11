@@ -34,6 +34,11 @@ namespace finalproject.Models.DAL
             return con;
 
         }
+
+        //--------------------------------------------------------------------------//
+        //________________________Relates to the Volunteer _________________________//
+        //--------------------------------------------------------------------------//
+
         public bool InsertEmail(Volunteer volunteer) // singIn page
         {
 
@@ -324,7 +329,7 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        public Volunteer ReadVolunteer_V(string email)
+        public Volunteer ReadVolunteer_V(string email) //for localStorage in VolunteerHome
         {
 
             SqlConnection con = null;
@@ -345,7 +350,7 @@ namespace finalproject.Models.DAL
                 Volunteer v = new Volunteer();
                 while (dr.Read())
                 {
-                    v.First_name = (string)dr["first_name"]; // all the fields are mandatory so it is enough to check only one field to know if all of them are null
+                    v.First_name = (string)dr["first_name"]; 
                     v.Last_name = (string)dr["last_name"];
                     v.Volunteer_email = (string)dr["email"];
                 }
@@ -366,7 +371,9 @@ namespace finalproject.Models.DAL
 
         }
 
-        /////////////------------- Relates to the manager -------------/////////////
+        //--------------------------------------------------------------------------//
+        //__________________________Relates to the manager__________________________//
+        //--------------------------------------------------------------------------//
 
         public bool ReadEmail_M(string email)
         {
@@ -507,7 +514,7 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        public Manager ReadManager_M(string email)
+        public Manager ReadManager_M(string email) //for localStorage in ManagerHome
         {
 
             SqlConnection con = null;
@@ -558,9 +565,10 @@ namespace finalproject.Models.DAL
         }
 
 
-
-        /////////////------------- Relates to the Guiding Program -------------/////////////
-        ///
+        //--------------------------------------------------------------------------//
+        //_____________________Relates to the Guiding Program_______________________//
+        //--------------------------------------------------------------------------//
+ 
         public void InsertLevel(GuidingProgram GP) // insert level into a guiding program 
         {
 
@@ -722,8 +730,6 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        /////////////------------- Relates to the Guiding -------------/////////////
-
         public List<GuidingProgram> Read_GP()
         {
             SqlConnection con = null;
@@ -775,7 +781,6 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        
         
         public int Read_maxLevel()
         {
@@ -853,7 +858,9 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        ////////////////
+        //--------------------------------------------------------------------------//
+        //_____________________Relates to the Performs Program\_______________________//
+        //--------------------------------------------------------------------------//
 
         public void InsertPerforms(PerformsProgram p)
         {
@@ -872,7 +879,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in adding new user", ex);
+                throw new Exception("faild in adding Performs Program", ex);
             }
             finally
             {
@@ -891,7 +898,7 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-             public int Read_maxLevelsPerforms(string email)
+        public int Read_maxLevelsPerforms(string email)
         {
             SqlConnection con = null;
 
@@ -912,7 +919,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in reading of GuidingProgram", ex);
+                throw new Exception("failed in reading of maxlevel", ex);
             }
             finally
             {
@@ -923,7 +930,7 @@ namespace finalproject.Models.DAL
 
         private SqlCommand createSelectCommand_maxLevelsPerforms(SqlConnection con, string email)
         {
-            string commandStr = "SELECT max(level_serial_num) as 'maxlevel'  FROM Performs_program_2022 where email = @email";
+            string commandStr = "SELECT max(level_serial_num) as 'maxlevel' FROM Performs_program_2022 where email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
@@ -971,6 +978,5 @@ namespace finalproject.Models.DAL
             return cmd;
         }
     }
-
 
 }

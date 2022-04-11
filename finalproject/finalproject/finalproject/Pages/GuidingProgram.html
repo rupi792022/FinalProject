@@ -24,7 +24,7 @@
             countLevel = 1;
             toUpdate = false;
 
-            $("#defineTheProgram").hide();
+            $("#defineTheProgram").hide(); //Name of Program and Number of level div
             $("#stepDetails").hide();
             $("#back").hide();
             $("#finishProgram").hide();
@@ -40,7 +40,7 @@
             $('#finishProgram').click(FinishProgram);
             $('#remove').click(Remove);
 
-            $('#buttonUpload').on('click', function () {
+            $('#buttonUpload').on('click', function () { //uploaded file
                 clickUpload++;
                 var data = new FormData();
                 var files = $("#files").get(0).files;
@@ -95,7 +95,6 @@
             else {
                 imgStr = "<img src='../" + data + "'/>";
             }
-
             document.getElementById("ph").innerHTML = imgStr;
         }
 
@@ -104,22 +103,21 @@
         }
 
         function AddNewProgram() {
-            $("#defineTheProgram").show();
-            $("#btnChoose").hide();
-
+            $("#defineTheProgram").show(); //Name of Program and Number of level div
+            $("#btnChoose").hide(); // add/edit btn div
             ajaxCall("DELETE", "../api/GuidingPrograms", deleteSuccess, deleteErrorCB);
         }
 
         function deleteSuccess() {
-            console.log("Success delete");
+            console.log("Success delete the GD");
         }
 
         function deleteErrorCB() {
-            console.log("Error delete");
+            console.log("Error delete the GD");
         }
 
         function start() {
-            if ($("#level_serial_num").val() == "" || $("#program_name").val() == "") {
+            if ($("#level_serial_num").val() == "" || $("#program_name").val() == "") {//check required fields
                 str = '';
                 str += '*You must enter program name and number of levels to continue';
                 document.getElementById("alertMessage1").innerHTML = str;
@@ -139,7 +137,7 @@
         }
 
         function AddQuestion() {
-            count++;
+            count++; //Question number
             if (count <= NumOfAnswers) {
                 str = "";
                 str += '<tr><td><p>Question ' + count + ':</p></td>';
@@ -277,7 +275,7 @@
         function Next() {
             NumOfLevel++;
             countLevel++;
-            if (NumOfLevel <= LevelsAmount) {
+            if (NumOfLevel <= LevelsAmount) { //The number of levels in the program
                 let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
                 ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
                 $("#back").show();
@@ -287,7 +285,7 @@
             else {
                 alert("You have reached the maximum amount of levels. Click finish if you share");
             }
-            if (NumOfLevel == LevelsAmount) {
+            if (NumOfLevel == LevelsAmount) { //When we reach the final level the next button changes to finishProgram
                 $("#finishProgram").show();
                 $("#next").hide();
             }
@@ -296,7 +294,7 @@
         function getSuccessNext(DetailsOfLevel) {
             $(".loginBox").css({ "height": "650px", "width": "1000px", "top": "65%" });
             title(NumOfLevel);
-            if (DetailsOfLevel.Content_level != null) {//אם באותו השלב הערכים מלאים
+            if (DetailsOfLevel.Content_level != null) {//check if is the values are full in the level
                 insertDetails(DetailsOfLevel);
             }
             else {
@@ -314,10 +312,33 @@
             }
         }
 
+        function insertDetails(DetailsOfLevel) { 
+            $(".loginBox").css({ "height": "+=20" });
+            toUpdate = true;
+            str = "";
+            document.getElementById("renderQA").innerHTML = str;
+            strFile = "You must upload the relevant files for this step again.";
+            document.getElementById("alertMessageFile").innerHTML = strFile;
+            $("#contentLevel").val(DetailsOfLevel.Content_level);
+            $("#question1").val(DetailsOfLevel.Question_content_1);
+            var Question = [];//array of all the questions
+            Question.push(DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
+            arrAnswers_1 = DetailsOfLevel.Answers_1.split(","); 
+            $("#1_correctAnswer1").val(arrAnswers_1[0]);
+            $("#1_Answer2").val(arrAnswers_1[1]);
+            $("#1_Answer3").val(arrAnswers_1[2]);
+            $("#1_Answer4").val(arrAnswers_1[3]);
+            arrAnswers_2 = DetailsOfLevel.Answers_2.split(",");
+            arrAnswers_3 = DetailsOfLevel.Answers_3.split(",");
+            arrAnswers_4 = DetailsOfLevel.Answers_4.split(",");
+            allAnswersArr = arrAnswers_2.concat(arrAnswers_3, arrAnswers_4);
+
+            renderLevelDetails(Question, allAnswersArr); 
+        }
+
         function renderLevelDetails(Question, allAnswersArr) {
             answers = 0;
-            howMach = 1;
-            //idNum = 2;
+            howMach = 1; //for AddQuestion if we update
             NumOfAnswer = 1;
             str = "";
             for (var i = 0; i < Question.length; i++) {
@@ -332,7 +353,6 @@
                         }
                         else {
                             str += '<tr><td></td><td></td><td><p>' + NumOfAnswer + '.</p></td><td><input type="text" id="' + (i + 2) + '_Answer' + NumOfAnswer + '" name="Answer"' + NumOfAnswer + '" value="' + allAnswersArr[k] + '"></td></tr>';
-                            //    idNum++;
                         }
                         NumOfAnswer++;
                     }
@@ -349,32 +369,8 @@
                 count = howMach;
         }
 
-        function insertDetails(DetailsOfLevel) {
-            $(".loginBox").css({ "height": "+=20" });
-            toUpdate = true;
-            str = "";
-            document.getElementById("renderQA").innerHTML = str;
-            strFile = "You must upload the relevant files for this step again.";
-            document.getElementById("alertMessageFile").innerHTML = strFile;
-            $("#contentLevel").val(DetailsOfLevel.Content_level);
-            $("#question1").val(DetailsOfLevel.Question_content_1);
-            var Question = [];//array of all the questions
-            Question.push(DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
-            arrAnswers_1 = DetailsOfLevel.Answers_1.split(",");
-            $("#1_correctAnswer1").val(arrAnswers_1[0]);
-            $("#1_Answer2").val(arrAnswers_1[1]);
-            $("#1_Answer3").val(arrAnswers_1[2]);
-            $("#1_Answer4").val(arrAnswers_1[3]);
-            arrAnswers_2 = DetailsOfLevel.Answers_2.split(",");
-            arrAnswers_3 = DetailsOfLevel.Answers_3.split(",");
-            arrAnswers_4 = DetailsOfLevel.Answers_4.split(",");
-            allAnswersArr = arrAnswers_2.concat(arrAnswers_3, arrAnswers_4);
-
-            renderLevelDetails(Question, allAnswersArr)
-        }
-
         function getErrorNext() {
-            console.log(nexterror);
+            console.log("Error moving to next step");
         }
 
         function Back() {
@@ -420,7 +416,7 @@
         }
 
         function getSuccessMaxLevel(maxLevel) {
-            LevelsAmount = maxLevel;
+            LevelsAmount = maxLevel; //LevelsAmount is The number of levels in the program
         }
 
         function getErrorMaxLevel() {

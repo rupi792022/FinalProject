@@ -24,7 +24,7 @@
             email = $("#email").val();
             password = $("#password").val();
 
-            if (email == "" || password == "") {
+            if (email == "" || password == "") { //check required fields
                 str = '';
                 str += '*You must enter email and a password to log in';
                 document.getElementById("alertMessage").innerHTML = str;
@@ -36,7 +36,7 @@
             }
         }
 
-        function SaveUserDetails() {
+        function SaveUserDetails() { // localStorage
             if (typeof (Storage) !== "undefined") {
                 localStorage.setItem('userDetails', JSON.stringify(email));
             }
@@ -44,8 +44,6 @@
                 alert("web storage not supported!");
             }
         }
-
-
 
         function getSuccessEmail_v(VolunteerEmail) {
             if (VolunteerEmail == true) {
@@ -78,6 +76,16 @@
 
         function getSuccessDetails_v(VolunteerDetails) {
             SaveUserDetails();
+            let myVolunteer = {
+                Volunteer_email: email,
+                Volunteer_password: password
+            }
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem('VolunteerDetails', JSON.stringify(myVolunteer));
+            }
+            else {
+                alert("web storage not supported!");
+            }
             if (VolunteerDetails == true) {
                 window.location.href = "VolunteerPersonalDetails.html";
             }

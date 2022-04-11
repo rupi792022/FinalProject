@@ -24,8 +24,6 @@ namespace finalproject.Controllers
             return volunteer.ReadPassword_V(email, password);
         }
 
-        
-
         [HttpGet]
         [Route("api/Volunteers/ReadEmail_RpasswordV")]
 
@@ -34,7 +32,6 @@ namespace finalproject.Controllers
             Volunteer v = new Volunteer();
             return v.ReadEmail_RpasswordV(email);
         }
-
 
 
         [HttpGet]
@@ -46,7 +43,6 @@ namespace finalproject.Controllers
         }
 
 
-       
         [HttpGet]
         [Route("api/Volunteers/ReadDetails_V")]
         public bool ReadDetails_V(string email)
@@ -54,7 +50,6 @@ namespace finalproject.Controllers
             Volunteer v = new Volunteer();
             return v.ReadDetails_V(email);
         }
-
 
 
         [HttpGet]
@@ -65,6 +60,7 @@ namespace finalproject.Controllers
                 return v.ReadVolunteer_V(email);     
         }
         // POST api/<controller>
+
         public HttpResponseMessage Post([FromBody] Volunteer volunteer)
         {
             bool emailExist = volunteer.InsertEmail();

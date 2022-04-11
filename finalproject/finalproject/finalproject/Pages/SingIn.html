@@ -31,7 +31,7 @@
             window.location.href = "LogIn.html";
         }
 
-        function Send() {
+        function Send() { //Entering volunteers into the system and sending an email with a password
             let email = $("#email").val();
             let DefaltPassword = '0000000A';
 
@@ -44,7 +44,7 @@
             return false;
         }
 
-        function postSuccessCB(sentOrExistEmail) {
+        function postSuccessCB(sentOrExistEmail) { 
             if (sentOrExistEmail == true) {
                 alert("The email is allready exist in the system, please enter another email");
             }
@@ -54,7 +54,6 @@
         }
 
         function postErrorCB() {
-
             console.log("Failed to save email");
         }
 
@@ -77,16 +76,12 @@
             </ul>
         </div>
     </nav>
-
-
     <div class="loginBox">
         <p>Please enter an email to create a new user in the system.</p><br>
-        <form>
             <div class="inputBox">
-                <input type="email" id="email" placeholder="Email" name="email" required pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"/>
+                <input type="email" id="email" placeholder="Email" name="email" pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$"/>
                 <button type="button" id="send">Send</button>
             </div>
-        </form>
     </div>
 </body>
 </html>

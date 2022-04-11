@@ -20,11 +20,10 @@
         });
 
         function SaveDatails() {
-            getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
 
             let newpassword = $("#NewPassword").val();
             let verifynewpassword = $("#VerifyNewPassword").val();
-
             if (newpassword != verifynewpassword) {
                 alert("Verification is not correct.")
             }
@@ -35,7 +34,6 @@
                 else
                     password = getDatails.Volunteer_password;
             }
-
             let firstname = $("#firstname").val();
             let lastname = $("#lastname").val();
             let birthdate = $("#birthdate").val();
@@ -50,6 +48,7 @@
             });
             let strLanguage = arrLanguage.toString();
 
+            //Required fields
             if (firstname == "" || lastname == "" || birthdate == "" || mobilephone == "" || startdate == "" || gender == undefined || volunteertype == undefined || strLanguage == "") {
                 str = '';
                 str += '*You must enter all fields to continue';
