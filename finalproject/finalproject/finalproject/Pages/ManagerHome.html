@@ -24,7 +24,7 @@
             else {
                 alert("web storage not supported!");
             }
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + managerDetails.First_name.toUpperCase() + ' ' + managerDetails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + managerDetails.First_name + ' ' + managerDetails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
         }
 
@@ -47,7 +47,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="ManagerHome.html">Home</a></li>
-                <li><a class="space" href="GuidingProgram.html">Learning guidance</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
                 <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="#">Reports</a></li>
                 <li><a class="space" href="#">Deshbord</a></li>
@@ -84,7 +84,7 @@
                         <div class="card">
                             <img  class="imgCard" src="../Images/social media.png" />
                             <div class="textCard">
-                                <p>Learning guidance</p>
+                                <p>Guiding Program </p>
                             </div>
                         </div>
                     </a>

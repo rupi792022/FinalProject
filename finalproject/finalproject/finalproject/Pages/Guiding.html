@@ -99,13 +99,15 @@
             if (index == (allPath.length - 1)) { //check if we have finished going through all the files
                 str += '<p>Now you are required to take an exam.</br>A number of questions will appear on the exam.</br> When you click on the "Next" button you will start the exam and you will not be able to go back.</br>At the end of each question, click on the "Check" button and then "Next" to continue to the next question.</p>';
                 str += '<div id="renderNext"><button id="createQuestion">Next</button></div>';
+                $(".loginBox").css({ "height": "540px", "width": "850px", "top": "55%" });
             }
             else {
                 if (Extantions[index] == "pdf" || Extantions[index] == "docx") {
-                    str += '<embed type="text/' + Extantions[index] + '" src="../' + filesPath[index] + '.' + Extantions[index] + '" width="850" height="540" >';
+                    str += '<embed class="uploadPDF" type="text/' + Extantions[index] + '" src="../' + filesPath[index] + '.' + Extantions[index] + '">';
+                    $(".loginBox").css({ "height": "650px", "width": "950px", "top": "65%" });
                 }
                 else if (Extantions[index] == "png" || Extantions[index] == "jpg")
-                    str += '<img class="uploadImage" src="../' + filesPath[index] + '.' + Extantions[index] + '" width="500" height="500" />';
+                    str += '<img class="uploadImage" src="../' + filesPath[index] + '.' + Extantions[index] + '" />';
                 str += '<div id="renderNext"><button id="nextUpload">Next</button></div>';
                 index++;
             }
@@ -231,7 +233,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
-                <li><a class="space" href="#">לומדה</a></li>
+                <li><a class="space" href="#">Tutorial</a></li>
                 <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="#">Reports</a></li>
                 <li><a class="space" href="#">Keywords</a></li>

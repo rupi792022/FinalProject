@@ -55,7 +55,7 @@
                 document.getElementById("alertMessage").innerHTML = str;
             } 
 
-            let MyVolunteerDetails = {
+           let MyVolunteerDetails = {
                 First_name: firstname,
                 Last_name: lastname,
                 Date_of_birth: birthdate,
@@ -72,7 +72,7 @@
         }
      
             function SaveSuccess() {
-                localStorage.setItem("userDetails", JSON.stringify(MyVolunteerDetails));
+                localStorage.setItem("userDetails", JSON.stringify(getDatails.Volunteer_email));
                 window.location.href = "VolunteerHome.html";
             }
             function SaveError(error) {
