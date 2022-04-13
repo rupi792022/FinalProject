@@ -39,7 +39,7 @@ namespace finalproject.Models.DAL
         //________________________Relates to the Volunteer _________________________//
         //--------------------------------------------------------------------------//
 
-        public bool InsertEmail(Volunteer volunteer) // singIn page
+        public bool InsertEmail(Volunteer volunteer) // SingIn page
         {
 
             SqlConnection con = null;
@@ -62,7 +62,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in adding new user", ex);
+                throw new Exception("failed to add new user", ex);
             }
             finally
             {
@@ -118,7 +118,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in adding new user", ex);
+                throw new Exception("failed to read volunteer by email", ex);
             }
             finally
             {
@@ -161,7 +161,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading password", ex);
+                throw new Exception("failed to read the password", ex);
             }
             finally
             {
@@ -200,7 +200,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading password", ex);
+                throw new Exception("failed to read the password", ex);
             }
             finally
             {
@@ -243,7 +243,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in adding new user", ex);
+                throw new Exception("failed to check if there is values in the volunteer details", ex);
             }
             finally
             {
@@ -284,7 +284,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in update the user details", ex);
+                throw new Exception("failed to update the user details", ex);
             }
             finally
             {
@@ -361,7 +361,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading volunteer details", ex);
+                throw new Exception("failed to read the volunteer details", ex);
             }
             finally
             {
@@ -404,7 +404,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
                 // write the error to log
-                throw new Exception("failed in reading manager by email", ex);
+                throw new Exception("failed to read manager by email", ex);
             }
             finally
             {
@@ -448,7 +448,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading password", ex);
+                throw new Exception("failed to read the password", ex);
             }
             finally
             {
@@ -487,7 +487,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading password", ex);
+                throw new Exception("failed to read the password", ex);
             }
             finally
             {
@@ -545,7 +545,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading manager details", ex);
+                throw new Exception("failed to read the manager details", ex);
             }
             finally
             {
@@ -586,7 +586,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in adding new user", ex);
+                throw new Exception("failed to add level into a guiding program", ex);
             }
             finally
             {
@@ -647,7 +647,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in reading level", ex);
+                throw new Exception("failed to read level", ex);
             }
             finally
             {
@@ -679,7 +679,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in update the user details", ex);
+                throw new Exception("failed to update the level details", ex);
             }
             finally
             {
@@ -765,7 +765,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in reading of GuidingProgram", ex);
+                throw new Exception("failed to read the GuidingProgram", ex);
             }
             finally
             {
@@ -802,7 +802,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in reading of GuidingProgram", ex);
+                throw new Exception("failed to read the maxLevel", ex);
             }
             finally
             {
@@ -839,7 +839,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in delete the program", ex);
+                throw new Exception("failed to delete the program", ex);
             }
             finally
             {
@@ -879,7 +879,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("faild in adding Performs Program", ex);
+                throw new Exception("failed to add the Performs Program", ex);
             }
             finally
             {
@@ -919,7 +919,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in reading of maxlevel", ex);
+                throw new Exception("failed to read the maxlevel", ex);
             }
             finally
             {
@@ -960,7 +960,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed in reading of GuidingProgram", ex);
+                throw new Exception("failed to read the scores", ex);
             }
             finally
             {

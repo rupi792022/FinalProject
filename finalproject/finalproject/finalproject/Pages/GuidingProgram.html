@@ -54,8 +54,7 @@
                 }
 
                 if (clickUpload == 1) {
-                    $(".loginBox").css({ "height": "+=50" });
-                    $(".loginBox").css({ "top": "+=5%" });
+                    $(".loginBox").css({ "height": "+=55", "top": "+=5%"});
                 }
 
                 // Ajax upload
@@ -151,8 +150,7 @@
                 str += '</tr>';
                 $(str).clone().appendTo("#renderQA");
 
-                $(".loginBox").css({ "height": "+=165" });
-                $(".loginBox").css({ "top": "+=14%" });
+                $(".loginBox").css({ "height": "+=160", "top": "+=14%" });
             }
             else alert("You can only insert a 4 questions");
             $("#remove").show();
@@ -165,8 +163,7 @@
                 table.deleteRow(rowCount - i);
             }
             count--;
-            $(".loginBox").css({ "height": "-=160" });
-            $(".loginBox").css({ "top": "-=14%" });
+            $(".loginBox").css({ "height": "-=160", "top": "-=14%" });
             if (count == 1)
                 $("#remove").hide();
         }
@@ -225,6 +222,8 @@
             }
 
             else {
+                str = '';
+                document.getElementById("alertMessage2").innerHTML = str;
                 MyGuidingProgram = {
                     Manager_email: managerEmail,
                     Program_name: programName,
@@ -292,6 +291,7 @@
         }
 
         function getSuccessNext(DetailsOfLevel) {
+            clickUpload = 0;
             $(".loginBox").css({ "height": "650px", "width": "1000px", "top": "65%" });
             title(NumOfLevel);
             if (DetailsOfLevel.Content_level != null) {//check if is the values are full in the level
@@ -357,8 +357,7 @@
                         NumOfAnswer++;
                     }
                     answers += 4;
-                    $(".loginBox").css({ "height": "+=160" });
-                    $(".loginBox").css({ "top": "+=14%" });
+                    $(".loginBox").css({ "height": "+=160", "top": "+=14%" });
                 }
                 document.getElementById("renderQA").innerHTML = str;
             }
@@ -375,6 +374,7 @@
 
         function Back() {
             NumOfLevel--;
+            countLevel--;
             $("#back").attr('disabled', false);
             let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
             ajaxCall("GET", apiCall, "", getSuccessBack, getErrorBack);
@@ -386,6 +386,7 @@
         }
 
         function getSuccessBack(DetailsOfLevel) {
+            clickUpload = 0;
             $(".loginBox").css({ "height": "650px", "width": "1000px", "top": "65%" });
             console.log(DetailsOfLevel);
             title(NumOfLevel);

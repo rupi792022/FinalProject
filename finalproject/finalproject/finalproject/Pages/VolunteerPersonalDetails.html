@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -34,41 +32,43 @@
                 else
                     password = getDatails.Volunteer_password;
             }
-            let firstname = $("#firstname").val();
-            let lastname = $("#lastname").val();
-            let birthdate = $("#birthdate").val();
-            let mobilephone = $("#mobilephone").val();
-            let email = getDatails.Volunteer_email;
-            let gender = $("input[type=radio][name=gender]:checked").val();
-            let startdate = $("#startdate").val();
-            let volunteertype = $("input[type=radio][name=volunteertype]:checked").val();
+             firstname = $("#firstname").val();
+             lastname = $("#lastname").val();
+             birthdate = $("#birthdate").val();
+             mobilephone = $("#mobilephone").val();
+             email = getDatails.Volunteer_email;
+             gender = $("input[type=radio][name=gender]:checked").val();
+             startdate = $("#startdate").val();
+             volunteertype = $("input[type=radio][name=volunteertype]:checked").val();
             var arrLanguage = [];
             $.each($("input[name='language']:checked"), function () {
                 arrLanguage.push($(this).val());
             });
-            let strLanguage = arrLanguage.toString();
+             strLanguage = arrLanguage.toString();
 
             //Required fields
             if (firstname == "" || lastname == "" || birthdate == "" || mobilephone == "" || startdate == "" || gender == undefined || volunteertype == undefined || strLanguage == "") {
                 str = '';
                 str += '*You must enter all fields to continue';
                 document.getElementById("alertMessage").innerHTML = str;
-            } 
-
-           let MyVolunteerDetails = {
-                First_name: firstname,
-                Last_name: lastname,
-                Date_of_birth: birthdate,
-                Phone_number: mobilephone,
-                Gender: gender,
-                Volunteer_email: email,
-                Start_date: startdate,
-                Volunteer_type: volunteertype,
-                Volunteer_password: password,
-                Language: strLanguage
             }
-            ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccess, SaveError)
-            return false;
+            else {
+                let MyVolunteerDetails = {
+                    First_name: firstname,
+                    Last_name: lastname,
+                    Date_of_birth: birthdate,
+                    Phone_number: mobilephone,
+                    Gender: gender,
+                    Volunteer_email: email,
+                    Start_date: startdate,
+                    Volunteer_type: volunteertype,
+                    Volunteer_password: password,
+                    Language: strLanguage
+                }
+                ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccess, SaveError)
+                return false;
+            }
+          
         }
      
             function SaveSuccess() {
@@ -112,8 +112,8 @@
                             <p>Volunteer Type:</p>
                             <input type="radio" id="freetime" name="volunteertype" value="FreeTime" />
                             <label for="freetime"> Free time</label><br>
-                            <input type="radio" id="againsthours" name="volunteertype" value="AgainstHours" />
-                            <label for="againsthours"> Against hours</label>
+                            <input type="radio" id="Volunteer hours" name="volunteertype" value="Volunteer hours" />
+                            <label for="Volunteer hours"> Volunteer hours</label>
                         </td>
                         <td>
                             <p>Choose your language/s:</p>
