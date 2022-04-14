@@ -102,10 +102,23 @@
         }
 
         function AddNewProgram() {
+            NumOfLevel = 1;
             $("#defineTheProgram").show(); //Name of Program and Number of level div
             $("#btnChoose").hide(); // add/edit btn div
-            ajaxCall("DELETE", "../api/GuidingPrograms", deleteSuccess, deleteErrorCB);
+            let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
+            ajaxCall("GET", apiCall, "", getSuccessAddNewProgram, getErrorAddNewProgram);
         }
+
+        function getSuccessAddNewProgram(DetailsOfLevel) {
+            if (DetailsOfLevel.Content_level != null) {
+                ajaxCall("DELETE", "../api/GuidingPrograms", deleteSuccess, deleteErrorCB);
+            }
+        }
+
+        function getErrorAddNewProgram() {
+            console.log("Error");
+        }
+
 
         function deleteSuccess() {
             console.log("Success delete the GD");
