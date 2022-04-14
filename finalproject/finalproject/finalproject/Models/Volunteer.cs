@@ -69,10 +69,6 @@ namespace finalproject.Models
 
         public bool sendEmail(string email, string password) //send Email
         {
-            //    DBservices dbs = new DBservices();
-            //    string password = dbs.forgotPassword(email);
-            //if (password == null)
-            //    return "The email address is not registered. \n Please try again.";
             // Gmail Address from where you send the mail 
             var fromAddress = "rupi792022@gmail.com";
             // any address where the email will be sending       
