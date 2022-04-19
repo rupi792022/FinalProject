@@ -195,6 +195,7 @@
     <Content Include="css\GuidingProgram.css" />
     <Content Include="css\LogIn.css" />
     <Content Include="css\ManagerHome.css" />
+    <Content Include="css\Reports.css" />
     <Content Include="css\SingIn.css" />
     <Content Include="css\VolunteerHome.css" />
     <Content Include="css\Guiding.css" />
@@ -213,6 +214,7 @@
     <Content Include="Pages\GuidingProgram.html" />
     <Content Include="Pages\ForgotPassword.html" />
     <Content Include="Pages\LogIn.html" />
+    <Content Include="Pages\Reports.html" />
     <Content Include="Pages\SingIn.html" />
     <Content Include="Pages\ManagerHome.html" />
     <Content Include="Pages\VolunteerHome.html" />

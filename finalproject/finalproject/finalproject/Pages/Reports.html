@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/Reports.css" rel="stylesheet" />
+    <title></title>
+    <script>
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name.toUpperCase() + ' ' + getDatails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
+            $('#submit').click(submitReport);
+
+        });
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+        function submitReport() {
+
+            contentLink = $("#contentLink").val();
+            country = $("#country option:selected").val();
+            explanation = $("#explanation").val();
+            email = getDatails.Volunteer_email;
+            language = $("input[type=radio][name=language]:checked").val();
+            socialNetwork = $("input[type=radio][name=socialNetwork]:checked").val();
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="logoFOA" src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="VolunteerHome.html">Home</a></li>
+                <li><a class="space" href="#">Tutorial</a></li>
+                <li><a class="space" href="#">Activity time</a></li>
+                <li><a class="space" href="Reports.html">Reports</a></li>
+                <li><a class="space" href="#">Keywords</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div class="inputBox">
+            <table>
+                <tr>
+                    <td colspan="2"><p>Content link:</p></td>
+                    <td><input type="url" id="contentLink" name="contentLink" placeholder="Enter content link" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p>Country where the post was published:</p></td>
+                    <td>
+                        <select name="country" id="country">
+                            <option value="Israel">Israel</option>
+                            <option value="Russia">Russia</option>
+                            <option value="France">France</option>
+                            <option value="England">England</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p>Short explanation:</p></td>
+                    <td colspan="2"><textarea id="explanation" name="explanation" cols="50" rows="8" placeholder="Enter a short explanation"></textarea></td>
+                </tr>
+            </table>
+                <table>
+                    <tr>
+                        <td><p>Choose language:</p></td>
+                        <td>
+                            <input type="radio" id="Hebrew" name="language" value="Hebrew" />
+                            <label for="Hebrew">Hebrew</label><br>
+                            <input type="radio" id="English" name="language" value="English" />
+                            <label for="English">English</label><br>
+                            <input type="radio" id="Russian" name="language" value="Russian" />
+                            <label for="Russian">Russian</label><br>
+                            <input type="radio" id="French" name="language" value="French" />
+                            <label for="French">French</label><br>
+                            <input type="radio" id="Arabic" name="language" value="Arabic" />
+                            <label for="Arabic">Arabic</label>
+                        <td><p>Choose social network:</p></td>
+                        <td>
+                            <input type="radio" id="Facebook" name="socialNetwork" value="Facebook" />
+                            <label for="Facebook">Facebook</label><br>
+                            <input type="radio" id="Instagram" name="socialNetwork" value="Instagram" />
+                            <label for="Instagram">Instagram</label><br>
+                            <input type="radio" id="Twitter" name="socialNetwork" value="Twitter" />
+                            <label for="Twitter">Twitter</label><br>
+                            <input type="radio" id="Tik-Tok" name="socialNetwork" value="Tik-Tok" />
+                            <label for="Tik-Tok">Tik-Tok</label><br>
+                            <input type="radio" id="YouTube" name="socialNetwork" value="YouTube" />
+                            <label for="YouTube">YouTube</label><br>
+                            <input type="radio" id="VK" name="socialNetwork" value="VK" />
+                            <label for="VK">VK</label>
+                        </td>
+                    </tr>
+            </table>
+            <button type="button" id="submit">Submit</button>
+        </div>
+        </div>
+</body>
+</html>
