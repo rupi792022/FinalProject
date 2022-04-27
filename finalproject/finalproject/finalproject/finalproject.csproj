@@ -182,6 +182,7 @@
     <Compile Include="Models\DAL\DataServices.cs" />
     <Compile Include="Models\GuidingProgram.cs" />
     <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\QandA.cs" />
     <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -211,7 +212,8 @@
     <Content Include="Images\reports.png" />
     <Content Include="Images\social media.png" />
     <Content Include="Images\volunteer.png" />
-    <Content Include="Pages\GuidingProgram.html" />
+    <Content Include="Pages\GuidingProgramNew.html" />
+    <Content Include="Pages\GuidingProgramOld.html" />
     <Content Include="Pages\ForgotPassword.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\Reports.html" />

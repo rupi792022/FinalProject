@@ -568,7 +568,53 @@ namespace finalproject.Models.DAL
         //--------------------------------------------------------------------------//
         //_____________________Relates to the Guiding Program_______________________//
         //--------------------------------------------------------------------------//
- 
+
+        public int Read_Max_Program() // Reading of the values 
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_MaxProgram(con);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                int maxProgram = 0;
+
+                while (dr.Read())
+                {
+                    maxProgram = Convert.ToInt16(dr["guiding_serial_num"]);
+                }
+
+                return maxProgram;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read level", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+        SqlCommand createSelectCommand_MaxProgram(SqlConnection con)
+        {
+            string commandStr = "SELECT max(guiding_serial_num) as  FROM Guiding_program_2022";
+            SqlCommand cmd = createCommand(con, commandStr); 
+            return cmd;
+        }
+
         public void InsertLevel(GuidingProgram GP) // insert level into a guiding program 
         {
 

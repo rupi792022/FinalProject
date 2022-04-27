@@ -18,6 +18,11 @@ namespace finalproject.Controllers
 
         // GET api/<controller>/5
 
+        public int Read_Max_Program()
+        {
+            GuidingProgram gp = new GuidingProgram();
+            return gp.Read_Max_Program();
+        }
 
         [HttpGet]
         [Route("api/GuidingPrograms/Read_Level")]
