@@ -590,7 +590,8 @@ namespace finalproject.Models.DAL
 
                 while (dr.Read())
                 {
-                    maxProgram = Convert.ToInt16(dr["guiding_serial_num"]);
+                    if (dr["guiding_serial_num"] != DBNull.Value)
+                        maxProgram = Convert.ToInt16(dr["guiding_serial_num"]);
                 }
 
                 return maxProgram;
@@ -610,12 +611,12 @@ namespace finalproject.Models.DAL
         }
         SqlCommand createSelectCommand_MaxProgram(SqlConnection con)
         {
-            string commandStr = "SELECT max(guiding_serial_num) as  FROM Guiding_program_2022";
+            string commandStr = "SELECT max(guiding_serial_num) as guiding_serial_num FROM Guiding_program_2022";
             SqlCommand cmd = createCommand(con, commandStr); 
             return cmd;
         }
 
-        public void InsertLevel(GuidingProgram GP) // insert level into a guiding program 
+        public void InsertProgram(GuidingProgram GP) // insert level into a guiding program 
         {
 
             SqlConnection con = null;
@@ -625,7 +626,7 @@ namespace finalproject.Models.DAL
                 // C - Connect
                 con = Connect("webOsDB");
 
-                SqlCommand command = CreateInsert_Level(GP, con);
+                SqlCommand command = Create_InsertProgram(GP, con);
                 command.ExecuteNonQuery();
             }
 
@@ -641,9 +642,9 @@ namespace finalproject.Models.DAL
             }
         }
 
-        SqlCommand CreateInsert_Level(GuidingProgram GP, SqlConnection con)
+        SqlCommand Create_InsertProgram(GuidingProgram GP, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Guiding_program_2022 ( [level_serial_num],[file_path], [program_name],[email],[content_level],[question_content_1], [question_content_2],[question_content_3],[question_content_4], [answers_1],[answers_2],[answers_3], [answers_4]) VALUES('" + GP.Level_serial_num + "', '" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Manager_email + "', '" + GP.Content_level + "', '" + GP.Question_content_1 + "', '" + GP.Question_content_2 + "', '" + GP.Question_content_3 + "', '" + GP.Question_content_4 + "', '" + GP.Answers_1 + "', '" + GP.Answers_2 + "', '" + GP.Answers_3 + "', '" + GP.Answers_4 + "')";
+            string insertStr = "INSERT INTO Guiding_program_2022 ( [guiding_serial_num],[file_path], [program_name],[content_level]) VALUES('" + GP.Guiding_serial_num + "', '" + GP.File_path + "', '" + GP.Program_name + "', '" + GP.Content_level + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -651,7 +652,8 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        public GuidingProgram Read_Level(int level_num) // Reading of the values 
+        
+        public void InsertQandA(QandA qa) // insert level into a guiding program 
         {
 
             SqlConnection con = null;
@@ -660,40 +662,15 @@ namespace finalproject.Models.DAL
             {
                 // C - Connect
                 con = Connect("webOsDB");
-                // C - Create Command
 
-                SqlCommand selectCommand = createSelectCommand_LevelDetails(con, level_num);
-
-                // Execute the command
-                //
-                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
-                GuidingProgram gp = new GuidingProgram();
-                while (dr.Read())
-                {
-                    gp.File_path = (string)dr["file_path"];
-                    gp.Program_name = (string)dr["program_name"];
-                    gp.Manager_email = (string)dr["email"];
-                    gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
-                    gp.Content_level = (string)dr["content_level"];
-                    gp.Question_content_1 = (string)dr["question_content_1"];
-                    gp.Question_content_2 = (string)dr["question_content_2"];
-                    gp.Question_content_3 = (string)dr["question_content_3"];
-                    gp.Question_content_4 = (string)dr["question_content_4"];
-                    gp.Answers_1 = (string)dr["answers_1"];
-                    gp.Answers_2 = (string)dr["answers_2"];
-                    gp.Answers_3 = (string)dr["answers_3"];
-                    gp.Answers_4 = (string)dr["answers_4"];
-                }
-
-                return gp;
-
+                SqlCommand command = Create_InsertProgram(qa, con);
+                command.ExecuteNonQuery();
             }
 
             catch (Exception ex)
             {
 
-                throw new Exception("failed to read level", ex);
+                throw new Exception("failed to add level into a guiding program", ex);
             }
             finally
             {
@@ -702,123 +679,184 @@ namespace finalproject.Models.DAL
             }
         }
 
-        SqlCommand createSelectCommand_LevelDetails(SqlConnection con, int level_num)
+        SqlCommand Create_InsertProgram(QandA qa, SqlConnection con)
         {
-            string commandStr = "SELECT * FROM Guiding_program_2022 WHERE level_serial_num = @level_num";
-            SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@level_num", SqlDbType.SmallInt);
-            cmd.Parameters["@level_num"].Value = level_num;
-            return cmd;
+            string insertStr = "INSERT INTO Q_and_A_2022 ([question_serial_num],[question_content],[answers],[guiding_serial_num]) VALUES('" + qa.Question_serial_num + "', '" + qa.Question_content + "', '" + qa.Answers + "', '" + qa.Guiding_serial_num + "')";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeout
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
         }
 
-        public void UpdateLevelDetails(GuidingProgram gp) // Update the values 
-        {
+        //public GuidingProgram Read_Level(int level_num) // Reading of the values 
+        //{
 
-            SqlConnection con = null;
+        //    SqlConnection con = null;
 
-            try
-            {
-                con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.File_path, gp.Content_level, gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
-                selectCommand.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
+        //    try
+        //    {
+        //        // C - Connect
+        //        con = Connect("webOsDB");
+        //        // C - Create Command
 
-                throw new Exception("failed to update the level details", ex);
-            }
-            finally
-            {
-                if (con != null)
-                    con.Close();
-            }
-        }
+        //        SqlCommand selectCommand = createSelectCommand_LevelDetails(con, level_num);
 
-        private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string file_path, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
-        {
-            string commandStr = "UPDATE Guiding_program_2022 SET email = @email" +
-               ",file_path = @file_path" +
-                ",content_level =@content_level" +
-                ",question_content_1 =@question_content_1" +
-                ",question_content_2 =@question_content_2 " +
-                ",question_content_3 =@question_content_3" +
-                ",question_content_4 =@question_content_4 " +
-                ",answers_1 =@answers_1 " +
-                ",answers_2 = @answers_2 " +
-                ",answers_3 = @answers_3 " +
-                ",answers_4 = @answers_4 " +
-                " WHERE level_serial_num = @level_serial_num";
-            SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@level_serial_num", SqlDbType.SmallInt);
-            cmd.Parameters["@level_serial_num"].Value = level_serial_num;
-            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
-            cmd.Parameters["@email"].Value = email;
-            cmd.Parameters.Add("@file_path", SqlDbType.NVarChar);
-            cmd.Parameters["@file_path"].Value = file_path;
-            cmd.Parameters.Add("@content_level", SqlDbType.NVarChar);
-            cmd.Parameters["@content_level"].Value = content_level;
-            cmd.Parameters.Add("@question_content_1", SqlDbType.NVarChar);
-            cmd.Parameters["@question_content_1"].Value = question_content_1;
-            cmd.Parameters.Add("@question_content_2", SqlDbType.NVarChar);
-            cmd.Parameters["@question_content_2"].Value = question_content_2;
-            cmd.Parameters.Add("@question_content_3", SqlDbType.NVarChar);
-            cmd.Parameters["@question_content_3"].Value = question_content_3;
-            cmd.Parameters.Add("@question_content_4", SqlDbType.NVarChar);
-            cmd.Parameters["@question_content_4"].Value = question_content_4;
-            cmd.Parameters.Add("@answers_1", SqlDbType.NVarChar);
-            cmd.Parameters["@answers_1"].Value = answers_1;
-            cmd.Parameters.Add("@answers_2", SqlDbType.NVarChar);
-            cmd.Parameters["@answers_2"].Value = answers_2;
-            cmd.Parameters.Add("@answers_3", SqlDbType.NVarChar);
-            cmd.Parameters["@answers_3"].Value = answers_3;
-            cmd.Parameters.Add("@answers_4", SqlDbType.NVarChar);
-            cmd.Parameters["@answers_4"].Value = answers_4;
-            return cmd;
-        }
+        //        // Execute the command
+        //        //
+        //        SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
-        public List<GuidingProgram> Read_GP()
-        {
-            SqlConnection con = null;
+        //        GuidingProgram gp = new GuidingProgram();
+        //        while (dr.Read())
+        //        {
+        //            gp.File_path = (string)dr["file_path"];
+        //            gp.Program_name = (string)dr["program_name"];
+        //            gp.Manager_email = (string)dr["email"];
+        //            gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
+        //            gp.Content_level = (string)dr["content_level"];
+        //            gp.Question_content_1 = (string)dr["question_content_1"];
+        //            gp.Question_content_2 = (string)dr["question_content_2"];
+        //            gp.Question_content_3 = (string)dr["question_content_3"];
+        //            gp.Question_content_4 = (string)dr["question_content_4"];
+        //            gp.Answers_1 = (string)dr["answers_1"];
+        //            gp.Answers_2 = (string)dr["answers_2"];
+        //            gp.Answers_3 = (string)dr["answers_3"];
+        //            gp.Answers_4 = (string)dr["answers_4"];
+        //        }
 
-            try
-            {
-                con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_GuidingProgram(con);
-                List<GuidingProgram> GP_List = new List<GuidingProgram>();
-                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+        //        return gp;
 
-                while (dr.Read())
-                {
-                    GuidingProgram gp = new GuidingProgram();
+        //    }
 
-                    gp.File_path = (string)dr["file_path"];
-                    gp.Program_name = (string)dr["program_name"];
-                    gp.Manager_email = (string)dr["email"];
-                    gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
-                    gp.Content_level = (string)dr["content_level"];
-                    gp.Question_content_1 = (string)dr["question_content_1"];
-                    gp.Question_content_2 = (string)dr["question_content_2"];
-                    gp.Question_content_3 = (string)dr["question_content_3"];
-                    gp.Question_content_4 = (string)dr["question_content_4"];
-                    gp.Answers_1 = (string)dr["answers_1"];
-                    gp.Answers_2 = (string)dr["answers_2"];
-                    gp.Answers_3 = (string)dr["answers_3"];
-                    gp.Answers_4 = (string)dr["answers_4"];
-                    GP_List.Add(gp);
-                }
-                return GP_List;
-            }
-            catch (Exception ex)
-            {
+        //    catch (Exception ex)
+        //    {
 
-                throw new Exception("failed to read the GuidingProgram", ex);
-            }
-            finally
-            {
-                if (con != null)
-                    con.Close();
-            }
-        }
+        //        throw new Exception("failed to read level", ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //            con.Close();
+        //    }
+        //}
+
+        //SqlCommand createSelectCommand_LevelDetails(SqlConnection con, int level_num)
+        //{
+        //    string commandStr = "SELECT * FROM Guiding_program_2022 WHERE level_serial_num = @level_num";
+        //    SqlCommand cmd = createCommand(con, commandStr);
+        //    cmd.Parameters.Add("@level_num", SqlDbType.SmallInt);
+        //    cmd.Parameters["@level_num"].Value = level_num;
+        //    return cmd;
+        //}
+
+        //public void UpdateLevelDetails(GuidingProgram gp) // Update the values 
+        //{
+
+        //    SqlConnection con = null;
+
+        //    try
+        //    {
+        //        con = Connect("webOsDB");
+        //        SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.File_path, gp.Content_level, gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
+        //        selectCommand.ExecuteNonQuery();
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw new Exception("failed to update the level details", ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //            con.Close();
+        //    }
+        //}
+
+        //private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string file_path, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
+        //{
+        //    string commandStr = "UPDATE Guiding_program_2022 SET email = @email" +
+        //       ",file_path = @file_path" +
+        //        ",content_level =@content_level" +
+        //        ",question_content_1 =@question_content_1" +
+        //        ",question_content_2 =@question_content_2 " +
+        //        ",question_content_3 =@question_content_3" +
+        //        ",question_content_4 =@question_content_4 " +
+        //        ",answers_1 =@answers_1 " +
+        //        ",answers_2 = @answers_2 " +
+        //        ",answers_3 = @answers_3 " +
+        //        ",answers_4 = @answers_4 " +
+        //        " WHERE level_serial_num = @level_serial_num";
+        //    SqlCommand cmd = createCommand(con, commandStr);
+        //    cmd.Parameters.Add("@level_serial_num", SqlDbType.SmallInt);
+        //    cmd.Parameters["@level_serial_num"].Value = level_serial_num;
+        //    cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+        //    cmd.Parameters["@email"].Value = email;
+        //    cmd.Parameters.Add("@file_path", SqlDbType.NVarChar);
+        //    cmd.Parameters["@file_path"].Value = file_path;
+        //    cmd.Parameters.Add("@content_level", SqlDbType.NVarChar);
+        //    cmd.Parameters["@content_level"].Value = content_level;
+        //    cmd.Parameters.Add("@question_content_1", SqlDbType.NVarChar);
+        //    cmd.Parameters["@question_content_1"].Value = question_content_1;
+        //    cmd.Parameters.Add("@question_content_2", SqlDbType.NVarChar);
+        //    cmd.Parameters["@question_content_2"].Value = question_content_2;
+        //    cmd.Parameters.Add("@question_content_3", SqlDbType.NVarChar);
+        //    cmd.Parameters["@question_content_3"].Value = question_content_3;
+        //    cmd.Parameters.Add("@question_content_4", SqlDbType.NVarChar);
+        //    cmd.Parameters["@question_content_4"].Value = question_content_4;
+        //    cmd.Parameters.Add("@answers_1", SqlDbType.NVarChar);
+        //    cmd.Parameters["@answers_1"].Value = answers_1;
+        //    cmd.Parameters.Add("@answers_2", SqlDbType.NVarChar);
+        //    cmd.Parameters["@answers_2"].Value = answers_2;
+        //    cmd.Parameters.Add("@answers_3", SqlDbType.NVarChar);
+        //    cmd.Parameters["@answers_3"].Value = answers_3;
+        //    cmd.Parameters.Add("@answers_4", SqlDbType.NVarChar);
+        //    cmd.Parameters["@answers_4"].Value = answers_4;
+        //    return cmd;
+        //}
+
+        //public List<GuidingProgram> Read_GP()
+        //{
+        //    SqlConnection con = null;
+
+        //    try
+        //    {
+        //        con = Connect("webOsDB");
+        //        SqlCommand selectCommand = createSelectCommand_GuidingProgram(con);
+        //        List<GuidingProgram> GP_List = new List<GuidingProgram>();
+        //        SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+        //        while (dr.Read())
+        //        {
+        //            GuidingProgram gp = new GuidingProgram();
+
+        //            gp.File_path = (string)dr["file_path"];
+        //            gp.Program_name = (string)dr["program_name"];
+        //            gp.Manager_email = (string)dr["email"];
+        //            gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
+        //            gp.Content_level = (string)dr["content_level"];
+        //            gp.Question_content_1 = (string)dr["question_content_1"];
+        //            gp.Question_content_2 = (string)dr["question_content_2"];
+        //            gp.Question_content_3 = (string)dr["question_content_3"];
+        //            gp.Question_content_4 = (string)dr["question_content_4"];
+        //            gp.Answers_1 = (string)dr["answers_1"];
+        //            gp.Answers_2 = (string)dr["answers_2"];
+        //            gp.Answers_3 = (string)dr["answers_3"];
+        //            gp.Answers_4 = (string)dr["answers_4"];
+        //            GP_List.Add(gp);
+        //        }
+        //        return GP_List;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw new Exception("failed to read the GuidingProgram", ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //            con.Close();
+        //    }
+        //}
 
         private SqlCommand createSelectCommand_GuidingProgram(SqlConnection con)
         {
@@ -864,45 +902,45 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        public void DeleteProgram()
-        {
+        //public void DeleteProgram()
+        //{
             
-            SqlConnection con = null;
+        //    SqlConnection con = null;
             
 
-            try
-            {
-                con = Connect("webOsDB");
-                List<GuidingProgram> GP_List = new List<GuidingProgram>();
-                GP_List = Read_GP();
-                foreach (var g in GP_List)
-                {
-                    SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, g.Level_serial_num);
-                    selectCommand.ExecuteNonQuery();
-                }
+        //    try
+        //    {
+        //        con = Connect("webOsDB");
+        //        List<GuidingProgram> GP_List = new List<GuidingProgram>();
+        //        GP_List = Read_GP();
+        //        foreach (var g in GP_List)
+        //        {
+        //            SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, g.Level_serial_num);
+        //            selectCommand.ExecuteNonQuery();
+        //        }
                 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw new Exception("failed to delete the program", ex);
-            }
-            finally
-            {
-                if (con != null)
-                    con.Close();
-            }
-        }
+        //        throw new Exception("failed to delete the program", ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //            con.Close();
+        //    }
+        //}
 
-        private SqlCommand createSelectCommand_DeleteProgram(SqlConnection con, int LevelNum)
-        {
-            string commandStr = "DELETE FROM Guiding_program_2022 WHERE level_serial_num = @LevelNum";
-            SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@LevelNum", SqlDbType.SmallInt);
-            cmd.Parameters["@LevelNum"].Value = LevelNum;
+        //private SqlCommand createSelectCommand_DeleteProgram(SqlConnection con, int LevelNum)
+        //{
+        //    string commandStr = "DELETE FROM Guiding_program_2022 WHERE level_serial_num = @LevelNum";
+        //    SqlCommand cmd = createCommand(con, commandStr);
+        //    cmd.Parameters.Add("@LevelNum", SqlDbType.SmallInt);
+        //    cmd.Parameters["@LevelNum"].Value = LevelNum;
             
-            return cmd;
-        }
+        //    return cmd;
+        //}
 
         //--------------------------------------------------------------------------//
         //_____________________Relates to the Performs Program\_______________________//

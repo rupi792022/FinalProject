@@ -18,19 +18,21 @@ namespace finalproject.Controllers
 
         // GET api/<controller>/5
 
+        [HttpGet]
+        [Route("api/GuidingPrograms/Read_Max_Program")]
         public int Read_Max_Program()
         {
             GuidingProgram gp = new GuidingProgram();
             return gp.Read_Max_Program();
         }
 
-        [HttpGet]
-        [Route("api/GuidingPrograms/Read_Level")]
-        public GuidingProgram Read_Level(int level_num)
-        {
-            GuidingProgram gp = new GuidingProgram();
-            return gp.Read_Level(level_num);
-        }
+        //[HttpGet]
+        //[Route("api/GuidingPrograms/Read_Level")]
+        //public GuidingProgram Read_Level(int level_num)
+        //{
+        //    GuidingProgram gp = new GuidingProgram();
+        //    return gp.Read_Level(level_num);
+        //}
 
 
         [HttpGet]
@@ -42,36 +44,36 @@ namespace finalproject.Controllers
         }
 
 
-        [HttpGet]
-        [Route("api/GuidingPrograms/Read_GP")]
-        public IEnumerable<GuidingProgram> Read_GP()
-        {
-            GuidingProgram gp = new GuidingProgram();
-            return gp.Read_GP();
-        }
+        //[HttpGet]
+        //[Route("api/GuidingPrograms/Read_GP")]
+        //public IEnumerable<GuidingProgram> Read_GP()
+        //{
+        //    GuidingProgram gp = new GuidingProgram();
+        //    return gp.Read_GP();
+        //}
 
 
         // POST api/<controller>
 
         public HttpResponseMessage Post([FromBody] GuidingProgram GP)
-        { 
-            GP.InsertLevel();
+        {
+            GP.InsertProgram();
             return Request.CreateResponse(HttpStatusCode.OK, "success");
         }
 
 
-        // PUT api/<controller>/5
-        public void Put(GuidingProgram GP)
-        {
-            GP.UpdateLevelDetails(GP);
-        }
+        //// PUT api/<controller>/5
+        //public void Put(GuidingProgram GP)
+        //{
+        //    GP.UpdateLevelDetails(GP);
+        //}
 
-        // DELETE api/<controller>/5
-        public void Delete()
-        {
-            GuidingProgram gp = new GuidingProgram();
-            gp.DeleteProgram();
-        }
-       
+        //// DELETE api/<controller>/5
+        //public void Delete()
+        //{
+        //    GuidingProgram gp = new GuidingProgram();
+        //    gp.DeleteProgram();
+        //}
+
     }
 }

@@ -19,11 +19,15 @@
 
             NumOfAnswers = 4;
             count = 1;
+            Qnum = 1;
             clickUpload = 0;
+           
 
             $("#remove").hide();
             $("#save").click(Save);
-
+            $('#addNewProgram').click(AddNewProgram);
+            $('#editProgram').click(EditProgram);
+            $("#AddQuestion").click(AddQuestion);
 
             $('#buttonUpload').on('click', function () { //uploaded file
                 clickUpload++;
@@ -94,7 +98,8 @@
         }
 
         function getSuccessMaxProgram(maxProgram) {
-            numOfprogram = maxProgram++;
+            maxProgram = maxProgram + 1;
+            numOfprogram = maxProgram;
         }
 
         function getErrorMaxProgram() {
@@ -108,15 +113,13 @@
         //}
 
         function AddQuestion() {
-           count ++;
+           count++;
+           Qnum ++;
            str = "";
-                str += '<tr><td><p>Question ' + count + ':</p></td>';
-                str += '<td><input type="text" id="question' + count + '" name="Question" required placeholder="Enter a question"></td>';
-                for (var i = 1; i < NumOfAnswers; i++) {
-                    if (i == 1) {
-                        str += '<td><p>' + i + '.</p></td><td class="correctAnswer"><input type="text"  id="' + count + '_correctAnswer' + i + '" name="correctAnswer"' + i + '"required placeholder="Enter a correct Answer"></td></tr>';
-                    }
-                    str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="' + count + '_Answer' + (i + 1) + '"name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
+            str += '<tr><td><p>Question ' + Qnum + ':</p></td>';
+            str += '<td><input type="text" id="question' + Qnum + '" name="Question" required placeholder="Enter a question"></td>';
+                for (var i = 0; i < NumOfAnswers; i++) {
+                    str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="Answer' + Qnum +'_'+ (i + 1) +'" name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
                 }
                 str += '</tr>';
                 $(str).clone().appendTo("#renderQA");
@@ -141,80 +144,32 @@
         function Save() {
             programName = $("#program_name").val();
             contentguiding = $("#contentguiding").val();
-            question1 = $("#question" + count).val();
+            contentLevel = $("#contentguiding").val();
             questions = [];
             answers = [];
+            concatAllanswers =[]
             for (var i = 0; i < count; i++) {
                 questions[i] = $("#question" + (i + 1)).val();
-                concatAllanswers = $("#" + (i + 1) + "_correctAnswer" + (i + 1)).val()
-                for (var k = 1; k < NumOfAnswers; k++) {
-                    concatAllanswers.concat(",", $("#" + (i + 1) + "_Answer" + (k + 1)).val());
+                /*concatAllanswers = $("#" + (i + 1) + "_correctAnswer" + (i + 1)).val()*/
+                for (var k = 0; k < NumOfAnswers; k++) {
+                    concatAllanswers[k] = $("#Answer"+ (i + 1) + "_" + (k + 1)).val();
                 }
-                answers[i] = concatAllanswers;
+                answers[i] = concatAllanswers.join(", ");
             }
 
             MyGuidingProgram = {
                 Program_name: programName,
-                Level_serial_num: countLevel,
+                Guiding_serial_num: numOfprogram,
                 File_path: filePath,
-                Content_level: contentLevel,
-                Question_content_1: question1,
-                Question_content_2: question2,
-                Question_content_3: question3,
-                Question_content_4: question4,
-                Answers_1: strAnswers_1,
-                Answers_2: strAnswers_2,
-                Answers_3: strAnswers_3,
-                Answers_4: strAnswers_4
+                Content_level: contentLevel
             }
 
-            if (toUpdate) {
-                ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
-            }
-            else
-                ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSave, postErrorSave);
+            //if (toUpdate) {
+            //    ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
+            //}
+            //else
+                ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSaveGP, postErrorSaveGP);
             return false;
-        }
-               
-           
-        }
-
-
-        function putObject(managerEmail, programName, contentLevel, question1, question2, question3, question4, strAnswers_1, strAnswers_2, strAnswers_3, strAnswers_4) {
-
-            if (contentLevel == "" || question1 == "") {
-                strAnswers_1 = "-";
-                str = '';
-                str += '*You must enter content level, uploaded files and question 1';
-                document.getElementById("alertMessage2").innerHTML = str;
-            }
-
-            else {
-                str = '';
-                document.getElementById("alertMessage2").innerHTML = str;
-                MyGuidingProgram = {
-                    Manager_email: managerEmail,
-                    Program_name: programName,
-                    Level_serial_num: countLevel,
-                    File_path: filePath,
-                    Content_level: contentLevel,
-                    Question_content_1: question1,
-                    Question_content_2: question2,
-                    Question_content_3: question3,
-                    Question_content_4: question4,
-                    Answers_1: strAnswers_1,
-                    Answers_2: strAnswers_2,
-                    Answers_3: strAnswers_3,
-                    Answers_4: strAnswers_4
-                }
-
-                if (toUpdate) {
-                    ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
-                }
-                else
-                    ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSave, postErrorSave);
-                return false;
-            }
         }
 
 
@@ -228,15 +183,32 @@
             console.log(error);
         }
 
-        function postSuccessSave() {
-            console.log("success to insert all the details");
-            alert("The level was successfully saved");
-            $('#next').removeAttr('disabled');
+        function postSuccessSaveGP() {
+            console.log("success MyGuidingProgram");
+            for (var i = 0; i < questions.length; i++) {
+                MyQandA = {
+                    Question_serial_num: (i + 1),
+                    Question_content: questions[i],
+                    Answers: answers[i]
+                }
+                ajaxCall("POST", "../api/QandAs", JSON.stringify(MyQandA), postSuccessSaveQA, postErrorSaveQA);
+                return false;
+            }
+ 
         }
 
-        function postErrorSave(error) {
+        function postErrorSaveGP(error) {
             console.log(error);
         }
+
+        function postSuccessSaveQA() {
+            console.log("success MyQandA");
+        }
+
+        function postErrorSaveQA(error) {
+            console.log(error);
+        }
+       
 
 
         function Next() {
@@ -453,25 +425,25 @@
                     <td><p>Question 1:</p></td>
                     <td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td>
                     <td><p>1.</p></td>
-                    <td class="correctAnswer"><input type="text" id="1_correctAnswer1" name="correctAnswer1" placeholder="Enter a correct Answer" /></td>
+                    <td class="correctAnswer"><input type="text" id="Answer1_1" name="correctAnswer1" placeholder="Enter a correct Answer" /></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><p>2.</p></td>
-                    <td> <input type="text" id="1_Answer2" name="Answer2" placeholder="Enter a possible answer" /></td>
+                    <td> <input type="text" id="Answer1_2" name="Answer2" placeholder="Enter a possible answer" /></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><p>3.</p></td>
-                    <td><input type="text" id="1_Answer3" name="Answer3" placeholder="Enter a possible answer" /></td>
+                    <td><input type="text" id="Answer1_3" name="Answer3" placeholder="Enter a possible answer" /></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><p>4.</p></td>
-                    <td><input type="text" id="1_Answer4" name="Answer4" placeholder="Enter a possible answer" /></td>
+                    <td><input type="text" id="Answer1_4" name="Answer4" placeholder="Enter a possible answer" /></td>
                 </tr>
             </table><br>
             <table id="renderQA"></table>

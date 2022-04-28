@@ -33,19 +33,19 @@ namespace finalproject.Models
 
         }
 
-        public void InsertLevel()
+        public void InsertProgram()
         {
             DataServices ds = new DataServices();
-            ds.InsertLevel(this);
+            ds.InsertProgram(this);
 
         }
 
-        public GuidingProgram Read_Level(int level_num)
-        {
-            DataServices ds = new DataServices();
-            return ds.Read_Level(level_num);
+        //public GuidingProgram Read_Level(int level_num)
+        //{
+        //    DataServices ds = new DataServices();
+        //    return ds.Read_Level(level_num);
 
-        }
+        //}
 
         public int Read_maxLevel()
         {
@@ -54,24 +54,24 @@ namespace finalproject.Models
 
         }
 
-        public List <GuidingProgram> Read_GP()
-        {
-            DataServices ds = new DataServices();
-            return ds.Read_GP();
+        //public List <GuidingProgram> Read_GP()
+        //{
+        //    DataServices ds = new DataServices();
+        //    return ds.Read_GP();
 
-        }
+        //}
 
 
-        public void UpdateLevelDetails(GuidingProgram gp)
-        {
-            DataServices ds = new DataServices();
-            ds.UpdateLevelDetails(gp);
-        }
+        //public void UpdateLevelDetails(GuidingProgram gp)
+        //{
+        //    DataServices ds = new DataServices();
+        //    ds.UpdateLevelDetails(gp);
+        //}
 
-        public void DeleteProgram ()
-        {
-            DataServices ds = new DataServices();
-            ds.DeleteProgram();
-        }
+        //public void DeleteProgram ()
+        //{
+        //    DataServices ds = new DataServices();
+        //    ds.DeleteProgram();
+        //}
     }
 }

@@ -172,6 +172,7 @@
     <Compile Include="Controllers\GuidingProgramsController.cs" />
     <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\PerformsProgramsController.cs" />
+    <Compile Include="Controllers\QandAsController.cs" />
     <Compile Include="Controllers\VolunteersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
