@@ -16,27 +16,48 @@ namespace finalproject.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/QandAs/Read_QandA")]
+        public IEnumerable<QandA> Read_QandA(int numProgram)
         {
-            return "value";
+            QandA q = new QandA();
+            return q.Read_QandA(numProgram);
         }
 
         // POST api/<controller>
-        public HttpResponseMessage Post([FromBody] QandA qa)
+        public HttpResponseMessage Post([FromBody] List<QandA> qa)
         {
-            qa.InsertQandA();
+            QandA q = new QandA();
+            q.InsertQandA(qa);
             return Request.CreateResponse(HttpStatusCode.OK, "success");
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route("api/QandAs/UpdateQandADetails")]
+        public void UpdateQandADetails(List<QandA> qa)
         {
+            QandA q = new QandA();
+            q.UpdateQandADetails(qa);
         }
+
+        // GET api/<controller>/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
+       
+        // PUT api/<controller>/5
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+
         }
+
+
     }
 }

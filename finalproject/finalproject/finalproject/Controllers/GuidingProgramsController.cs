@@ -44,13 +44,13 @@ namespace finalproject.Controllers
         }
 
 
-        //[HttpGet]
-        //[Route("api/GuidingPrograms/Read_GP")]
-        //public IEnumerable<GuidingProgram> Read_GP()
-        //{
-        //    GuidingProgram gp = new GuidingProgram();
-        //    return gp.Read_GP();
-        //}
+        [HttpGet]
+        [Route("api/GuidingPrograms/Read_GP")]
+        public IEnumerable<GuidingProgram> Read_GP()
+        {
+            GuidingProgram gp = new GuidingProgram();
+            return gp.Read_GP();
+        }
 
 
         // POST api/<controller>
@@ -62,11 +62,11 @@ namespace finalproject.Controllers
         }
 
 
-        //// PUT api/<controller>/5
-        //public void Put(GuidingProgram GP)
-        //{
-        //    GP.UpdateLevelDetails(GP);
-        //}
+        // PUT api/<controller>/5
+        public void Put(GuidingProgram GP)
+        {
+            GP.UpdateGuidingDetails(GP);
+        }
 
         //// DELETE api/<controller>/5
         //public void Delete()

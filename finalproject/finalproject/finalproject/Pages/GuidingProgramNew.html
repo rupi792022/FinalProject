@@ -21,13 +21,19 @@
             count = 1;
             Qnum = 1;
             clickUpload = 0;
-           
+            toUpdate = false;
 
             $("#remove").hide();
             $("#save").click(Save);
+            $("#defineTheProgram").hide();
+            $("#stepDetails").hide();
             $('#addNewProgram').click(AddNewProgram);
             $('#editProgram').click(EditProgram);
             $("#AddQuestion").click(AddQuestion);
+            $(document).on("click", ".btnProgram", getProgram);
+
+            let apiCall = "../api/GuidingPrograms/Read_Max_Program"; //Reading the latest tutorial number
+            ajaxCall("GET", apiCall, "", getSuccessMaxProgram, getErrorMaxProgram);
 
             $('#buttonUpload').on('click', function () { //uploaded file
                 clickUpload++;
@@ -91,10 +97,9 @@
         }
 
         function AddNewProgram() {
-            $("#defineTheProgram").show(); //Name of Program and Number of level div
-            $("#btnChoose").hide(); // add/edit btn div
-            let apiCall = "../api/GuidingPrograms/Read_Max_Program";
-            ajaxCall("GET", apiCall, "", getSuccessMaxProgram, getErrorMaxProgram);
+            toUpdate = false;
+            $("#defineTheProgram").show(); //Name of Program div
+            $("#btnChoose").hide(); // add/edit btn div 
         }
 
         function getSuccessMaxProgram(maxProgram) {
@@ -106,26 +111,19 @@
             console.log("Error");
         }
        
-        //function title(level) {
-        //    strTitle = "";
-        //    strTitle += "<h1>Level Number " + level + "</h1>";
-        //    document.getElementById("title").innerHTML = strTitle;
-        //}
-
         function AddQuestion() {
            count++;
            Qnum ++;
            str = "";
-            str += '<tr><td><p>Question ' + Qnum + ':</p></td>';
-            str += '<td><input type="text" id="question' + Qnum + '" name="Question" required placeholder="Enter a question"></td>';
-                for (var i = 0; i < NumOfAnswers; i++) {
+           str += '<tr><td><p>Question ' + Qnum + ':</p></td>';
+           str += '<td><input type="text" id="question' + Qnum + '" name="Question" required placeholder="Enter a question"></td>';
+           for (var i = 0; i < NumOfAnswers; i++) {
                     str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="Answer' + Qnum +'_'+ (i + 1) +'" name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
-                }
-                str += '</tr>';
-                $(str).clone().appendTo("#renderQA");
-
-                $(".loginBox").css({ "height": "+=160", "top": "+=14%" });
-                $("#remove").show();
+           }
+           str += '</tr>';
+           $(str).clone().appendTo("#renderQA");
+           $(".loginBox").css({ "height": "+=160", "top": "+=14%" });
+           $("#remove").show();
         }
 
         function Remove() {//remove question
@@ -137,7 +135,7 @@
             count--;
             $(".loginBox").css({ "height": "-=160", "top": "-=14%" });
             if (count == 1)
-                $("#remove").hide();
+            $("#remove").hide();
         }
 
 
@@ -147,7 +145,10 @@
             contentLevel = $("#contentguiding").val();
             questions = [];
             answers = [];
-            concatAllanswers =[]
+            concatAllanswers = [];
+            if (toUpdate) {
+                count = numOfQ;
+            }
             for (var i = 0; i < count; i++) {
                 questions[i] = $("#question" + (i + 1)).val();
                 /*concatAllanswers = $("#" + (i + 1) + "_correctAnswer" + (i + 1)).val()*/
@@ -164,37 +165,55 @@
                 Content_level: contentLevel
             }
 
-            //if (toUpdate) {
-            //    ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSave, putErrorSave)
-            //}
-            //else
+            if (toUpdate) {
+                ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSaveGP, putErrorSaveGP)
+            }
+            else
                 ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSaveGP, postErrorSaveGP);
             return false;
         }
 
 
-        function putSuccessSave() {
-            console.log("success to upadte all the details");
-            alert("The level was successfully saved");
-            $('#next').removeAttr('disabled');
+        function putSuccessSaveGP() {
+            console.log("success to upadte all GuidingPrograms details");
+            QandA = SaveQAdetails();
+            ajaxCall("PUT", "../api/QandAs/UpdateQandADetails", JSON.stringify(QandA), putSuccessSaveQA, putErrorSaveQA);
+            return false;
         }
 
-        function putErrorSave(error) {
+        function putErrorSaveGP(error) {
             console.log(error);
         }
 
-        function postSuccessSaveGP() {
-            console.log("success MyGuidingProgram");
+        function putSuccessSaveQA() {
+            alert("Program update complete");
+            EditProgram();
+        }
+
+        function putErrorSaveQA(error) {
+            console.log(error);
+        }
+
+
+        function SaveQAdetails() {
+            QandA = [];
             for (var i = 0; i < questions.length; i++) {
                 MyQandA = {
                     Question_serial_num: (i + 1),
                     Question_content: questions[i],
-                    Answers: answers[i]
+                    Answers: answers[i],
+                    Guiding_serial_num: numOfprogram
                 }
-                ajaxCall("POST", "../api/QandAs", JSON.stringify(MyQandA), postSuccessSaveQA, postErrorSaveQA);
-                return false;
+                QandA[i] = MyQandA;
             }
- 
+            return QandA;
+        }
+
+        function postSuccessSaveGP() {
+            QandA = SaveQAdetails();
+            console.log("success MyGuidingProgram");
+            ajaxCall("POST", "../api/QandAs", JSON.stringify(QandA), postSuccessSaveQA, postErrorSaveQA);
+            return false;
         }
 
         function postErrorSaveGP(error) {
@@ -203,78 +222,91 @@
 
         function postSuccessSaveQA() {
             console.log("success MyQandA");
+            alert("success in adding the program");
         }
 
         function postErrorSaveQA(error) {
             console.log(error);
         }
        
-
-
-        function Next() {
-            NumOfLevel++;
-            countLevel++;
-            if (NumOfLevel <= LevelsAmount) { //The number of levels in the program
-                let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
-                ajaxCall("GET", apiCall, "", getSuccessNext, getErrorNext);
-                $("#back").show();
-                $("#back").attr('disabled', false);
-                $("#remove").hide();
-            }
-            else {
-                alert("You have reached the maximum amount of levels. Click finish if you share");
-            }
-            if (NumOfLevel == LevelsAmount) { //When we reach the final level the next button changes to finishProgram
-                $("#finishProgram").show();
-                $("#next").hide();
-            }
-        }
-
-        function getSuccessNext(DetailsOfLevel) {
-            clickUpload = 0;
-            $(".loginBox").css({ "height": "650px", "width": "1000px", "top": "65%" });
-            title(NumOfLevel);
-            if (DetailsOfLevel.Content_level != null) {//check if is the values are full in the level
-                insertDetails(DetailsOfLevel);
-            }
-            else {
-                str = "";
-                document.getElementById("renderQA").innerHTML = str;
-                document.getElementById("ph").innerHTML = str;
-                $("#files").val('');
-                $("#contentLevel").val('');
-                $("#question1").val('');
-                $("#1_correctAnswer1").val('');
-                $("#1_Answer2").val('');
-                $("#1_Answer3").val('');
-                $("#1_Answer4").val('');
-                count = 1;
-            }
-        }
-
-        function insertDetails(DetailsOfLevel) { 
-            $(".loginBox").css({ "height": "+=20" });
+        function EditProgram() {
+            $("#addNewProgram").hide();
+            $("#EditProgram").hide();
+            $("#stepDetails").hide();
+            $("#defineTheProgram").hide();
             toUpdate = true;
-            str = "";
-            document.getElementById("renderQA").innerHTML = str;
-            strFile = "You must upload the relevant files for this step again.";
-            document.getElementById("alertMessageFile").innerHTML = strFile;
-            $("#contentLevel").val(DetailsOfLevel.Content_level);
-            $("#question1").val(DetailsOfLevel.Question_content_1);
-            var Question = [];//array of all the questions
-            Question.push(DetailsOfLevel.Question_content_2, DetailsOfLevel.Question_content_3, DetailsOfLevel.Question_content_4);
-            arrAnswers_1 = DetailsOfLevel.Answers_1.split(","); 
-            $("#1_correctAnswer1").val(arrAnswers_1[0]);
-            $("#1_Answer2").val(arrAnswers_1[1]);
-            $("#1_Answer3").val(arrAnswers_1[2]);
-            $("#1_Answer4").val(arrAnswers_1[3]);
-            arrAnswers_2 = DetailsOfLevel.Answers_2.split(",");
-            arrAnswers_3 = DetailsOfLevel.Answers_3.split(",");
-            arrAnswers_4 = DetailsOfLevel.Answers_4.split(",");
-            allAnswersArr = arrAnswers_2.concat(arrAnswers_3, arrAnswers_4);
-
-            renderLevelDetails(Question, allAnswersArr); 
+            let apiCall = "../api/GuidingPrograms/Read_GP";
+            ajaxCall("GET", apiCall, "", getSuccessRead_GP, getErrorRead_GP);
         }
+
+        function getSuccessRead_GP(gp) {
+            console.log("success Read_GP");
+            GP = gp;
+            renderPrograms();
+        }
+
+        function renderPrograms() {
+            let str = "";
+            for (var i = 0; i < GP.length; i++) {
+                str += '<button type="button" class="btnProgram" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+            }
+            document.getElementById("btnChoose").innerHTML = str;
+        }
+
+
+        function getErrorRead_GP(error) {
+            console.log(error);
+        }
+
+        function getProgram() {
+            
+            programNum = this.id;
+            let apiCall = "../api/QandAs/Read_QandA?numProgram=" + programNum;
+            ajaxCall("GET", apiCall, "", getSuccessRead_QandA, getErrorRead_QandA);
+        }
+
+
+        function getSuccessRead_QandA(qa) {
+            numOfQ = qa.length;
+            console.log("success Read_QandA");
+            $("#stepDetails").show();
+            $("#defineTheProgram").show();
+            $("#program_name").val(GP[programNum-1].Program_name);
+            $("#contentguiding").val(GP[programNum - 1].Content_level);
+            $("#question1").val(qa[0].Question_content);
+            arrAnswers = qa[0].Answers.split(",");
+            for (var i = 0; i < arrAnswers.length; i++) {
+                $("#Answer1_" + (i+1)).val(arrAnswers[i]);
+            }
+            let str = "";
+            for (var i = 1; i < qa.length; i++) {
+                arrAnswers = qa[i].Answers.split(",");
+                str += '<tr><td><p>Question ' + qa[i].Question_serial_num + ':</p></td>';
+                str += '<td><input type="text" id="question' + qa[i].Question_serial_num + '" name="Question" value="' + qa[i].Question_content + '"></td>';
+                for (var j = 0; j < arrAnswers.length; j++) {
+                    str += '<tr><td></td><td></td><td><p>' + (j + 1) + '.</p><td><input type="text" id="Answer' + qa[i].Question_serial_num + '_' + (j + 1) + '" name="Answer"' + (j + 1) + '" value="' + arrAnswers[j] +'"></td>';
+                }
+                str += '</tr>';
+            }
+            $(str).clone().appendTo("#renderQA");
+            $(".loginBox").css({ "height": "+=160", "top": "+=14%" });
+            $("#remove").show();
+
+
+        }
+
+        function getErrorRead_QandA(error) {
+            console.log(error);
+        }
+
+
+
+
+
+
+
+
+
 
         function renderLevelDetails(Question, allAnswersArr) {
             answers = 0;
@@ -339,13 +371,7 @@
             console.log(error);
         }
 
-        function EditProgram() {
-            toUpdate = true;
-            $("#btnChoose").hide();
-            NumOfLevel = 1;
-            let apiCall = "../api/GuidingPrograms/Read_Level?level_num=" + NumOfLevel;
-            ajaxCall("GET", apiCall, "", getSuccessEP, getErrorEP);
-        }
+        
 
         function getSuccessEP(DetailsOfLevel) {
             $("#stepDetails").show();
@@ -454,10 +480,9 @@
                     <td colspan="2"><label id="alertMessage2"></label></td>
                 </tr>
                 <tr>
-                    <td><button type="button" id="back">Back</button></td>
                     <td></td>
                     <td></td>
-                    <td><button type="button" id="save">Save</button>&nbsp;&nbsp;<button type="button" id="next">Next</button><button type="button" id="finishProgram">Finish Program</button></td>
+                    <td><button type="button" id="save">Save</button></td>
                 </tr>
             </table>
         </div>

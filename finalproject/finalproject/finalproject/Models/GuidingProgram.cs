@@ -54,19 +54,19 @@ namespace finalproject.Models
 
         }
 
-        //public List <GuidingProgram> Read_GP()
-        //{
-        //    DataServices ds = new DataServices();
-        //    return ds.Read_GP();
+        public List<GuidingProgram> Read_GP()
+        {
+            DataServices ds = new DataServices();
+            return ds.Read_GP();
 
-        //}
+        }
 
 
-        //public void UpdateLevelDetails(GuidingProgram gp)
-        //{
-        //    DataServices ds = new DataServices();
-        //    ds.UpdateLevelDetails(gp);
-        //}
+        public void UpdateGuidingDetails(GuidingProgram gp)
+        {
+            DataServices ds = new DataServices();
+            ds.UpdateGuidingDetails(gp);
+        }
 
         //public void DeleteProgram ()
         //{

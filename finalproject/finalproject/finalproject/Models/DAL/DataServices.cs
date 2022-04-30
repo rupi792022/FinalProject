@@ -350,7 +350,7 @@ namespace finalproject.Models.DAL
                 Volunteer v = new Volunteer();
                 while (dr.Read())
                 {
-                    v.First_name = (string)dr["first_name"]; 
+                    v.First_name = (string)dr["first_name"];
                     v.Last_name = (string)dr["last_name"];
                     v.Volunteer_email = (string)dr["email"];
                 }
@@ -535,7 +535,7 @@ namespace finalproject.Models.DAL
                 Manager m = new Manager();
                 while (dr.Read())
                 {
-                    m.First_name = (string)dr["first_name"]; 
+                    m.First_name = (string)dr["first_name"];
                     m.Last_name = (string)dr["last_name"];
                 }
 
@@ -612,7 +612,7 @@ namespace finalproject.Models.DAL
         SqlCommand createSelectCommand_MaxProgram(SqlConnection con)
         {
             string commandStr = "SELECT max(guiding_serial_num) as guiding_serial_num FROM Guiding_program_2022";
-            SqlCommand cmd = createCommand(con, commandStr); 
+            SqlCommand cmd = createCommand(con, commandStr);
             return cmd;
         }
 
@@ -652,8 +652,8 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        
-        public void InsertQandA(QandA qa) // insert level into a guiding program 
+
+        public void InsertQandA(List<QandA> qa) // insert level into a guiding program 
         {
 
             SqlConnection con = null;
@@ -662,9 +662,12 @@ namespace finalproject.Models.DAL
             {
                 // C - Connect
                 con = Connect("webOsDB");
+                foreach (var q in qa)
+                {
+                    SqlCommand command = Create_InsertProgram(q, con);
+                    command.ExecuteNonQuery();
+                }
 
-                SqlCommand command = Create_InsertProgram(qa, con);
-                command.ExecuteNonQuery();
             }
 
             catch (Exception ex)
@@ -749,114 +752,82 @@ namespace finalproject.Models.DAL
         //    return cmd;
         //}
 
-        //public void UpdateLevelDetails(GuidingProgram gp) // Update the values 
-        //{
+        public void UpdateGuidingDetails(GuidingProgram gp) // Update the values 
+        {
 
-        //    SqlConnection con = null;
+            SqlConnection con = null;
 
-        //    try
-        //    {
-        //        con = Connect("webOsDB");
-        //        SqlCommand selectCommand = createSelectCommand_UpdateLevelDetails(con, gp.Manager_email, gp.File_path, gp.Content_level, gp.Level_serial_num, gp.Question_content_1, gp.Question_content_2, gp.Question_content_3, gp.Question_content_4, gp.Answers_1, gp.Answers_2, gp.Answers_3, gp.Answers_4);
-        //        selectCommand.ExecuteNonQuery();
-        //    }
-        //    catch (Exception ex)
-        //    {
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_UpdateGuidingDetails(con, gp.Guiding_serial_num, gp.File_path, gp.Content_level, gp.Program_name);
+                selectCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
 
-        //        throw new Exception("failed to update the level details", ex);
-        //    }
-        //    finally
-        //    {
-        //        if (con != null)
-        //            con.Close();
-        //    }
-        //}
+                throw new Exception("failed to update the Guiding details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
 
-        //private SqlCommand createSelectCommand_UpdateLevelDetails(SqlConnection con, string email, string file_path, string content_level, int level_serial_num, string question_content_1, string question_content_2, string question_content_3, string question_content_4, string answers_1, string answers_2, string answers_3, string answers_4)
-        //{
-        //    string commandStr = "UPDATE Guiding_program_2022 SET email = @email" +
-        //       ",file_path = @file_path" +
-        //        ",content_level =@content_level" +
-        //        ",question_content_1 =@question_content_1" +
-        //        ",question_content_2 =@question_content_2 " +
-        //        ",question_content_3 =@question_content_3" +
-        //        ",question_content_4 =@question_content_4 " +
-        //        ",answers_1 =@answers_1 " +
-        //        ",answers_2 = @answers_2 " +
-        //        ",answers_3 = @answers_3 " +
-        //        ",answers_4 = @answers_4 " +
-        //        " WHERE level_serial_num = @level_serial_num";
-        //    SqlCommand cmd = createCommand(con, commandStr);
-        //    cmd.Parameters.Add("@level_serial_num", SqlDbType.SmallInt);
-        //    cmd.Parameters["@level_serial_num"].Value = level_serial_num;
-        //    cmd.Parameters.Add("@email", SqlDbType.NVarChar);
-        //    cmd.Parameters["@email"].Value = email;
-        //    cmd.Parameters.Add("@file_path", SqlDbType.NVarChar);
-        //    cmd.Parameters["@file_path"].Value = file_path;
-        //    cmd.Parameters.Add("@content_level", SqlDbType.NVarChar);
-        //    cmd.Parameters["@content_level"].Value = content_level;
-        //    cmd.Parameters.Add("@question_content_1", SqlDbType.NVarChar);
-        //    cmd.Parameters["@question_content_1"].Value = question_content_1;
-        //    cmd.Parameters.Add("@question_content_2", SqlDbType.NVarChar);
-        //    cmd.Parameters["@question_content_2"].Value = question_content_2;
-        //    cmd.Parameters.Add("@question_content_3", SqlDbType.NVarChar);
-        //    cmd.Parameters["@question_content_3"].Value = question_content_3;
-        //    cmd.Parameters.Add("@question_content_4", SqlDbType.NVarChar);
-        //    cmd.Parameters["@question_content_4"].Value = question_content_4;
-        //    cmd.Parameters.Add("@answers_1", SqlDbType.NVarChar);
-        //    cmd.Parameters["@answers_1"].Value = answers_1;
-        //    cmd.Parameters.Add("@answers_2", SqlDbType.NVarChar);
-        //    cmd.Parameters["@answers_2"].Value = answers_2;
-        //    cmd.Parameters.Add("@answers_3", SqlDbType.NVarChar);
-        //    cmd.Parameters["@answers_3"].Value = answers_3;
-        //    cmd.Parameters.Add("@answers_4", SqlDbType.NVarChar);
-        //    cmd.Parameters["@answers_4"].Value = answers_4;
-        //    return cmd;
-        //}
+        private SqlCommand createSelectCommand_UpdateGuidingDetails(SqlConnection con, int guiding_serial_num, string file_path, string content_level,  string program_name)
+        {
+            string commandStr = "UPDATE Guiding_program_2022 SET"+
+               " file_path = @file_path" +
+                ",content_level = @content_level" +
+                ",program_name = @program_name" +
+                " WHERE guiding_serial_num = @guiding_serial_num";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@guiding_serial_num", SqlDbType.NVarChar);
+            cmd.Parameters["@guiding_serial_num"].Value = guiding_serial_num;
+            cmd.Parameters.Add("@content_level", SqlDbType.NVarChar);
+            cmd.Parameters["@content_level"].Value = content_level;
+            cmd.Parameters.Add("@file_path", SqlDbType.NVarChar);
+            cmd.Parameters["@file_path"].Value = file_path;
+            cmd.Parameters.Add("@program_name", SqlDbType.NVarChar);
+            cmd.Parameters["@program_name"].Value = program_name;
+            return cmd;
+        }
 
-        //public List<GuidingProgram> Read_GP()
-        //{
-        //    SqlConnection con = null;
+        public List<GuidingProgram> Read_GP()
+        {
+            SqlConnection con = null;
 
-        //    try
-        //    {
-        //        con = Connect("webOsDB");
-        //        SqlCommand selectCommand = createSelectCommand_GuidingProgram(con);
-        //        List<GuidingProgram> GP_List = new List<GuidingProgram>();
-        //        SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_GuidingProgram(con);
+                List<GuidingProgram> GP_List = new List<GuidingProgram>();
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
-        //        while (dr.Read())
-        //        {
-        //            GuidingProgram gp = new GuidingProgram();
+                while (dr.Read())
+                {
+                    GuidingProgram gp = new GuidingProgram();
 
-        //            gp.File_path = (string)dr["file_path"];
-        //            gp.Program_name = (string)dr["program_name"];
-        //            gp.Manager_email = (string)dr["email"];
-        //            gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
-        //            gp.Content_level = (string)dr["content_level"];
-        //            gp.Question_content_1 = (string)dr["question_content_1"];
-        //            gp.Question_content_2 = (string)dr["question_content_2"];
-        //            gp.Question_content_3 = (string)dr["question_content_3"];
-        //            gp.Question_content_4 = (string)dr["question_content_4"];
-        //            gp.Answers_1 = (string)dr["answers_1"];
-        //            gp.Answers_2 = (string)dr["answers_2"];
-        //            gp.Answers_3 = (string)dr["answers_3"];
-        //            gp.Answers_4 = (string)dr["answers_4"];
-        //            GP_List.Add(gp);
-        //        }
-        //        return GP_List;
-        //    }
-        //    catch (Exception ex)
-        //    {
+                    gp.File_path = (string)dr["file_path"];
+                    gp.Program_name = (string)dr["program_name"];
+                    gp.Guiding_serial_num = Convert.ToInt16(dr["guiding_serial_num"]);
+                    gp.Content_level = (string)dr["content_level"];
+                    GP_List.Add(gp);
+                }
+                return GP_List;
+            }
+            catch (Exception ex)
+            {
 
-        //        throw new Exception("failed to read the GuidingProgram", ex);
-        //    }
-        //    finally
-        //    {
-        //        if (con != null)
-        //            con.Close();
-        //    }
-        //}
+                throw new Exception("failed to read the GuidingProgram", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
 
         private SqlCommand createSelectCommand_GuidingProgram(SqlConnection con)
         {
@@ -865,7 +836,7 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        
+
         public int Read_maxLevel()
         {
             SqlConnection con = null;
@@ -904,9 +875,9 @@ namespace finalproject.Models.DAL
 
         //public void DeleteProgram()
         //{
-            
+
         //    SqlConnection con = null;
-            
+
 
         //    try
         //    {
@@ -918,7 +889,7 @@ namespace finalproject.Models.DAL
         //            SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, g.Level_serial_num);
         //            selectCommand.ExecuteNonQuery();
         //        }
-                
+
         //    }
         //    catch (Exception ex)
         //    {
@@ -938,7 +909,7 @@ namespace finalproject.Models.DAL
         //    SqlCommand cmd = createCommand(con, commandStr);
         //    cmd.Parameters.Add("@LevelNum", SqlDbType.SmallInt);
         //    cmd.Parameters["@LevelNum"].Value = LevelNum;
-            
+
         //    return cmd;
         //}
 
@@ -974,7 +945,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand Create_InsertPerforms(PerformsProgram p, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Performs_program_2022 ( [level_serial_num],[score],[email]) VALUES('" + p.Level_serial_num + "', '" + p.Score + "', '" + p.Volunteer_email +  "')";
+            string insertStr = "INSERT INTO Performs_program_2022 ( [level_serial_num],[score],[email]) VALUES('" + p.Level_serial_num + "', '" + p.Score + "', '" + p.Volunteer_email + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -1021,8 +992,8 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        
-        public List <int> Read_scores(string email)
+
+        public List<int> Read_scores(string email)
         {
             SqlConnection con = null;
 
@@ -1061,6 +1032,98 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@email"].Value = email;
             return cmd;
         }
-    }
 
+
+        //////QandA
+
+        public List<QandA> Read_QandA(int numProgram)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_QandA(con, numProgram);
+                List<QandA> Q_List = new List<QandA>();
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dr.Read())
+                {
+                    QandA q = new QandA();
+
+                    q.Question_serial_num = Convert.ToInt16(dr["question_serial_num"]);
+                    q.Question_content = (string)dr["question_content"];
+                    q.Guiding_serial_num = Convert.ToInt16(dr["guiding_serial_num"]);
+                    q.Answers = (string)dr["answers"];
+                    Q_List.Add(q);
+                }
+                return Q_List;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read the GuidingProgram", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_QandA(SqlConnection con, int numProgram)
+        {
+            string commandStr = "SELECT * FROM Q_and_A_2022 where guiding_serial_num =@numProgram ";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@numProgram", SqlDbType.NVarChar);
+            cmd.Parameters["@numProgram"].Value = numProgram;
+            return cmd;
+        }
+
+        public void UpdateQandADetails(List<QandA> qa) // Update the values 
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                foreach (var q in qa)
+                {
+                SqlCommand selectCommand = createSelectCommand_UpdateQandADetails(con, q.Question_serial_num, q.Question_content, q.Answers, q.Guiding_serial_num);
+                selectCommand.ExecuteNonQuery();
+                }
+               
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to update the Guiding details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_UpdateQandADetails(SqlConnection con,int question_serial_num,string question_content, string answers, int guiding_serial_num)
+        {
+            string commandStr = "UPDATE Q_and_A_2022 SET" +
+                " question_content = @question_content" +
+                ",answers = @answers" +
+                " WHERE guiding_serial_num = @guiding_serial_num and question_serial_num = @question_serial_num";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@question_serial_num", SqlDbType.SmallInt);
+            cmd.Parameters["@question_serial_num"].Value = question_serial_num;
+            cmd.Parameters.Add("@question_content", SqlDbType.NVarChar);
+            cmd.Parameters["@question_content"].Value = question_content;
+            cmd.Parameters.Add("@answers", SqlDbType.NVarChar);
+            cmd.Parameters["@answers"].Value = answers;
+            cmd.Parameters.Add("@guiding_serial_num", SqlDbType.NVarChar);
+            cmd.Parameters["@guiding_serial_num"].Value = guiding_serial_num;
+
+            return cmd;
+        }
+    }
 }
