@@ -17,10 +17,6 @@
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
-            let str = "";
-            str += '<button type="button" id="editProgram">Edit Program</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type = "button" id = "addNewProgram"> Add New Program</button>'
-            document.getElementById("btnChoose").innerHTML = str;
-
             NumOfAnswers = 4;
             count = 1;
             Qnum = 1;
@@ -28,8 +24,10 @@
             toUpdate = false;
 
             $("#remove").hide();
-            $('#addNewProgram').click(AddNewProgram);
-            $('#editProgram').click(EditProgram);
+            //$('#addNewProgram').click(AddNewProgram);
+            //$('#editProgram').click(EditProgram);
+            $(document).on("click", "#addNewProgram", AddNewProgram);
+            $(document).on("click", "#editProgram", EditProgram);
             $(document).on("click", "#AddQuestion", AddQuestion);
             $(document).on("click", "#remove", Remove);
             $(document).on("click", "#save", Save);
@@ -101,14 +99,23 @@
             console.log(data);
         }
 
+        function addORedit() {
+            let str = '<button type ="button" id = "addNewProgram"> Add New Program</button>';
+            if (numOfprogram != 0) {
+                str += '<button type="button" id="editProgram">Edit Program</button>';
+            }
+            document.getElementById("btnChoose").innerHTML = str;
+        }
+       
         function AddNewProgram() {
             toUpdate = false;
+            numOfprogram++;
             renderInputLevel();
         }
 
-        function getSuccessMaxProgram(maxProgram) {
-            maxProgram = maxProgram + 1;
+        function getSuccessMaxProgram(maxProgram) {  
             numOfprogram = maxProgram;
+            addORedit();
         }
 
         function getErrorMaxProgram() {
@@ -141,7 +148,6 @@
             if (Qnum == 1)
                 $("#remove").hide();
         }
-
 
         function Save() {
             programName = $("#program_name").val();
@@ -177,7 +183,6 @@
             return false;
         }
 
-
         function putSuccessSaveGP() {
             console.log("success to upadte all GuidingPrograms details");
             QandA = SaveQAdetails();
@@ -191,13 +196,17 @@
 
         function putSuccessSaveQA() {
             alert("Program update complete");
+            str = "";
+            document.getElementById("AddNewQuestion").innerHTML = str;
+            document.getElementById("btn").innerHTML = str;
+            document.getElementById("ph").innerHTML = str;
+            document.getElementById("renderQA").innerHTML = str;
             EditProgram();
         }
 
         function putErrorSaveQA(error) {
             console.log(error);
         }
-
 
         function SaveQAdetails() {
             QandA = [];
@@ -227,6 +236,13 @@
         function postSuccessSaveQA() {
             console.log("success MyQandA");
             alert("success in adding the program");
+            str = "";
+            document.getElementById("AddNewQuestion").innerHTML = str;
+            document.getElementById("btn").innerHTML = str;
+            document.getElementById("ph").innerHTML = str;
+            document.getElementById("renderQA").innerHTML = str;
+            renderQA
+            addORedit();
         }
 
         function postErrorSaveQA(error) {
@@ -293,7 +309,6 @@
             $(".loginBox").css({ "height": "+=175", "top": "+=14%" });
             $("#remove").show();
 
-
         }
 
         function getErrorRead_QandA(error) {
@@ -311,22 +326,16 @@
             $("#btnChoose").css({ "text-align": "left", "padding-top": "-=170px" });
             document.getElementById("btnChoose").innerHTML = str;
 
-            strTableQuestion = "";
-            strTableQuestion += '<tr><td><p>Question 1:</p></td><td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td><td><p>1.</p></td><td class="correctAnswer"><input type="text" id="Answer1_1" name="correctAnswer1" placeholder="Enter a correct Answer" /></td></tr>';
-            strTableQuestion += '<tr><td></td><td></td><td><p>2.</p></td><td> <input type="text" id="Answer1_2" name="Answer2" placeholder="Enter a possible answer" /></td></tr>';
-            strTableQuestion += '<tr><td></td><td></td><td><p>3.</p></td><td> <input type="text" id="Answer1_3" name="Answer3" placeholder="Enter a possible answer" /></td></tr>';
-            strTableQuestion += '<tr><td></td><td></td><td><p>4.</p></td><td> <input type="text" id="Answer1_4" name="Answer4" placeholder="Enter a possible answer" /></td></tr>';
+            str = '<tr><td><p>Question 1:</p></td><td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td><td><p>1.</p></td><td class="correctAnswer"><input type="text" id="Answer1_1" name="correctAnswer1" placeholder="Enter a correct Answer" /></td></tr>';
+            str += '<tr><td></td><td></td><td><p>2.</p></td><td> <input type="text" id="Answer1_2" name="Answer2" placeholder="Enter a possible answer" /></td></tr>';
+            str += '<tr><td></td><td></td><td><p>3.</p></td><td> <input type="text" id="Answer1_3" name="Answer3" placeholder="Enter a possible answer" /></td></tr>';
+            str += '<tr><td></td><td></td><td><p>4.</p></td><td> <input type="text" id="Answer1_4" name="Answer4" placeholder="Enter a possible answer" /></td></tr>';
 
-            document.getElementById("AddNewQuestion").innerHTML = strTableQuestion;
-
-            strbtn = "";
-            strbtn += '<tr><td><button type="button" id="remove">Remove question</button><br></td><td></td><td colspan="2"><label id="alertMessage2"></label></td></tr>';
-            strbtn += '<tr><td></td><td></td><td><button type="button" id="save">save</button></td></tr>';
-
-
-            document.getElementById("btn").innerHTML = strbtn;
+            document.getElementById("AddNewQuestion").innerHTML = str;
+            str = '<tr><td><button type="button" id="remove">Remove question</button><br></td><td></td><td colspan="2"><label id="alertMessage2"></label></td></tr>';
+            str += '<tr><td></td><td></td><td><button type="button" id="save">save</button></td></tr>';
+            document.getElementById("btn").innerHTML = str;
         }
-
 
     </script>
 </head>
