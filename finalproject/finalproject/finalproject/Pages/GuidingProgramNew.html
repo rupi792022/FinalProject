@@ -23,9 +23,6 @@
             clickUpload = 0;
             toUpdate = false;
 
-            $("#remove").hide();
-            //$('#addNewProgram').click(AddNewProgram);
-            //$('#editProgram').click(EditProgram);
             $(document).on("click", "#addNewProgram", AddNewProgram);
             $(document).on("click", "#editProgram", EditProgram);
             $(document).on("click", "#AddQuestion", AddQuestion);
@@ -100,10 +97,12 @@
         }
 
         function addORedit() {
-            let str = '<button type ="button" id = "addNewProgram"> Add New Program</button>';
+            let str = '<button type ="button" id = "addNewProgram"> Add New Program</button>&nbsp;&nbsp;&nbsp;';
             if (numOfprogram != 0) {
                 str += '<button type="button" id="editProgram">Edit Program</button>';
             }
+            $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
+            $(".loginBox").css({ "height": "589px", "top": "60%" });
             document.getElementById("btnChoose").innerHTML = str;
         }
        
@@ -123,7 +122,7 @@
         }
 
         function AddQuestion() {
-            /*           count++;*/
+            count++;
             Qnum++;
             str = "";
             str += '<tr><td><p>Question ' + Qnum + ':</p></td>';
@@ -196,11 +195,6 @@
 
         function putSuccessSaveQA() {
             alert("Program update complete");
-            str = "";
-            document.getElementById("AddNewQuestion").innerHTML = str;
-            document.getElementById("btn").innerHTML = str;
-            document.getElementById("ph").innerHTML = str;
-            document.getElementById("renderQA").innerHTML = str;
             EditProgram();
         }
 
@@ -236,12 +230,6 @@
         function postSuccessSaveQA() {
             console.log("success MyQandA");
             alert("success in adding the program");
-            str = "";
-            document.getElementById("AddNewQuestion").innerHTML = str;
-            document.getElementById("btn").innerHTML = str;
-            document.getElementById("ph").innerHTML = str;
-            document.getElementById("renderQA").innerHTML = str;
-            renderQA
             addORedit();
         }
 
@@ -303,12 +291,13 @@
                     str += '<tr><td></td><td></td><td><p>' + (j + 1) + '.</p><td><input type="text" id="Answer' + qa[i].Question_serial_num + '_' + (j + 1) + '" name="Answer"' + (j + 1) + '" value="' + arrAnswers[j] + '"></td>';
                 }
                 str += '</tr>';
+                $(".loginBox").css({ "height": "+=175", "top": "+=14%" });
             }
+           
             $(str).clone().appendTo("#renderQA");
             Qnum = i;
-            $(".loginBox").css({ "height": "+=175", "top": "+=14%" });
-            $("#remove").show();
-
+            if (Qnum > 1)
+                $("#remove").show();
         }
 
         function getErrorRead_QandA(error) {
@@ -321,20 +310,20 @@
             str += '<table><tr><td><p>Name of Program:</p></td><td><input type="text" id="program_name" name="program_name" placeholder="Name of the program"/></td></tr></table><br>';
             str += '<textarea id="contentguiding" name="contentguiding" cols="50" rows="8" placeholder="Enter a content"></textarea>';
             str += '<form method="post" enctype="multipart/form-data" id="formUpload"><div><label for="files">Please select file - you can choose more than one.</label><input type="file" id="files" name="files" multiple="multiple" /></div><br /><button type="button" id="buttonUpload">Upload files</button><br></form>';
+            str += ' <div id="ph"></div>';
             str += '<br><button type="button" id="AddQuestion">Add Question</button><br>';
+
+            str += '<table id="AddNewQuestion"><tr><td><p>Question 1:</p></td><td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td>';
+            for (var i = 0; i < NumOfAnswers; i++) {
+                str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p></td><td> <input type="text" id="Answer1_' + (i + 1) + '" name="Answer' + (i + 1) + '" placeholder="Enter a possible answer" /></td></tr>';
+            }
+            str += '</table>';
+
+            str += '<table id="renderQA"></table></table><table id="btn"><tr><td><button hidden="true" type="button" id="remove">Remove question</button><br></td><td></td><td colspan="2"><label id="alertMessage2"></label></td></tr>';
+            str += '<tr><td></td><td></td><td><button type="button" id="save">save</button></td></tr></table>';
 
             $("#btnChoose").css({ "text-align": "left", "padding-top": "-=170px" });
             document.getElementById("btnChoose").innerHTML = str;
-
-            str = '<tr><td><p>Question 1:</p></td><td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td><td><p>1.</p></td><td class="correctAnswer"><input type="text" id="Answer1_1" name="correctAnswer1" placeholder="Enter a correct Answer" /></td></tr>';
-            str += '<tr><td></td><td></td><td><p>2.</p></td><td> <input type="text" id="Answer1_2" name="Answer2" placeholder="Enter a possible answer" /></td></tr>';
-            str += '<tr><td></td><td></td><td><p>3.</p></td><td> <input type="text" id="Answer1_3" name="Answer3" placeholder="Enter a possible answer" /></td></tr>';
-            str += '<tr><td></td><td></td><td><p>4.</p></td><td> <input type="text" id="Answer1_4" name="Answer4" placeholder="Enter a possible answer" /></td></tr>';
-
-            document.getElementById("AddNewQuestion").innerHTML = str;
-            str = '<tr><td><button type="button" id="remove">Remove question</button><br></td><td></td><td colspan="2"><label id="alertMessage2"></label></td></tr>';
-            str += '<tr><td></td><td></td><td><button type="button" id="save">save</button></td></tr>';
-            document.getElementById("btn").innerHTML = str;
         }
 
     </script>
@@ -358,12 +347,6 @@
     </nav>
     <div class="loginBox">
         <div id="btnChoose"></div>
-        <div id="stepDetails">
-            <div id="ph"></div>
-            <table id="AddNewQuestion"></table><br>
-            <table id="renderQA"></table>
-            <table id="btn"></table>
-        </div>
     </div>
 </body>
 </html>

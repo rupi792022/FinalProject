@@ -195,6 +195,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\ForgotPassword.css" />
     <Content Include="css\GuidingProgram.css" />
+    <Content Include="css\GuidingProgramNew.css" />
     <Content Include="css\LogIn.css" />
     <Content Include="css\ManagerHome.css" />
     <Content Include="css\Reports.css" />
