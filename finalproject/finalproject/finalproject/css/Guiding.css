@@ -1,4 +1,4 @@
-﻿.logoFOA { 
+﻿.logoFOA {
     height: 60px;
 }
 
@@ -14,7 +14,7 @@
 body {
     font-family: Calibri;
     background: #3E8C84;
-    color:gray;
+    color: gray;
 }
 
 .space {
@@ -84,18 +84,19 @@ a {
 }
 
 #learning {
- padding-left:30px;
+    padding-left: 30px;
 }
 
-#learning p{
-    font-size:17px;
-    font-family:Calibri;
-}
+    #learning p {
+        font-size: 17px;
+        font-family: Calibri;
+    }
 
 #uploadRender,
 #nextUpload,
 #createQuestion,
-#nextAnswer {
+#nextAnswer,
+#readQandA {
     border: 1px solid #C59636;
     outline: none;
     height: 35px;
@@ -121,7 +122,7 @@ a {
     cursor: pointer;
     font-family: Calibri;
     position: absolute;
-    bottom: 245px;
+    bottom: 230px;
     font-weight: normal;
 }
 
@@ -131,12 +132,13 @@ a {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding-top:30px;
+    padding-top: 30px;
 }
+
 .uploadPDF {
     width: 850px;
     height: 540px;
-    padding-right:30px;
+    padding-right: 30px;
 }
 
 .lableRadio {
@@ -149,12 +151,12 @@ a {
 
 #renderNext {
     position: absolute;
-    bottom:15px;
+    bottom: 15px;
     right: 15px;
 }
 
-.questionP{
-    color:black;
+.questionP {
+    color: black;
 }
 
 #alertMessage {
@@ -162,5 +164,4 @@ a {
     font-size: 16px;
     font-family: Calibri;
     font-weight: bold;
-    
 }

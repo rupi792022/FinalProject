@@ -24,14 +24,14 @@
             $(document).on("click", "#nextUpload", nextUpload);
             $(document).on("click", "#readQandA", readQandA);
             $(document).on("click", "#nextAnswer", renderQuestions);
-           
+
         });
 
         function logOut() {
             localStorage.clear();
             window.location.href = "LogIn.html";
         }
-      
+
         function getSuccessGP(gp) {
             console.log("Success GP")
             GP = gp; //All the Guiding Programs
@@ -42,17 +42,17 @@
             let apiCall = "../api/PerformsPrograms/Read_maxProPerforms?email=" + getDatails.Volunteer_email;
             ajaxCall("GET", apiCall, "", getSuccessMaxPro, getErrorMaxPro);
         }
-        
+
         function renderProgram() {
             str = "";
             for (var i = 0; i < GP.length; i++) {
                 if ((i + 1) <= themaxProgram) {
                     str += '<button type="button" style="background:green" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
                 }
-                else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">'+ GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
             }
             document.getElementById("learning").innerHTML = str;
-            
+
         }
 
         function getErrorGP() {
@@ -151,22 +151,22 @@
             str = "";//render on a html the question and answers
             randomAnswers = [];
             if (indexQuestion < Question.length) {
-            str += "<p>Please select the <b>correct<b> answer</p>";
-            str += "<p class='questionP'>" + Question[indexQuestion] + "</p>";
+                str += "<p>Please select the <b>correct<b> answer</p>";
+                str += "<p class='questionP'>" + Question[indexQuestion] + "</p>";
                 for (var j = indexAnswers; j < indexAnswers + 4; j++) {
                     randomAnswers[index] = AllAnswers[j];
                     index++;
-             }
-            indexAnswers += 4;
-            randomAnswers = randomAnswers.sort(() => Math.random() - 0.5);
-            for (var i = 0; i < randomAnswers.length; i++) {
-                str += '<input type="radio" id="answer' + count + '" name="answer" value="' + randomAnswers[i] + '"><label class="lableRadio" for="answer' + count + '">' + randomAnswers[i] + '</label><br>';
-                count++;
-            }
-            str += '<lebal>You need to click "Check" before moving on to the next question<lebal><br><button id="checkAnswer">Check</button><br>';
-            str += '<div id="renderNext"><button id="nextAnswer" disabled>Next</button></div>';
-            indexQuestion++;
-            document.getElementById("learning").innerHTML = str;
+                }
+                indexAnswers += 4;
+                randomAnswers = randomAnswers.sort(() => Math.random() - 0.5);
+                for (var i = 0; i < randomAnswers.length; i++) {
+                    str += '<input type="radio" id="answer' + count + '" name="answer" value="' + randomAnswers[i] + '"><label class="lableRadio" for="answer' + count + '">' + randomAnswers[i] + '</label><br>';
+                    count++;
+                }
+                str += '<lebal>You need to click "Check" before moving on to the next question<lebal><br><button id="checkAnswer">Check</button><br>';
+                str += '<div id="renderNext"><button id="nextAnswer" disabled>Next</button></div>';
+                indexQuestion++;
+                document.getElementById("learning").innerHTML = str;
             }
             else {
                 MyPerforms = {
@@ -176,7 +176,7 @@
                 }
                 ajaxCall("POST", "../api/PerformsPrograms", JSON.stringify(MyPerforms), postSuccessSave, postErrorSave);
                 return false;
-                
+
             }
 
         }
@@ -184,8 +184,8 @@
         function postSuccessSave() {
             str = '';
             str += 'You have completed the ' + GP[programNum - 1].Program_name + ' program! Your final score is: ' + Math.round(score) + '!';
-           document.getElementById("alertMessage").innerHTML = str;
-           performs();
+            document.getElementById("alertMessage").innerHTML = str;
+            performs();
         }
 
 
@@ -201,9 +201,9 @@
                 score += (100 / Question.length);
             }
             else alert("Sorry, The answer is incorrect");
-                $("#nextAnswer").attr('disabled', false);
+            $("#nextAnswer").attr('disabled', false);
         }
-        
+
 
     </script>
 </head>
@@ -215,7 +215,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
-                <li><a class="space" href="#">Tutorial</a></li>
+                <li><a class="space" href="Guiding-New.html">Tutorial</a></li>
                 <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="Reports.html">Reports</a></li>
                 <li><a class="space" href="#">Keywords</a></li>

@@ -105,14 +105,14 @@
             $(".loginBox").css({ "height": "589px", "top": "60%" });
             document.getElementById("btnChoose").innerHTML = str;
         }
-       
+
         function AddNewProgram() {
             toUpdate = false;
             numOfprogram++;
             renderInputLevel();
         }
 
-        function getSuccessMaxProgram(maxProgram) {  
+        function getSuccessMaxProgram(maxProgram) {
             numOfprogram = maxProgram;
             addORedit();
         }
@@ -132,7 +132,7 @@
             }
             str += '</tr>';
             $(str).clone().appendTo("#renderQA");
-            $(".loginBox").css({ "height": "+=190", "top": "+=15%" });
+            $(".loginBox").css({ "height": "+=185", "top": "+=14%" });
             $("#remove").show();
         }
 
@@ -143,7 +143,7 @@
                 table.deleteRow(rowCount - i);
             }
             Qnum--;
-            $(".loginBox").css({ "height": "-=190", "top": "-=15%" });
+            $(".loginBox").css({ "height": "-=185", "top": "-=14%" });
             if (Qnum == 1)
                 $("#remove").hide();
         }
@@ -254,9 +254,12 @@
             for (var i = 0; i < GP.length; i++) {
                 str += '<button type="button" class="btnProgram" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
             }
+            str += '<div id="backAddNew"><button id="backHomeBTN" onclick="addORedit()">Back</button></div>';
             $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
+            $(".loginBox").css({ "height": "589px", "top": "60%" });
             document.getElementById("btnChoose").innerHTML = str;
         }
+
 
 
         function getErrorRead_GP(error) {
@@ -291,9 +294,9 @@
                     str += '<tr><td></td><td></td><td><p>' + (j + 1) + '.</p><td><input type="text" id="Answer' + qa[i].Question_serial_num + '_' + (j + 1) + '" name="Answer"' + (j + 1) + '" value="' + arrAnswers[j] + '"></td>';
                 }
                 str += '</tr>';
-                $(".loginBox").css({ "height": "+=175", "top": "+=14%" });
+                $(".loginBox").css({ "height": "+=185", "top": "+=14%" });
             }
-           
+
             $(str).clone().appendTo("#renderQA");
             Qnum = i;
             if (Qnum > 1)
