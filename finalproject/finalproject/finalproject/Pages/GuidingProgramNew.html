@@ -155,9 +155,9 @@
             questions = [];
             answers = [];
             concatAllanswers = [];
-            if (toUpdate) {
-                count = numOfQ;
-            }
+            //if (toUpdate) {
+            //    count = numOfQ;
+            //}
             for (var i = 0; i < count; i++) {
                 questions[i] = $("#question" + (i + 1)).val();
                 /*concatAllanswers = $("#" + (i + 1) + "_correctAnswer" + (i + 1)).val()*/
@@ -251,7 +251,6 @@
 
         function renderPrograms() {
             let str = "";
-            str += '<p id="pChooseEdit">Select the tutorial you want to edit</p>'
             for (var i = 0; i < GP.length; i++) {
                 str += '<button type="button" class="btnProgram" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
             }
@@ -273,6 +272,7 @@
 
         function getSuccessRead_QandA(qa) {
             numOfQ = qa.length;
+            count = numOfQ;
             console.log("success Read_QandA");
             renderInputLevel();
             $("#program_name").val(GP[programNum - 1].Program_name);

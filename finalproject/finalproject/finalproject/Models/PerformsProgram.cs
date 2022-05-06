@@ -9,39 +9,38 @@ namespace finalproject.Models
     public class PerformsProgram
     {
         string volunteer_email;
-        string level_serial_num;
+        int guiding_serial_num;
         int score;
 
-        public PerformsProgram() { }
-        public PerformsProgram(string volunteer_email, string level_serial_num, int score)
+        public PerformsProgram(string volunteer_email, int guiding_serial_num, int score)
         {
             Volunteer_email = volunteer_email;
-            Level_serial_num = level_serial_num;
+            Guiding_serial_num = guiding_serial_num;
             Score = score;
         }
 
         public string Volunteer_email { get => volunteer_email; set => volunteer_email = value; }
-        public string Level_serial_num { get => level_serial_num; set => level_serial_num = value; }
+        public int Guiding_serial_num { get => guiding_serial_num; set => guiding_serial_num = value; }
         public int Score { get => score; set => score = value; }
 
-
+        public PerformsProgram() { }
         public void InsertPerforms()
         {
             DataServices ds = new DataServices();
             ds.InsertPerforms(this);
         }
 
-        public int Read_maxLevelsPerforms(string email)
+        public int Read_maxProPerforms(string email)
         {
             DataServices ds = new DataServices();
-            return ds.Read_maxLevelsPerforms(email);
+            return ds.Read_maxProPerforms(email);
         }
 
-        public List <int> Read_scores(string email)
-        {
-            DataServices ds = new DataServices();
-            return ds.Read_scores(email);
-        }
+        //public List <int> Read_scores(string email)
+        //{
+        //    DataServices ds = new DataServices();
+        //    return ds.Read_scores(email);
+        //}
 
         
     }

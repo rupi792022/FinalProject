@@ -945,7 +945,7 @@ namespace finalproject.Models.DAL
 
         SqlCommand Create_InsertPerforms(PerformsProgram p, SqlConnection con)
         {
-            string insertStr = "INSERT INTO Performs_program_2022 ( [level_serial_num],[score],[email]) VALUES('" + p.Level_serial_num + "', '" + p.Score + "', '" + p.Volunteer_email + "')";
+            string insertStr = "INSERT INTO Performs_program_2022 ( [guiding_serial_num],[score],[email]) VALUES('" + p.Guiding_serial_num + "', '" + p.Score + "', '" + p.Volunteer_email + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeout
             command.CommandTimeout = 5;
@@ -953,23 +953,23 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        public int Read_maxLevelsPerforms(string email)
+        public int Read_maxProPerforms(string email)
         {
             SqlConnection con = null;
 
             try
             {
                 con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_maxLevelsPerforms(con, email);
+                SqlCommand selectCommand = createSelectCommand_Read_maxProPerforms(con, email);
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-                int maxLevel = 0;
+                int maxP = 0;
 
                 while (dr.Read())
                 {
-                    if (dr["maxlevel"] != DBNull.Value)
-                        maxLevel = Convert.ToInt16(dr["maxlevel"]);
+                    if (dr["maxPro"] != DBNull.Value)
+                        maxP = Convert.ToInt16(dr["maxPro"]);
                 }
-                return maxLevel;
+                return maxP;
             }
             catch (Exception ex)
             {
@@ -983,9 +983,9 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_maxLevelsPerforms(SqlConnection con, string email)
+        private SqlCommand createSelectCommand_Read_maxProPerforms(SqlConnection con, string email)
         {
-            string commandStr = "SELECT max(level_serial_num) as 'maxlevel' FROM Performs_program_2022 where email = @email";
+            string commandStr = "SELECT max(guiding_serial_num) as 'maxPro' FROM Performs_program_2022 where email = @email";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@email", SqlDbType.NVarChar);
             cmd.Parameters["@email"].Value = email;
@@ -993,45 +993,45 @@ namespace finalproject.Models.DAL
         }
 
 
-        public List<int> Read_scores(string email)
-        {
-            SqlConnection con = null;
+        //public List<int> Read_scores(string email)
+        //{
+        //    SqlConnection con = null;
 
-            try
-            {
-                con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_Read_scores(con, email);
-                List<int> Score_List = new List<int>();
-                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+        //    try
+        //    {
+        //        con = Connect("webOsDB");
+        //        SqlCommand selectCommand = createSelectCommand_Read_scores(con, email);
+        //        List<int> Score_List = new List<int>();
+        //        SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
 
-                while (dr.Read())
-                {
-                    int score;
-                    score = Convert.ToInt16(dr["score"]);
-                    Score_List.Add(score);
-                }
-                return Score_List;
-            }
-            catch (Exception ex)
-            {
+        //        while (dr.Read())
+        //        {
+        //            int score;
+        //            score = Convert.ToInt16(dr["score"]);
+        //            Score_List.Add(score);
+        //        }
+        //        return Score_List;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw new Exception("failed to read the scores", ex);
-            }
-            finally
-            {
-                if (con != null)
-                    con.Close();
-            }
-        }
+        //        throw new Exception("failed to read the scores", ex);
+        //    }
+        //    finally
+        //    {
+        //        if (con != null)
+        //            con.Close();
+        //    }
+        //}
 
-        private SqlCommand createSelectCommand_Read_scores(SqlConnection con, string email)
-        {
-            string commandStr = "SELECT score FROM Performs_program_2022 where email = @email";
-            SqlCommand cmd = createCommand(con, commandStr);
-            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
-            cmd.Parameters["@email"].Value = email;
-            return cmd;
-        }
+        //private SqlCommand createSelectCommand_Read_scores(SqlConnection con, string email, int gp)
+        //{
+        //    string commandStr = "SELECT score FROM Performs_program_2022 where email = @email and guiding_serial_num = @gp";
+        //    SqlCommand cmd = createCommand(con, commandStr);
+        //    cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+        //    cmd.Parameters["@email"].Value = email;
+        //    return cmd;
+        //}
 
 
         //////QandA
@@ -1088,12 +1088,22 @@ namespace finalproject.Models.DAL
             try
             {
                 con = Connect("webOsDB");
+                List<QandA> Q_List = new List<QandA>();
+                Q_List = Read_QandA(qa[0].Guiding_serial_num);
                 foreach (var q in qa)
                 {
-                SqlCommand selectCommand = createSelectCommand_UpdateQandADetails(con, q.Question_serial_num, q.Question_content, q.Answers, q.Guiding_serial_num);
-                selectCommand.ExecuteNonQuery();
+                    if (q.Question_serial_num > Q_List.Count)
+                    {
+                        SqlCommand command = Create_InsertProgram(q, con);
+                        command.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        SqlCommand selectCommand = createSelectCommand_UpdateQandADetails(con, q.Question_serial_num, q.Question_content, q.Answers, q.Guiding_serial_num);
+                        selectCommand.ExecuteNonQuery();
+                    }
                 }
-               
+            
             }
             catch (Exception ex)
             {

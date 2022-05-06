@@ -33,7 +33,6 @@ namespace finalproject.Models
             ds.InsertQandA(qa);
 
         }
-
         public List<QandA> Read_QandA(int numProgram)
         {
             DataServices ds = new DataServices();

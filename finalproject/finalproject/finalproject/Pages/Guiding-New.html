@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/Guiding.css" rel="stylesheet" />
+    <title></title>
+    <script>
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name.toUpperCase() + ' ' + getDatails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
+            let apiCall = "../api/GuidingPrograms/Read_GP";
+            ajaxCall("GET", apiCall, "", getSuccessGP, getErrorGP);
+
+            $(document).on("click", ".btnLevel", startProgram);
+            $(document).on("click", "#uploadRender", uploadRender);
+            $(document).on("click", "#checkAnswer", checkAnswer);
+            $(document).on("click", "#nextUpload", nextUpload);
+            $(document).on("click", "#readQandA", readQandA);
+            $(document).on("click", "#nextAnswer", renderQuestions);
+           
+        });
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+      
+        function getSuccessGP(gp) {
+            console.log("Success GP")
+            GP = gp; //All the Guiding Programs
+            performs();
+        }
+
+        function performs() {
+            let apiCall = "../api/PerformsPrograms/Read_maxProPerforms?email=" + getDatails.Volunteer_email;
+            ajaxCall("GET", apiCall, "", getSuccessMaxPro, getErrorMaxPro);
+        }
+        
+        function renderProgram() {
+            str = "";
+            for (var i = 0; i < GP.length; i++) {
+                if ((i + 1) <= themaxProgram) {
+                    str += '<button type="button" style="background:green" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                }
+                else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">'+ GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+            }
+            document.getElementById("learning").innerHTML = str;
+            
+        }
+
+        function getErrorGP() {
+            console.log("the GP is not read");
+        }
+
+        function getSuccessMaxPro(maxPrograms) {
+            themaxProgram = maxPrograms;
+            renderProgram();
+        }
+        function getErrorMaxPro() {
+            console.log("the MaxPro is not read");
+        }
+
+
+        function startProgram() {
+            programNum = $(this).attr("id");
+            str = "";
+            str += '<p>' + GP[programNum - 1].Content_level + '</p>';
+            str += '<div id="renderNext"><button id="uploadRender">Next</button></div>';
+            document.getElementById("learning").innerHTML = str;
+        }
+
+        function uploadRender() {
+            index = 0;
+            str = "";
+            Extantions = []; //only the end
+            filesPath = []; //the all file path
+            allPath = GP[programNum - 1].File_path.split(",");
+            for (var i = 0; i < (allPath.length - 1); i++) {
+                path = allPath[i].split(".");
+                for (var j = 0; j < path.length; j++) {
+                    if (j % 2 != 0)
+                        Extantions.push(path[j]);
+                    else filesPath.push(path[j]);
+                }
+            }
+            nextUpload();
+        }
+
+
+        function nextUpload() {
+            str = "";
+            if (index == (allPath.length - 1)) { //check if we have finished going through all the files
+                str += '<p>Now you are required to take an exam.</br>A number of questions will appear on the exam.</br> When you click on the "Next" button you will start the exam and you will not be able to go back.</br>At the end of each question, click on the "Check" button and then "Next" to continue to the next question.</p>';
+                str += '<div id="renderNext"><button id="readQandA">Next</button></div>'; // לבדוק את הכפתור next מבחינת עיצוב
+                $(".loginBox").css({ "height": "540px", "width": "850px", "top": "55%" });
+            }
+            else {
+                if (Extantions[index] == "pdf" || Extantions[index] == "docx") {
+                    str += '<embed class="uploadPDF" type="text/' + Extantions[index] + '" src="../' + filesPath[index] + '.' + Extantions[index] + '">';
+                    $(".loginBox").css({ "height": "650px", "width": "950px", "top": "65%" });
+                }
+                else if (Extantions[index] == "png" || Extantions[index] == "jpg")
+                    str += '<img class="uploadImage" src="../' + filesPath[index] + '.' + Extantions[index] + '" />';
+                str += '<div id="renderNext"><button id="nextUpload">Next</button></div>';
+                index++;
+            }
+            document.getElementById("learning").innerHTML = str;
+        }
+
+
+        function readQandA() {
+            let apiCall = "../api/QandAs/Read_QandA?numProgram=" + programNum;
+            ajaxCall("GET", apiCall, "", getSuccessRead_QandA, getErrorRead_QandA);
+        }
+
+        function getSuccessRead_QandA(QA) {
+            console.log("Success QandA")
+            createQuestion(QA);
+        }
+
+        function getErrorRead_QandA() {
+            console.log("the QandA is not read");
+        }
+
+
+        function createQuestion(qa) {
+            score = 0;
+            Question = [];
+            AllAnswers = [];
+            Answers = [];
+            for (var i = 0; i < qa.length; i++) {
+                Question[i] = qa[i].Question_content;
+                Answers = qa[i].Answers.split(",");
+                AllAnswers = AllAnswers.concat(Answers);
+            }
+            indexQuestion = 0;
+            indexAnswers = 0;
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            count = 0;//count the number of answer
+            index = 0;
+            str = "";//render on a html the question and answers
+            randomAnswers = [];
+            if (indexQuestion < Question.length) {
+            str += "<p>Please select the <b>correct<b> answer</p>";
+            str += "<p class='questionP'>" + Question[indexQuestion] + "</p>";
+                for (var j = indexAnswers; j < indexAnswers + 4; j++) {
+                    randomAnswers[index] = AllAnswers[j];
+                    index++;
+             }
+            indexAnswers += 4;
+            randomAnswers = randomAnswers.sort(() => Math.random() - 0.5);
+            for (var i = 0; i < randomAnswers.length; i++) {
+                str += '<input type="radio" id="answer' + count + '" name="answer" value="' + randomAnswers[i] + '"><label class="lableRadio" for="answer' + count + '">' + randomAnswers[i] + '</label><br>';
+                count++;
+            }
+            str += '<lebal>You need to click "Check" before moving on to the next question<lebal><br><button id="checkAnswer">Check</button><br>';
+            str += '<div id="renderNext"><button id="nextAnswer" disabled>Next</button></div>';
+            indexQuestion++;
+            document.getElementById("learning").innerHTML = str;
+            }
+            else {
+                MyPerforms = {
+                    Volunteer_email: getDatails.Volunteer_email,
+                    Guiding_serial_num: programNum,
+                    Score: score
+                }
+                ajaxCall("POST", "../api/PerformsPrograms", JSON.stringify(MyPerforms), postSuccessSave, postErrorSave);
+                return false;
+                
+            }
+
+        }
+
+        function postSuccessSave() {
+            str = '';
+            str += 'You have completed the ' + GP[programNum - 1].Program_name + ' program! Your final score is: ' + Math.round(score) + '!';
+           document.getElementById("alertMessage").innerHTML = str;
+           performs();
+        }
+
+
+        function postErrorSave() {
+            console.log("failed in saving performs details");
+        }
+
+        function checkAnswer() {
+            //check if the answer is correct
+            let SelectedAnswer = $("input[type=radio][name=answer]:checked").val();//get the value from the checkbo
+            if (SelectedAnswer == AllAnswers[indexAnswers - 4]) {//check if the answer is correct
+                alert("Good Job! The answer is correct")
+                score += (100 / Question.length);
+            }
+            else alert("Sorry, The answer is incorrect");
+                $("#nextAnswer").attr('disabled', false);
+        }
+        
+
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="logoFOA" src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="VolunteerHome.html">Home</a></li>
+                <li><a class="space" href="#">Tutorial</a></li>
+                <li><a class="space" href="#">Activity time</a></li>
+                <li><a class="space" href="Reports.html">Reports</a></li>
+                <li><a class="space" href="#">Keywords</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div id="learning"></div>
+        <div id="alertMessage"></div>
+        <div id="QA"></div>
+    </div>
+</body>
+</html>
