@@ -692,65 +692,7 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        //public GuidingProgram Read_Level(int level_num) // Reading of the values 
-        //{
-
-        //    SqlConnection con = null;
-
-        //    try
-        //    {
-        //        // C - Connect
-        //        con = Connect("webOsDB");
-        //        // C - Create Command
-
-        //        SqlCommand selectCommand = createSelectCommand_LevelDetails(con, level_num);
-
-        //        // Execute the command
-        //        //
-        //        SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
-        //        GuidingProgram gp = new GuidingProgram();
-        //        while (dr.Read())
-        //        {
-        //            gp.File_path = (string)dr["file_path"];
-        //            gp.Program_name = (string)dr["program_name"];
-        //            gp.Manager_email = (string)dr["email"];
-        //            gp.Level_serial_num = Convert.ToInt16(dr["level_serial_num"]);
-        //            gp.Content_level = (string)dr["content_level"];
-        //            gp.Question_content_1 = (string)dr["question_content_1"];
-        //            gp.Question_content_2 = (string)dr["question_content_2"];
-        //            gp.Question_content_3 = (string)dr["question_content_3"];
-        //            gp.Question_content_4 = (string)dr["question_content_4"];
-        //            gp.Answers_1 = (string)dr["answers_1"];
-        //            gp.Answers_2 = (string)dr["answers_2"];
-        //            gp.Answers_3 = (string)dr["answers_3"];
-        //            gp.Answers_4 = (string)dr["answers_4"];
-        //        }
-
-        //        return gp;
-
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-
-        //        throw new Exception("failed to read level", ex);
-        //    }
-        //    finally
-        //    {
-        //        if (con != null)
-        //            con.Close();
-        //    }
-        //}
-
-        //SqlCommand createSelectCommand_LevelDetails(SqlConnection con, int level_num)
-        //{
-        //    string commandStr = "SELECT * FROM Guiding_program_2022 WHERE level_serial_num = @level_num";
-        //    SqlCommand cmd = createCommand(con, commandStr);
-        //    cmd.Parameters.Add("@level_num", SqlDbType.SmallInt);
-        //    cmd.Parameters["@level_num"].Value = level_num;
-        //    return cmd;
-        //}
+       
 
         public void UpdateGuidingDetails(GuidingProgram gp) // Update the values 
         {
@@ -884,7 +826,7 @@ namespace finalproject.Models.DAL
                 con = Connect("webOsDB");
                 SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, numProgram);
                 selectCommand.ExecuteNonQuery();
-               
+
 
             }
             catch (Exception ex)
@@ -1123,12 +1065,12 @@ namespace finalproject.Models.DAL
                 con = Connect("webOsDB");
                 List<QandA> Q_List = new List<QandA>();
                 Q_List = Read_QandA(numProgram);
-                for (int i = 1; i < (Q_List.Count+1); i++)
+                for (int i = 1; i < (Q_List.Count + 1); i++)
                 {
                     SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, numProgram, i);
                     selectCommand.ExecuteNonQuery();
                 }
-                
+
             }
             catch (Exception ex)
             {

@@ -10,7 +10,7 @@ namespace finalproject.Controllers
 {
     public class QandAsController : ApiController
     {
-        // GET api/<controller>
+        //GET api/<controller>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -40,21 +40,12 @@ namespace finalproject.Controllers
             q.UpdateQandADetails(qa);
         }
 
-        // GET api/<controller>/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
-       
-        // PUT api/<controller>/5
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
 
         // DELETE api/<controller>/5
-
-        public void Delete(int numProgram)
+        [HttpDelete]
+        [Route("api/QandAs/DeleteQandA")]
+        public void DeleteQandA(int numProgram)
         {
             QandA q = new QandA();
             q.DeleteQandA(numProgram);

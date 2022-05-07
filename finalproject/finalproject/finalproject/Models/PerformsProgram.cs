@@ -36,12 +36,6 @@ namespace finalproject.Models
             return ds.Read_maxProPerforms(email);
         }
 
-        //public List <int> Read_scores(string email)
-        //{
-        //    DataServices ds = new DataServices();
-        //    return ds.Read_scores(email);
-        //}
-
         
     }
 }

@@ -216,7 +216,6 @@
     <Content Include="Images\volunteer.png" />
     <Content Include="Pages\Guiding-New.html" />
     <Content Include="Pages\GuidingProgramNew.html" />
-    <Content Include="Pages\GuidingProgramOld.html" />
     <Content Include="Pages\ForgotPassword.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\Reports.html" />

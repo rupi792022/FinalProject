@@ -25,14 +25,7 @@ namespace finalproject.Controllers
            PerformsProgram p = new PerformsProgram();
             return p.Read_maxProPerforms(email);
         }
-        
-        //[HttpGet]
-        //[Route("api/PerformsPrograms/Read_scores")]
-        ////public List <int> Read_scores(string email)
-        //{
-        //    PerformsProgram p = new PerformsProgram();
-        //    return p.Read_scores(email);
-        //}
+
 
         // POST api/<controller>
         public void Post([FromBody] PerformsProgram p)

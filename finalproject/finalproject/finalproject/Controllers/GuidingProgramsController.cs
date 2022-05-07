@@ -26,14 +26,6 @@ namespace finalproject.Controllers
             return gp.Read_Max_Program();
         }
 
-        //[HttpGet]
-        //[Route("api/GuidingPrograms/Read_Level")]
-        //public GuidingProgram Read_Level(int level_num)
-        //{
-        //    GuidingProgram gp = new GuidingProgram();
-        //    return gp.Read_Level(level_num);
-        //}
-
 
         [HttpGet]
         [Route("api/GuidingPrograms/Read_maxLevel")]
@@ -69,7 +61,9 @@ namespace finalproject.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int numProgram)
+        [HttpDelete]
+        [Route("api/GuidingPrograms/DeleteProgram")]
+        public void DeleteProgram(int numProgram)
         {
             GuidingProgram gp = new GuidingProgram();
             gp.DeleteProgram(numProgram);
