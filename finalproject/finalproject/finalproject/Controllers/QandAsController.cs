@@ -53,11 +53,12 @@ namespace finalproject.Controllers
         //}
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+
+        public void Delete(int numProgram)
         {
-
+            QandA q = new QandA();
+            q.DeleteQandA(numProgram);
         }
-
 
     }
 }

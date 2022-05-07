@@ -40,12 +40,6 @@ namespace finalproject.Models
 
         }
 
-        //public GuidingProgram Read_Level(int level_num)
-        //{
-        //    DataServices ds = new DataServices();
-        //    return ds.Read_Level(level_num);
-
-        //}
 
         public int Read_maxLevel()
         {
@@ -68,10 +62,10 @@ namespace finalproject.Models
             ds.UpdateGuidingDetails(gp);
         }
 
-        //public void DeleteProgram ()
-        //{
-        //    DataServices ds = new DataServices();
-        //    ds.DeleteProgram();
-        //}
+        public void DeleteProgram(int numProgram)
+        {
+            DataServices ds = new DataServices();
+            ds.DeleteProgram(numProgram);
+        }
     }
 }

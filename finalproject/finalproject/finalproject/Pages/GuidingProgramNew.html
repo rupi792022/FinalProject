@@ -29,6 +29,7 @@
             $(document).on("click", "#remove", Remove);
             $(document).on("click", "#save", Save);
             $(document).on("click", ".btnProgram", getProgram);
+            $(document).on("click", ".btnDelete", deleteProgram);
             $(document).on("click", "#buttonUpload", ButtonUpload);
 
             let apiCall = "../api/GuidingPrograms/Read_Max_Program"; //Reading the latest tutorial number
@@ -99,7 +100,7 @@
         function addORedit() {
             let str = '<button type ="button" id = "addNewProgram"> Add New Program</button>&nbsp;&nbsp;&nbsp;';
             if (numOfprogram != 0) {
-                str += '<button type="button" id="editProgram">Edit Program</button>';
+                str += '<button type="button" id="editProgram">Edit/Delete Program</button>';
             }
             $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
             $(".loginBox").css({ "height": "589px", "top": "60%" });
@@ -142,9 +143,10 @@
             for (let i = 1; i < 6; i++) {
                 table.deleteRow(rowCount - i);
             }
+            count--;
             Qnum--;
             $(".loginBox").css({ "height": "-=185", "top": "-=14%" });
-            if (Qnum == 1)
+            if (count == 1)
                 $("#remove").hide();
         }
 
@@ -243,6 +245,34 @@
             ajaxCall("GET", apiCall, "", getSuccessRead_GP, getErrorRead_GP);
         }
 
+        function deleteProgram(){
+            programNum = $(this).attr("id");
+            let apiCall = "../api/GuidingPrograms?numProgram=" + programNum;
+            ajaxCall("DELETE", apiCall , deleteSuccess, deleteErrorGP);
+        }
+
+        function deleteErrorGP() {
+            console.log("Error delete GP");
+        }
+
+
+        function deleteSuccess() {
+            console.log("Success delete the GP");
+            let apiCall = "../api/QandAs?numProgram=" + programNum;
+            ajaxCall("DELETE", apiCall, deleteSuccessQA, deleteErrorQA);
+        }
+
+        function deleteErrorQA() {
+            console.log("Error delete QA");
+        }
+
+
+        function deleteSuccessQA() {
+            console.log("Success delete the QA");
+            alert("success in deleting the program");
+            addORedit();
+        }
+
         function getSuccessRead_GP(gp) {
             console.log("success Read_GP");
             GP = gp;
@@ -252,14 +282,13 @@
         function renderPrograms() {
             let str = "";
             for (var i = 0; i < GP.length; i++) {
-                str += '<button type="button" class="btnProgram" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                str += '<button type="button" class="btnProgram" id="' + GP[i].Guiding_serial_num + '">' + GP[i].Program_name + ' <button type="button" class="btnDelete" id="' + GP[i].Guiding_serial_num + '"> Delete </button ></button >&nbsp;&nbsp;&nbsp';
             }
             str += '<div id="backAddNew"><button id="backHomeBTN" onclick="addORedit()">Back</button></div>';
             $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
             $(".loginBox").css({ "height": "589px", "top": "60%" });
             document.getElementById("btnChoose").innerHTML = str;
         }
-
 
 
         function getErrorRead_GP(error) {
@@ -299,7 +328,7 @@
 
             $(str).clone().appendTo("#renderQA");
             Qnum = i;
-            if (Qnum > 1)
+            if (count > 1)
                 $("#remove").show();
         }
 

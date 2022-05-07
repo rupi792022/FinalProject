@@ -68,12 +68,12 @@ namespace finalproject.Controllers
             GP.UpdateGuidingDetails(GP);
         }
 
-        //// DELETE api/<controller>/5
-        //public void Delete()
-        //{
-        //    GuidingProgram gp = new GuidingProgram();
-        //    gp.DeleteProgram();
-        //}
+        // DELETE api/<controller>/5
+        public void Delete(int numProgram)
+        {
+            GuidingProgram gp = new GuidingProgram();
+            gp.DeleteProgram(numProgram);
+        }
 
     }
 }

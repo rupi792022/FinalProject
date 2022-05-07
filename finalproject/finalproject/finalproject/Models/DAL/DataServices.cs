@@ -873,48 +873,43 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
-        //public void DeleteProgram()
-        //{
+        public void DeleteProgram(int numProgram)
+        {
 
-        //    SqlConnection con = null;
+            SqlConnection con = null;
 
 
-        //    try
-        //    {
-        //        con = Connect("webOsDB");
-        //        List<GuidingProgram> GP_List = new List<GuidingProgram>();
-        //        GP_List = Read_GP();
-        //        foreach (var g in GP_List)
-        //        {
-        //            SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, g.Level_serial_num);
-        //            selectCommand.ExecuteNonQuery();
-        //        }
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_DeleteProgram(con, numProgram);
+                selectCommand.ExecuteNonQuery();
+               
 
-        //    }
-        //    catch (Exception ex)
-        //    {
+            }
+            catch (Exception ex)
+            {
 
-        //        throw new Exception("failed to delete the program", ex);
-        //    }
-        //    finally
-        //    {
-        //        if (con != null)
-        //            con.Close();
-        //    }
-        //}
+                throw new Exception("failed to delete the program", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
 
-        //private SqlCommand createSelectCommand_DeleteProgram(SqlConnection con, int LevelNum)
-        //{
-        //    string commandStr = "DELETE FROM Guiding_program_2022 WHERE level_serial_num = @LevelNum";
-        //    SqlCommand cmd = createCommand(con, commandStr);
-        //    cmd.Parameters.Add("@LevelNum", SqlDbType.SmallInt);
-        //    cmd.Parameters["@LevelNum"].Value = LevelNum;
-
-        //    return cmd;
-        //}
+        private SqlCommand createSelectCommand_DeleteProgram(SqlConnection con, int numProgram)
+        {
+            string commandStr = "DELETE FROM Guiding_program_2022 WHERE guiding_serial_num = @numProgram";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@numProgram", SqlDbType.NVarChar);
+            cmd.Parameters["@numProgram"].Value = numProgram;
+            return cmd;
+        }
 
         //--------------------------------------------------------------------------//
-        //_____________________Relates to the Performs Program\_______________________//
+        //_____________________Relates to the Performs Program_______________________//
         //--------------------------------------------------------------------------//
 
         public void InsertPerforms(PerformsProgram p)
@@ -993,46 +988,6 @@ namespace finalproject.Models.DAL
         }
 
 
-        //public List<int> Read_scores(string email)
-        //{
-        //    SqlConnection con = null;
-
-        //    try
-        //    {
-        //        con = Connect("webOsDB");
-        //        SqlCommand selectCommand = createSelectCommand_Read_scores(con, email);
-        //        List<int> Score_List = new List<int>();
-        //        SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
-
-        //        while (dr.Read())
-        //        {
-        //            int score;
-        //            score = Convert.ToInt16(dr["score"]);
-        //            Score_List.Add(score);
-        //        }
-        //        return Score_List;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw new Exception("failed to read the scores", ex);
-        //    }
-        //    finally
-        //    {
-        //        if (con != null)
-        //            con.Close();
-        //    }
-        //}
-
-        //private SqlCommand createSelectCommand_Read_scores(SqlConnection con, string email, int gp)
-        //{
-        //    string commandStr = "SELECT score FROM Performs_program_2022 where email = @email and guiding_serial_num = @gp";
-        //    SqlCommand cmd = createCommand(con, commandStr);
-        //    cmd.Parameters.Add("@email", SqlDbType.NVarChar);
-        //    cmd.Parameters["@email"].Value = email;
-        //    return cmd;
-        //}
-
 
         //////QandA
 
@@ -1097,13 +1052,23 @@ namespace finalproject.Models.DAL
                         SqlCommand command = Create_InsertProgram(q, con);
                         command.ExecuteNonQuery();
                     }
-                    else
+                    else 
                     {
                         SqlCommand selectCommand = createSelectCommand_UpdateQandADetails(con, q.Question_serial_num, q.Question_content, q.Answers, q.Guiding_serial_num);
                         selectCommand.ExecuteNonQuery();
                     }
+                   
                 }
-            
+                if (Q_List.Count > qa.Count)
+                {
+                    for (int i = 0; i < (Q_List.Count - qa.Count); i++)
+                    {
+                        SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, Q_List[qa.Count+i].Question_serial_num, Q_List[qa.Count+i].Guiding_serial_num);
+                        selectCommand.ExecuteNonQuery();
+                    }
+                   
+                }
+
             }
             catch (Exception ex)
             {
@@ -1135,5 +1100,47 @@ namespace finalproject.Models.DAL
 
             return cmd;
         }
+
+        private SqlCommand createSelectCommand_DeleteQandA(SqlConnection con, int question_serial_num, int guiding_serial_num)
+        {
+            string commandStr = "DELETE FROM Q_and_A_2022 WHERE guiding_serial_num = @guiding_serial_num and question_serial_num = @question_serial_num";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@guiding_serial_num", SqlDbType.NVarChar);
+            cmd.Parameters["@guiding_serial_num"].Value = guiding_serial_num;
+            cmd.Parameters.Add("@question_serial_num", SqlDbType.SmallInt);
+            cmd.Parameters["@question_serial_num"].Value = question_serial_num;
+            return cmd;
+        }
+
+        public void DeleteQandA(int numProgram)
+        {
+
+            SqlConnection con = null;
+
+
+            try
+            {
+                con = Connect("webOsDB");
+                List<QandA> Q_List = new List<QandA>();
+                Q_List = Read_QandA(numProgram);
+                for (int i = 1; i < (Q_List.Count+1); i++)
+                {
+                    SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, numProgram, i);
+                    selectCommand.ExecuteNonQuery();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to delete the program", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
     }
 }

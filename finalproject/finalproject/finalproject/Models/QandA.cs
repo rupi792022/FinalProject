@@ -45,5 +45,10 @@ namespace finalproject.Models
             ds.UpdateQandADetails(qa);
         }
 
+        public void DeleteQandA(int numProgram)
+        {
+            DataServices ds = new DataServices();
+            ds.DeleteQandA(numProgram);
+        }
     }
 }
