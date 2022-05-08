@@ -282,9 +282,9 @@
         function renderPrograms() {
             let str = "";
             for (var i = 0; i < GP.length; i++) {
-                str += '<button type="button" class="btnProgram" id="' + GP[i].Guiding_serial_num + '">' + GP[i].Program_name + ' <button type="button" class="btnDelete" id="' + GP[i].Guiding_serial_num + '"> Delete </button ></button >&nbsp;&nbsp;&nbsp';
+                str += '<div class="btn-group"><button type="button" class="btnProgram" id="' + GP[i].Guiding_serial_num + '">' + GP[i].Program_name + ' </button ><button type="button" class="btnDelete" id="' + GP[i].Guiding_serial_num + '"> Delete </button></div>&nbsp;&nbsp;&nbsp';
             }
-            str += '<div id="backAddNew"><button id="backHomeBTN" onclick="addORedit()">Back</button></div>';
+            str += '<div id="backAddEdit"><button id="backHomeBTN" onclick="addORedit()">Back</button></div>';
             $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
             $(".loginBox").css({ "height": "589px", "top": "60%" });
             document.getElementById("btnChoose").innerHTML = str;
@@ -379,6 +379,7 @@
     </nav>
     <div class="loginBox">
         <div id="btnChoose"></div>
+      
     </div>
 </body>
 </html>

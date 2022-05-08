@@ -238,16 +238,23 @@ form label {
     width: 150px;
     height: 95px;
     font-size: 20px;
+
 }
 
-/*#pChooseEdit {
-    font-size: 18px;
-    color:gray;
-    padding-bottom:20px;
-}*/
 
-#backAddNew {
+
+#backAddEdit {
     position: absolute;
     bottom: 15px;
     right: 15px;
+}
+
+.btn-group button {
+    cursor: pointer;
+    display: block; 
+}
+
+.btnDelete{
+    margin-left:37px;
+    margin-top:8px;
 }
