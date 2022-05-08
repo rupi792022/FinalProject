@@ -247,12 +247,12 @@
 
         function deleteProgram(){
             programNum = $(this).attr("id");
-            let apiCall = "../api/GuidingPrograms/DeleteProgram?numProgram=" + programNum;
-            ajaxCall("DELETE", apiCall, deleteSuccessGP, deleteErrorGP);
+            let apiCall = "../api/GuidingPrograms?numProgram=" + programNum;
+            ajaxCall("DELETE", apiCall, "", deleteSuccessGP, deleteErrorGP);
         }
 
         function deleteErrorGP(error) {
-            console.log("error delete the GP");
+            console.log(error);
         }
 
 

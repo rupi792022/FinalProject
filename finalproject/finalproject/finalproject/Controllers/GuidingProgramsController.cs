@@ -61,9 +61,9 @@ namespace finalproject.Controllers
         }
 
         // DELETE api/<controller>/5
-        [HttpDelete]
-        [Route("api/GuidingPrograms/DeleteProgram")]
-        public void DeleteProgram(int numProgram)
+        //[HttpDelete]
+        //[Route("api/GuidingPrograms/DeleteProgram")]
+        public void Delete(int numProgram)
         {
             GuidingProgram gp = new GuidingProgram();
             gp.DeleteProgram(numProgram);
