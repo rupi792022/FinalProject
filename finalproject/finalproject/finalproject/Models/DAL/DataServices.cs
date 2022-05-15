@@ -1067,7 +1067,7 @@ namespace finalproject.Models.DAL
                 Q_List = Read_QandA(numProgram);
                 for (int i = 1; i < (Q_List.Count + 1); i++)
                 {
-                    SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, numProgram, i);
+                    SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, i, numProgram);
                     selectCommand.ExecuteNonQuery();
                 }
 

@@ -259,7 +259,7 @@
         function deleteSuccessGP() {
             console.log("Success delete the GP");
             let apiCall = "../api/QandAs/DeleteQandA?numProgram=" + programNum;
-            ajaxCall("DELETE", apiCall, deleteSuccessQA, deleteErrorQA);
+            ajaxCall("DELETE", apiCall, "", deleteSuccessQA, deleteErrorQA);
         }
 
         function deleteErrorQA() {
@@ -270,7 +270,9 @@
         function deleteSuccessQA() {
             console.log("Success delete the QA");
             alert("success in deleting the program");
-            addORedit();
+            let apiCall = "../api/GuidingPrograms/Read_Max_Program"; //Reading the latest tutorial number
+            ajaxCall("GET", apiCall, "", getSuccessMaxProgram, getErrorMaxProgram);
+/*            addORedit();*/
         }
 
         function getSuccessRead_GP(gp) {
