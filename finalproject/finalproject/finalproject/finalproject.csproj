@@ -265,7 +265,6 @@
     <Compile Include="Models\GuidingProgram.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\QandA.cs" />
-    <Compile Include="Models\Tweet.cs" />
     <Compile Include="Models\Twitter.cs" />
     <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -304,6 +303,7 @@
     <Content Include="Pages\Reports.html" />
     <Content Include="Pages\SingIn.html" />
     <Content Include="Pages\ManagerHome.html" />
+    <Content Include="Pages\test.html" />
     <Content Include="Pages\VolunteerHome.html" />
     <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\VolunteerPersonalDetails.html" />

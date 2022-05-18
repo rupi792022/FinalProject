@@ -4,23 +4,27 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Threading.Tasks;
+using Tweetinvi;
+using finalproject.Models;
 
 namespace finalproject.Controllers
 {
     public class TwittersController : ApiController
     {
+
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        [HttpGet]
+        [Route("api/Twitters/getTweet")]
+        //[HttpGet]
+        //[Route("api/Twitters/getTweetsByIds/{tweetid}")]
+        public async Task<Object> getTweet(int tweetid) 
         {
-            return new string[] { "value1", "value2" };
+            Twitter t = new Twitter();
+            return await t.getTweet(tweetid);
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+        
         // POST api/<controller>
         public void Post([FromBody] string value)
         {
