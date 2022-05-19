@@ -58,7 +58,7 @@ namespace finalproject.Models
         const string Access_Token = "1521117634267435009-a2CLrnlhS5ATNDDjufTwrkYSAFuToO";
         const string Access_Token_Secret = "RLBdasjycfyovwIYobJ6V8KbpbcUKdPIyIg3VHY3cAp1F";
 
-        public async Task<object> getTweet(int tweetid)
+        public async Task<Twitter> getTweet(long tweetid)
         {
             // we create a client with your user's credentials
             var userClient = new TwitterClient(API_key, API_Key_Secret, Access_Token, Access_Token_Secret);

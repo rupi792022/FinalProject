@@ -16,9 +16,7 @@ namespace finalproject.Controllers
         // GET api/<controller>
         [HttpGet]
         [Route("api/Twitters/getTweet")]
-        //[HttpGet]
-        //[Route("api/Twitters/getTweetsByIds/{tweetid}")]
-        public async Task<Object> getTweet(int tweetid) 
+        public async Task<Twitter> getTweet(long tweetid) 
         {
             Twitter t = new Twitter();
             return await t.getTweet(tweetid);
