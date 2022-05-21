@@ -305,7 +305,6 @@
     <Content Include="Pages\ManagerHome.html" />
     <Content Include="Pages\test.html" />
     <Content Include="Pages\VolunteerHome.html" />
-    <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\VolunteerPersonalDetails.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\ajaxCallsWithKey.js" />

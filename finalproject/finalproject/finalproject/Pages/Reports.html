@@ -15,7 +15,7 @@
             getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name.toUpperCase() + ' ' + getDatails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
-
+            email = getDatails.Volunteer_email;
             $('#submit').click(submitReport);
             $('#getDetails').click(getDetails);
 
@@ -27,13 +27,13 @@
         }
 
         function submitReport() {
-
-            contentLink = $("#contentLink").val();
-            country = $("#country option:selected").val();
-            explanation = $("#explanation").val();
-            email = getDatails.Volunteer_email;
-            language = $("input[type=radio][name=language]:checked").val();
-            socialNetwork = $("input[type=radio][name=socialNetwork]:checked").val();
+            ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessSaveQA, postErrorSaveQA);
+            return false;
+            //contentLink = $("#contentLink").val();
+            //country = $("#country option:selected").val();
+            //explanation = $("#explanation").val();
+            //language = $("input[type=radio][name=language]:checked").val();
+            //socialNetwork = $("input[type=radio][name=socialNetwork]:checked").val();
         }
 
         function getDetails() {
@@ -43,19 +43,27 @@
                 tweetid = arrContentLink[5];
             }
             else tweetid = arrContentLink[3];
-            let apiCall = "../api/Twitters/getTweet?tweetid=" + tweetid;
-            /* let apiCall = "../api/Twitters/getTweetsByIds/"+ tweetid;*/
-            /* let apiCall = "../api/Twitters/"+ tweetid;*/
+            let apiCall = "../api/Twitters/getTweet?tweetid=" + tweetid + "&email=" + email;
             ajaxCall("GET", apiCall, "", getSuccessTweet, getErrorTweet);
 
         }
 
-        function getSuccessTweet(tweet) {
-            console.log(tweet);
+        function pasteValues() {
+            $("#country").val(t.Country);
+            $("#language").val(t.Lang);
+            $("#Hashtag").val(t.Hashtag);
         }
+
+        function getSuccessTweet(tweet) {
+            t = tweet;
+            pasteValues();
+        }
+
         function getErrorTweet(error) {
             console.log(error);
         }
+
+
 
 
     </script>
@@ -87,12 +95,13 @@
                 <tr>
                     <td colspan="2"><p>Country where the post was published:</p></td>
                     <td>
-                        <select name="country" id="country">
-                            <option value="Israel">Israel</option>
-                            <option value="Russia">Russia</option>
-                            <option value="France">France</option>
-                            <option value="England">England</option>
-                        </select>
+                        <input type="text" id="country" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p>Hashtag:</p></td>
+                    <td>
+                        <input type="text" id="Hashtag" />
                     </td>
                 </tr>
                 <tr>
@@ -104,16 +113,7 @@
                     <tr>
                         <td><p>Choose language:</p></td>
                         <td>
-                            <input type="radio" id="Hebrew" name="language" value="Hebrew" />
-                            <label for="Hebrew">Hebrew</label><br>
-                            <input type="radio" id="English" name="language" value="English" />
-                            <label for="English">English</label><br>
-                            <input type="radio" id="Russian" name="language" value="Russian" />
-                            <label for="Russian">Russian</label><br>
-                            <input type="radio" id="French" name="language" value="French" />
-                            <label for="French">French</label><br>
-                            <input type="radio" id="Arabic" name="language" value="Arabic" />
-                            <label for="Arabic">Arabic</label>
+                            <input type="text" id="language" />
                         <td><p>Choose social network:</p></td>
                         <td>
                             <input type="radio" id="Facebook" name="socialNetwork" value="Facebook" />
