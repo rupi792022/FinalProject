@@ -21,16 +21,12 @@ namespace finalproject.Controllers
             Twitter t = new Twitter();
             return await t.getTweet(tweetid, email);
         }
-
-        
-        // POST api/<controller>
-        public void Post([FromBody] string value)
-        {
-        }
-
+       
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+
+        public void Post([FromBody] Twitter twitter)
         {
+            twitter.InsertTweet();
         }
 
         // DELETE api/<controller>/5

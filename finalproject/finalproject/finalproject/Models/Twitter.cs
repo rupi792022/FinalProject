@@ -97,6 +97,14 @@ namespace finalproject.Models
             Twitter myTwitter = new Twitter(tweetid, tweet.Lang, tweet.Text, utc, geo, url, "Twitter", hashtag, authorName,email);
             return myTwitter;
         }
+
+        public void InsertTweet()
+        {
+            DataServices ds = new DataServices();
+             ds.InsertTweet(this);
+           
+        }
+
     }
 
 }

@@ -1083,6 +1083,40 @@ namespace finalproject.Models.DAL
                     con.Close();
             }
         }
+        ////////////////Twitter///////////////////
+        
+        public void InsertTweet (Twitter twitter)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_InsertTweet(con, twitter);
+                selectCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to save the tweet", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        
+         private SqlCommand createSelectCommand_InsertTweet(SqlConnection con, Twitter t)
+        {
+            string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "')";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeouti
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
+        }
 
     }
 }

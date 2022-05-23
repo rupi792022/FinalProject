@@ -27,13 +27,28 @@
         }
 
         function submitReport() {
-            ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessSaveQA, postErrorSaveQA);
+            ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessTweet, postErrorTweet);
             return false;
+
             //contentLink = $("#contentLink").val();
             //country = $("#country option:selected").val();
             //explanation = $("#explanation").val();
             //language = $("input[type=radio][name=language]:checked").val();
             //socialNetwork = $("input[type=radio][name=socialNetwork]:checked").val();
+        }
+
+        function postSuccessTweet() {
+            alert("Report saved successfully")
+            console.log("postSuccessTweet");
+            $("#contentLink").val('');
+            $("#country").val('');
+            $("#language").val('');
+            $("#Hashtag").val('');
+            $("#explanation").val('');
+        }
+
+        function postErrorTweet(error) {
+            console.log(error);
         }
 
         function getDetails() {
@@ -52,6 +67,7 @@
             $("#country").val(t.Country);
             $("#language").val(t.Lang);
             $("#Hashtag").val(t.Hashtag);
+            $("#explanation").val(t.ContentText);
         }
 
         function getSuccessTweet(tweet) {
@@ -105,7 +121,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><p>Short explanation:</p></td>
+                    <td colspan="2"><p>Tweet content:</p></td>
                     <td colspan="2"><textarea id="explanation" name="explanation" cols="50" rows="8" placeholder="Enter a short explanation"></textarea></td>
                 </tr>
             </table>
