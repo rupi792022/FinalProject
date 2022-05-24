@@ -87,13 +87,12 @@ namespace finalproject.Models
             {
                 geo = user.Location.ToString();
             }
-            for (int i = 0; i < tweet.Entities.Hashtags.Length; i++)
-            {
-                 if (tweet.Entities.Hashtags[i].Tag != null)
-                 {
+            if (tweet.Entities.Hashtags != null) { 
+                for (int i = 0; i < tweet.Entities.Hashtags.Length; i++)
+                {
                     hashtag += tweet.Entities.Hashtags[i].Tag.ToString() + ",";
-                 }
-            } 
+                }
+            }
             Twitter myTwitter = new Twitter(tweetid, tweet.Lang, tweet.Text, utc, geo, url, "Twitter", hashtag, authorName,email);
             return myTwitter;
         }
