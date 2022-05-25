@@ -138,6 +138,7 @@ body {
     }
 
         .loginBox input[type="url"],
+        .loginBox input[type="text"],
         .loginBox select {
             border: none;
             border-bottom: 1px solid #C59636;
@@ -155,6 +156,7 @@ body {
 
 
             .loginBox input[type="url"]:hover,
+            .loginBox input[type="text"]:hover,
             .loginBox select:hover {
                 /*    color: #C59636;*/
                 border: 1px solid #C59636;
@@ -164,6 +166,7 @@ body {
             }
 
             .loginBox input[type="url"]:focus,
+            .loginBox input[type="text"]:focus,
             .loginBox select:focus {
                 border: 1px solid #C59636;
                 border-radius: 7px;
@@ -213,4 +216,8 @@ label{
 button {
     position: absolute;
     right: 10px;
+}
+
+#Hashtag{
+
 }
