@@ -21,7 +21,14 @@ namespace finalproject.Controllers
             Twitter t = new Twitter();
             return await t.getTweet(tweetid, email);
         }
-       
+
+        [HttpGet]
+        [Route("api/Twitters/GetPage")]
+        public void GetPage(string url)
+        {
+            Twitter t = new Twitter();
+            t.GetPage(url);
+        }
         // PUT api/<controller>/5
 
         public void Post([FromBody] Twitter twitter)
