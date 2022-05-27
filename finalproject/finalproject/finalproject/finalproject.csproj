@@ -278,6 +278,7 @@
     <Content Include="css\ForgotPassword.css" />
     <Content Include="css\GuidingProgram.css" />
     <Content Include="css\GuidingProgramNew.css" />
+    <Content Include="css\KeyWord-manager.css" />
     <Content Include="css\LogIn.css" />
     <Content Include="css\ManagerHome.css" />
     <Content Include="css\Reports.css" />
@@ -299,6 +300,7 @@
     <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\GuidingProgram.html" />
     <Content Include="Pages\ForgotPassword.html" />
+    <Content Include="Pages\KeyWord-manager.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\MonitoringReport.html" />
     <Content Include="Pages\Reports.html" />
