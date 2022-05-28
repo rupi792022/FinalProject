@@ -23,14 +23,23 @@ namespace finalproject.Controllers
         }
 
         [HttpGet]
-        [Route("api/Twitters/GetPage")]
-        public void GetPage(string url)
+        [Route("api/Twitters/getStatusPage")]
+        public IEnumerable<Twitter> getStatusPage([FromUri] List<Twitter> notRe_tweets) {
+            Twitter t = new Twitter();
+            return t.getStatusPage(notRe_tweets);
+        }
+
+        [HttpGet]
+        [Route("api/Twitters/getTweets")]
+        public List<Twitter> getTweets()
         {
             Twitter t = new Twitter();
-            t.GetPage(url);
+            return t.getTweets();
         }
         // PUT api/<controller>/5
 
+        [HttpPost]
+        [Route("api/Twitters")]
         public void Post([FromBody] Twitter twitter)
         {
             twitter.InsertTweet();

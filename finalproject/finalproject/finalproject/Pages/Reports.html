@@ -27,14 +27,9 @@
         }
 
         function submitReport() {
+
             ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessTweet, postErrorTweet);
             return false;
-
-            //contentLink = $("#contentLink").val();
-            //country = $("#country option:selected").val();
-            //explanation = $("#explanation").val();
-            //language = $("input[type=radio][name=language]:checked").val();
-            //socialNetwork = $("input[type=radio][name=socialNetwork]:checked").val();
         }
 
         function postSuccessTweet() {

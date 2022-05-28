@@ -10,14 +10,51 @@
     <script src="../Scripts/ajaxCalls.js"></script>
     <title></title>
     <script>
+
         $(document).ready(function () {
-            let apiCall = "../api/Twitters/GetPage?url=" + "https://twitter.com/Rupi792022/status/1530181352326406152";
-            ajaxCall("GET", apiCall, "", getSuccessUrl, getErrorUrl);
+            let apiCall = "../api/Twitters/getTweets";
+            ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
+
+            $(document).on("click", "#checkStatuse", checkStatuse);
 
         });
 
-        function getSuccessUrl() {
+        function getSuccessGetTweets(tweets) {
+            console.log("success GetTweets");
+            Tweets = tweets;
+            renderReport(tweets);
+        }
+
+        function renderReport(tweets) {
+            str = "";
+            for (var i = 0; i < tweets.length; i++) {
+                str += "<p>" + tweets[i].LinkUrl + "</p>";
+                str += "<p>" + tweets[i].Country + "</p>";
+                str += "<p>" + tweets[i].Created_at + "</p>";
+                str += "<p>" + tweets[i].Network + "</p>";
+                str += "<p>" + tweets[i].Lang + "</p>";
+                str += "<p>" + tweets[i].Volunteer_email + "</p>";
+                str += "<p>" + tweets[i].Status + "</p>";
+            }
+                str += "<button id='checkStatuse'>Check the status</button>";
+                document.getElementById("reports").innerHTML = str;
+        }
+
+            function checkStatuse() {
+                //http://localhost:59511/api/Values?str[]="abc"&str[]="xyz"
+                /*     let apiCall = "../api/Twitters/getStatusPage?notRe_tweets=" + Tweets;*/
+                let apiCall = "../api/Twitters/getStatusPage?notRe_tweets[]=" + Tweets;
+            ajaxCall("GET", apiCall, "", getSuccessUrl, getErrorUrl);
+
+        }
+
+        function getErrorGetTweets(error) {
+            console.log(error);
+        }
+
+        function getSuccessUrl(tweetStatus) {
             console.log("success");
+            renderReport(tweetStatus);
         }
 
         function getErrorUrl(error) {
@@ -28,6 +65,6 @@
     </script>
 </head>
 <body>
-
+    <div id="reports"></div>
 </body>
 </html>

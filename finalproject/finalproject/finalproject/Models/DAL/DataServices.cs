@@ -1108,9 +1108,56 @@ namespace finalproject.Models.DAL
         }
 
         
-         private SqlCommand createSelectCommand_InsertTweet(SqlConnection con, Twitter t)
+        private SqlCommand createSelectCommand_InsertTweet(SqlConnection con, Twitter t)
         {
-            string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "')";
+            string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name],[status],[lang] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText.Replace("'", "") + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "', '" + t.Status + "', '" + t.Lang + "')";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeouti
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
+        }
+
+        public List<Twitter> getTweets()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                List<Twitter> tweets_List = new List<Twitter>();
+               
+                SqlCommand selectCommand = createSelectCommand_notRemoved_tw(con);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                while (dr.Read())
+                {
+                    Twitter t = new Twitter();
+                    t.LinkUrl = (string)dr["link_url"];
+                    t.Volunteer_email = (string)dr["email_v"];
+                    t.Country = (string)dr["country"];
+                    t.Created_at = Convert.ToDateTime(dr["created_at"]);
+                    t.Network = (string)dr["network"];
+                    t.Lang = (string)dr["lang"];
+                    t.Status = (string)dr["status"];
+                    tweets_List.Add(t);
+                }
+                return tweets_List;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read the tweet", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+        private SqlCommand createSelectCommand_notRemoved_tw(SqlConnection con)
+        {
+            string insertStr = "select link_url,email_v,country,status,created_at,network,lang from Tweets_2022 where lower(status) = 'not removed'";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeouti
             command.CommandTimeout = 5;
