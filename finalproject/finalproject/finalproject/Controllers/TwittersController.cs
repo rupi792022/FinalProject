@@ -24,7 +24,7 @@ namespace finalproject.Controllers
 
         [HttpGet]
         [Route("api/Twitters/getStatusPage")]
-        public IEnumerable<Twitter> getStatusPage([FromUri] List<Twitter> notRe_tweets) {
+        public Twitter[] getStatusPage(Twitter[] notRe_tweets) {
             Twitter t = new Twitter();
             return t.getStatusPage(notRe_tweets);
         }

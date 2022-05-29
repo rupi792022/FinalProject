@@ -15,8 +15,7 @@
             let apiCall = "../api/Twitters/getTweets";
             ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
 
-            $(document).on("click", "#checkStatuse", checkStatuse);
-
+            $(document).on("click", "#checkStatus", checkStatus);
         });
 
         function getSuccessGetTweets(tweets) {
@@ -36,16 +35,13 @@
                 str += "<p>" + tweets[i].Volunteer_email + "</p>";
                 str += "<p>" + tweets[i].Status + "</p>";
             }
-                str += "<button id='checkStatuse'>Check the status</button>";
+                str += "<button id='checkStatus'>Check the status</button>";
                 document.getElementById("reports").innerHTML = str;
         }
 
-            function checkStatuse() {
-                //http://localhost:59511/api/Values?str[]="abc"&str[]="xyz"
-                /*     let apiCall = "../api/Twitters/getStatusPage?notRe_tweets=" + Tweets;*/
-                let apiCall = "../api/Twitters/getStatusPage?notRe_tweets[]=" + Tweets;
-            ajaxCall("GET", apiCall, "", getSuccessUrl, getErrorUrl);
-
+        function checkStatus() {
+            let apiCall = "../api/Twitters/getStatusPage";
+            ajaxCall("GET", apiCall, JSON.stringify(Tweets), getSuccessUrl, getErrorUrl);
         }
 
         function getErrorGetTweets(error) {
@@ -53,7 +49,7 @@
         }
 
         function getSuccessUrl(tweetStatus) {
-            console.log("success");
+            console.log("success tweetStatus");
             renderReport(tweetStatus);
         }
 

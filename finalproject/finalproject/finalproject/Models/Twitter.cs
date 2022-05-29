@@ -108,7 +108,7 @@ namespace finalproject.Models
            
         }
 
-        public List<Twitter> getStatusPage(List<Twitter> notRe_tweets)
+        public Twitter[] getStatusPage(Twitter[] notRe_tweets)
         {
             try { 
               
