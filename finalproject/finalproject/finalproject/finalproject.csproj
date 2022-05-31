@@ -281,6 +281,7 @@
     <Content Include="css\KeyWord-manager.css" />
     <Content Include="css\LogIn.css" />
     <Content Include="css\ManagerHome.css" />
+    <Content Include="css\MonitoringReport.css" />
     <Content Include="css\Reports.css" />
     <Content Include="css\SingIn.css" />
     <Content Include="css\VolunteerHome.css" />

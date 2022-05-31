@@ -8,10 +8,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/MonitoringReport.css" rel="stylesheet" />
     <title></title>
     <script>
 
         $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
             let apiCall = "../api/Twitters/getTweets";
             ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
 
@@ -25,17 +30,18 @@
         }
 
         function renderReport(tweets) {
-            str = "";
+            str = "<table><tr id='headerTable'><td><p>Content link</p></td><td><p>Country</p></td><td><p>Date</p></td><td><p>Network</p></td><td><p>Language</p></td><td><p>Volunteer email</p></td><td><p>Status</p></td></tr>";
             for (var i = 0; i < tweets.length; i++) {
-                str += "<p>" + tweets[i].LinkUrl + "</p>";
-                str += "<p>" + tweets[i].Country + "</p>";
-                str += "<p>" + tweets[i].Created_at + "</p>";
-                str += "<p>" + tweets[i].Network + "</p>";
-                str += "<p>" + tweets[i].Lang + "</p>";
-                str += "<p>" + tweets[i].Volunteer_email + "</p>";
-                str += "<p>" + tweets[i].Status + "</p>";
+                str += "<tr><td><p>" + tweets[i].LinkUrl + "</p></td>";
+                str += "<td><p>" + tweets[i].Country + "</p></td>";
+                str += "<td><p>" + tweets[i].Created_at + "</p></td>";
+                str += "<td><p>" + tweets[i].Network + "</p></td>";
+                str += "<td><p>" + tweets[i].Lang + "</p></td>";
+                str += "<td><p>" + tweets[i].Volunteer_email + "</p></td>";
+                str += "<td><p>" + tweets[i].Status + "</p></td></tr>";
             }
-                str += "<button id='checkStatus'>Check the status</button>";
+            str +="</table>"
+                str += "<br><button id='checkStatus'>Check the status</button>";
                 document.getElementById("reports").innerHTML = str;
         }
 
@@ -61,6 +67,24 @@
     </script>
 </head>
 <body>
-    <div id="reports"></div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="#">Activity time</a></li>
+                <li><a class="space" href="#">Reports</a></li>
+                <li><a class="space" href="#">Dashbord</a></li>
+                <li><a class="space" href="#">Keywords</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div id="reports"></div>
+    </div>
 </body>
 </html>
