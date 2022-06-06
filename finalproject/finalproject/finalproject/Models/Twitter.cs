@@ -108,21 +108,27 @@ namespace finalproject.Models
            
         }
 
-        public Twitter[] getStatusPage(Twitter[] notRe_tweets)
+        public List<Twitter> getStatusPage(List<Twitter> notRe_tweets)
         {
-            try { 
-              
-                    foreach (var t in notRe_tweets)
+            List<Twitter> t_List = new List<Twitter>();
+            try {
+                
+                foreach (var t in notRe_tweets)
                     {
                     HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(t.LinkUrl);
                     // Sends the HttpWebRequest and waits for a response.
                     HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
                     if (myHttpWebResponse.StatusCode != HttpStatusCode.OK)
-                        t.status = "Removed";
+                    {
+                        t.Status = "Removed";
+                        t_List.Add(t);
+
+                    }
                     // Releases the resources of the response.
-                    myHttpWebResponse.Close();
+                    //myHttpWebResponse.Close();
+                  
                 }
-               
+
             }
             catch (WebException e)
             {
@@ -132,7 +138,8 @@ namespace finalproject.Models
             {
                 Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
             }
-            return notRe_tweets;
+
+            return t_List;
         }
 
 
@@ -140,6 +147,15 @@ namespace finalproject.Models
         {
             DataServices ds = new DataServices();
             return ds.getTweets();
+        }
+
+        public void UpdateStatus(List<Twitter> tweets)
+
+        {
+            List<Twitter> tweets_List = new List<Twitter>();
+            tweets_List = getStatusPage(tweets);
+            DataServices ds = new DataServices();
+            ds.UpdateStatus(tweets_List);
         }
 
     }

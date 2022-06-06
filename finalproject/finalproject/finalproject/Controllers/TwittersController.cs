@@ -22,11 +22,11 @@ namespace finalproject.Controllers
             return await t.getTweet(tweetid, email);
         }
 
-        [HttpGet]
-        [Route("api/Twitters/getStatusPage")]
-        public Twitter[] getStatusPage(Twitter[] notRe_tweets) {
+        [HttpPost]
+        [Route("api/Twitters/UpdateStatus")]
+        public void UpdateStatus(List<Twitter> notRe_tweets) {
             Twitter t = new Twitter();
-            return t.getStatusPage(notRe_tweets);
+            t.UpdateStatus(notRe_tweets);
         }
 
         [HttpGet]

@@ -1165,5 +1165,48 @@ namespace finalproject.Models.DAL
             return command;
         }
 
+        public void UpdateStatus(List<Twitter> notRe_tweets)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                if (notRe_tweets.Count > 0)
+                {
+                    foreach (var t in notRe_tweets)
+                    {
+                        SqlCommand selectCommand = createSelectCommand_update_status(con, t.Tweet_id, t.Status);
+                        selectCommand.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to update tweets", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_update_status(SqlConnection con, long id, string status)
+        {
+            string commandStr = "UPDATE Tweets_2022 SET" +
+                ",status = @status" +
+                " WHERE id = @id" ;
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@status", SqlDbType.NVarChar);
+            cmd.Parameters["@status"].Value = status;
+            cmd.Parameters.Add("@id", SqlDbType.NVarChar);
+            cmd.Parameters["@id"].Value = id;
+            return cmd;
+        }
+
     }
 }
