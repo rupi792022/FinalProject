@@ -46,7 +46,7 @@
         }
 
         function checkStatus() {
-            ajaxCall("POST", "../api/Twitters/UpdateStatus", JSON.stringify(Tweets), getSuccessUrl, getErrorUrl);
+            ajaxCall("POST", "../api/Twitters/UpdateStatus", JSON.stringify(Tweets), postSuccessUrl, postErrorUrl);
             return false;
         }
 
@@ -54,12 +54,12 @@
             console.log(error);
         }
 
-        function getSuccessUrl(/*tweetStatus*/) {
+        function postSuccessUrl(t) {
             console.log("success tweetStatus");
             /*renderReport(tweetStatus);*/
         }
 
-        function getErrorUrl(error) {
+        function postErrorUrl(error) {
             console.log(error);
         }
 

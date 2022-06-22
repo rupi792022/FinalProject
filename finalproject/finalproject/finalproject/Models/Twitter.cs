@@ -16,7 +16,7 @@ using Tweetinvi.Core.Models;
 using System.Data;
 using System.Runtime.InteropServices;
 using finalproject.Models.DAL;
-
+using System.Net.Http;
 
 namespace finalproject.Models
 {
@@ -115,18 +115,18 @@ namespace finalproject.Models
                 
                 foreach (var t in notRe_tweets)
                     {
+
                     HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(t.LinkUrl);
                     // Sends the HttpWebRequest and waits for a response.
                     HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
                     if (myHttpWebResponse.StatusCode != HttpStatusCode.OK)
-                    {
-                        t.Status = "Removed";
-                        t_List.Add(t);
 
-                    }
+                        t.Status = "Removed";
+                    //t_List.Add(t);
+
                     // Releases the resources of the response.
-                    //myHttpWebResponse.Close();
-                  
+                    myHttpWebResponse.Close();
+
                 }
 
             }
@@ -143,19 +143,21 @@ namespace finalproject.Models
         }
 
 
+
         public List<Twitter> getTweets()
         {
             DataServices ds = new DataServices();
             return ds.getTweets();
         }
 
-        public void UpdateStatus(List<Twitter> tweets)
+        public List<Twitter> UpdateStatus(List<Twitter> tweets)
 
         {
             List<Twitter> tweets_List = new List<Twitter>();
             tweets_List = getStatusPage(tweets);
             DataServices ds = new DataServices();
             ds.UpdateStatus(tweets_List);
+            return tweets_List;
         }
 
     }
