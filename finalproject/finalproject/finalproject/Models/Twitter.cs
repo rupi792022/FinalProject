@@ -101,42 +101,43 @@ namespace finalproject.Models
             return myTwitter;
         }
 
-        public void InsertTweet()
+        public bool InsertTweet()
         {
             DataServices ds = new DataServices();
-            ds.InsertTweet(this);
+            return ds.InsertTweet(this);
            
         }
 
         public List<Twitter> getStatusPage(List<Twitter> notRe_tweets)
         {
             List<Twitter> t_List = new List<Twitter>();
-            try {
-                
-                foreach (var t in notRe_tweets)
-                    {
-
+            foreach (var t in notRe_tweets)
+            {
+                try
+                {
                     HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(t.LinkUrl);
                     // Sends the HttpWebRequest and waits for a response.
                     HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
                     if (myHttpWebResponse.StatusCode != HttpStatusCode.OK)
-
+                    {
                         t.Status = "Removed";
-                    //t_List.Add(t);
-
+                        t_List.Add(t);
+                    }
                     // Releases the resources of the response.
                     myHttpWebResponse.Close();
 
                 }
+                catch (WebException e)
+                {
+                    //Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}", e.Status);
+                    if(e.Status.ToString() == "ProtocolError")
+                    {
+                        t.Status = "Removed";
+                        t_List.Add(t);
+                    }
+                    continue; 
 
-            }
-            catch (WebException e)
-            {
-                Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}", e.Status);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
+                }
             }
 
             return t_List;
@@ -150,14 +151,14 @@ namespace finalproject.Models
             return ds.getTweets();
         }
 
-        public List<Twitter> UpdateStatus(List<Twitter> tweets)
+        public void UpdateStatus(List<Twitter> tweets)
 
         {
             List<Twitter> tweets_List = new List<Twitter>();
             tweets_List = getStatusPage(tweets);
             DataServices ds = new DataServices();
             ds.UpdateStatus(tweets_List);
-            return tweets_List;
+          
         }
 
     }

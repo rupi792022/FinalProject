@@ -27,14 +27,15 @@
         }
 
         function submitReport() {
-
             ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessTweet, postErrorTweet);
             return false;
         }
 
-        function postSuccessTweet() {
-            alert("Report saved successfully")
-            console.log("postSuccessTweet");
+        function postSuccessTweet(exist) {
+            if (exist == true) {
+                alert("The report is allready exist, please add another report.");
+            }
+            else alert("The report was added successfully!");
             $("#contentLink").val('');
             $("#country").val('');
             $("#language").val('');

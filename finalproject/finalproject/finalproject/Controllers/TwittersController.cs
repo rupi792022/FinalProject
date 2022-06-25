@@ -24,10 +24,10 @@ namespace finalproject.Controllers
 
         [HttpPost]
         [Route("api/Twitters/UpdateStatus")]
-        public List<Twitter> UpdateStatus( List<Twitter> notRe_tweets)
+        public void UpdateStatus( List<Twitter> notRe_tweets)
         {
             Twitter t = new Twitter();
-            return t.UpdateStatus(notRe_tweets);
+            t.UpdateStatus(notRe_tweets);
         }
 
         [HttpGet]
@@ -41,9 +41,9 @@ namespace finalproject.Controllers
 
         [HttpPost]
         [Route("api/Twitters")]
-        public void Post([FromBody] Twitter twitter)
+        public bool Post([FromBody] Twitter twitter)
         {
-            twitter.InsertTweet();
+           return twitter.InsertTweet();
         }
 
         // DELETE api/<controller>/5

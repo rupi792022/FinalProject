@@ -16,17 +16,26 @@
             getDatails = JSON.parse(localStorage.getItem('managerDetails'));
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
+            $(document).on("click", "#checkStatus", checkStatus);
+            getTheTweet();
 
+        });
+
+        function getTheTweet() {
             let apiCall = "../api/Twitters/getTweets";
             ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
-
-            $(document).on("click", "#checkStatus", checkStatus);
-        });
+        }
 
         function getSuccessGetTweets(tweets) {
             console.log("success GetTweets");
             Tweets = tweets;
-            renderReport(tweets);
+            if (tweets.length > 0) {
+                renderReport(tweets);
+            }
+            else {
+                strNoR = "No reports for review. All posts have been removed!";
+                document.getElementById("reports").innerHTML = strNoR;
+            }
         }
 
         function renderReport(tweets) {
@@ -54,9 +63,9 @@
             console.log(error);
         }
 
-        function postSuccessUrl(t) {
+        function postSuccessUrl() {
             console.log("success tweetStatus");
-            /*renderReport(tweetStatus);*/
+            getTheTweet();
         }
 
         function postErrorUrl(error) {

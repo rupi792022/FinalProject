@@ -1085,15 +1085,21 @@ namespace finalproject.Models.DAL
         }
         ////////////////Twitter///////////////////
         
-        public void InsertTweet (Twitter twitter)
+        public bool InsertTweet(Twitter twitter)
         {
             SqlConnection con = null;
 
             try
             {
-                con = Connect("webOsDB");
-                SqlCommand selectCommand = createSelectCommand_InsertTweet(con, twitter);
-                selectCommand.ExecuteNonQuery();
+               bool tweetExist = ReadTweet_(twitter.Tweet_id);
+                if(tweetExist == false)
+                {
+                     con = Connect("webOsDB");
+                     SqlCommand selectCommand = createSelectCommand_InsertTweet(con, twitter);
+                     selectCommand.ExecuteNonQuery();
+                }
+                return tweetExist;
+
             }
             catch (Exception ex)
             {
@@ -1105,6 +1111,7 @@ namespace finalproject.Models.DAL
                 if (con != null)
                     con.Close();
             }
+           
         }
 
         
@@ -1113,6 +1120,54 @@ namespace finalproject.Models.DAL
             string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name],[status],[lang] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText.Replace("'", "") + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "', '" + t.Status + "', '" + t.Lang + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeouti
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
+        }
+        public bool ReadTweet_(long tweet_id)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_tweetExist(con, tweet_id);
+
+                // Execute the command
+                //
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+                if (dr.Read())
+                {
+                    return true;
+                }
+                return false;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read the id tweet", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+        private SqlCommand createSelectCommand_tweetExist(SqlConnection con, long tweet_id)
+        {
+            string insertStr = "select * from Tweets_2022 where tweet_id = @tweet_id";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeouti
+            command.Parameters.Add("@tweet_id", SqlDbType.NVarChar);
+            command.Parameters["@tweet_id"].Value = tweet_id;
             command.CommandTimeout = 5;
             command.CommandType = System.Data.CommandType.Text;
             return command;
@@ -1132,6 +1187,7 @@ namespace finalproject.Models.DAL
                 while (dr.Read())
                 {
                     Twitter t = new Twitter();
+                    t.Tweet_id = Convert.ToInt64(dr["tweet_id"]);
                     t.LinkUrl = (string)dr["link_url"];
                     t.Volunteer_email = (string)dr["email_v"];
                     t.Country = (string)dr["country"];
@@ -1157,7 +1213,7 @@ namespace finalproject.Models.DAL
         }
         private SqlCommand createSelectCommand_notRemoved_tw(SqlConnection con)
         {
-            string insertStr = "select link_url,email_v,country,status,created_at,network,lang from Tweets_2022 where lower(status) = 'not removed'";
+            string insertStr = "select tweet_id,link_url,email_v,country,status,created_at,network,lang from Tweets_2022 where lower(status) = 'not removed'";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeouti
             command.CommandTimeout = 5;
@@ -1195,16 +1251,16 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_update_status(SqlConnection con, long id, string status)
+        private SqlCommand createSelectCommand_update_status(SqlConnection con, long tweet_id, string status)
         {
-            string commandStr = "UPDATE Tweets_2022 SET" +
-                ",status = @status" +
-                " WHERE id = @id" ;
+            string commandStr = "UPDATE Tweets_2022 SET " +
+                "status = @status" +
+                " WHERE tweet_id = @tweet_id";
             SqlCommand cmd = createCommand(con, commandStr);
             cmd.Parameters.Add("@status", SqlDbType.NVarChar);
             cmd.Parameters["@status"].Value = status;
-            cmd.Parameters.Add("@id", SqlDbType.NVarChar);
-            cmd.Parameters["@id"].Value = id;
+            cmd.Parameters.Add("@tweet_id", SqlDbType.NVarChar);
+            cmd.Parameters["@tweet_id"].Value = tweet_id;
             return cmd;
         }
 
