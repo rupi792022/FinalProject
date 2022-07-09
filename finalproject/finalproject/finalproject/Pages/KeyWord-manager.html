@@ -16,7 +16,29 @@
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
+            let apiCall = "../api/Twitters/getHashtag";
+            ajaxCall("GET", apiCall, "", getSuccessHashtag, getErrorHashtag);
+
         });
+
+        function getSuccessHashtag() {
+            console.log("success");
+        }
+        function getErrorHashtag() {
+            console.log("error");
+        }
+
+        function sortHastag() { //לטפל בנראות של הצבעים
+        foreach(KeyValuePair < string, Int32 > author in dict.OrderByDescending(key => key.Value))
+        {
+            firstValue = author.Value;
+
+            Console.WriteLine("Key: {0}, Value: {1}", author.Key, author.Value);
+            }
+        }
+
+
+
     </script>
             
 </head >

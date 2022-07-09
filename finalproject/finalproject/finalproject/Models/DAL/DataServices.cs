@@ -1264,5 +1264,42 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
+        public List<string> getHashtag()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                List<string> hashtags_List = new List<string>();
+                SqlCommand selectCommand = createSelectCommand_getHashtag(con);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                while (dr.Read())
+                {
+                    string hashtag = (string)dr["hashtag"];
+                    hashtags_List.Add(hashtag);
+                }
+                return hashtags_List;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read the tweet", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+        
+        private SqlCommand createSelectCommand_getHashtag(SqlConnection con)
+        {
+            string commandStr = "SELECT hashtag from Tweets_2022";
+            SqlCommand cmd = createCommand(con, commandStr);
+            return cmd;
+        }
+
     }
 }

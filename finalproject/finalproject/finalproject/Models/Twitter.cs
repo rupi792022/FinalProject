@@ -101,6 +101,7 @@ namespace finalproject.Models
             return myTwitter;
         }
 
+
         public bool InsertTweet()
         {
             DataServices ds = new DataServices();
@@ -158,8 +159,39 @@ namespace finalproject.Models
             tweets_List = getStatusPage(tweets);
             DataServices ds = new DataServices();
             ds.UpdateStatus(tweets_List);
-          
         }
+
+        public Dictionary<string, int> sorthashtags(List<string> hashtags)
+        {
+            List<string> listOf_hashtags = new List<string>();
+            foreach (var h in hashtags)
+            {
+                listOf_hashtags.AddRange(h.Split(',').ToList());
+            }
+
+            var dict = new Dictionary<string, int>();
+            foreach (var value in listOf_hashtags)
+            {
+                // When the key is not found, "count" will be initialized to 0
+                dict.TryGetValue(value, out int count);
+                dict[value] = count + 1;
+            }
+            //foreach (KeyValuePair<string, Int32> author in dict.OrderByDescending(key => key.Value))
+            //{
+            //    firstValue = author.Value;
+
+            //    Console.WriteLine("Key: {0}, Value: {1}", author.Key, author.Value);
+            //}
+
+            return dict;
+        }
+
+        public Dictionary<string, int> getHashtag()
+        {
+            DataServices ds = new DataServices();
+            return sorthashtags(ds.getHashtag());
+        }
+
 
     }
 
