@@ -40,7 +40,7 @@ namespace finalproject.Controllers
 
         [HttpGet]
         [Route("api/Twitters/getHashtag")]
-        public List<string> getHashtag()
+        public Dictionary<string, int> getHashtag()
         {
             Twitter t = new Twitter();
             return t.getHashtag();

@@ -21,19 +21,48 @@
 
         });
 
-        function getSuccessHashtag() {
+        function getSuccessHashtag(dicWords) {
             console.log("success");
+            sortHastag(dicWords);
         }
         function getErrorHashtag() {
             console.log("error");
         }
 
-        function sortHastag() { //לטפל בנראות של הצבעים
-        foreach(KeyValuePair < string, Int32 > author in dict.OrderByDescending(key => key.Value))
-        {
-            firstValue = author.Value;
+        function sortHastag(dict) {
+            strRed = "";
+            strGreen = "";
+            strYellow = "";
 
-            Console.WriteLine("Key: {0}, Value: {1}", author.Key, author.Value);
+            for(let k in dict) // נדרשת עוד בדיקה. לא לשכוח למחוק 
+            /*foreach(KeyValuePair < string, Int32 > author in dict.OrderByDescending(key => key.Value))*/
+            {
+                
+                if (dict[k] >= 3) {
+                    strRed = '<p>';
+                    strRed += k;
+                    strRed += " ";
+                    strRed += '</p>';
+                    document.getElementById("red").innerHTML += strRed;
+                }
+                
+
+                //strGreen = '<p>';
+                //if (author.Value >= 2 ) {
+                //    strGreen += author.Key;
+                //    strGreen += " ";
+                //}
+                //strGreen += '</p>';
+                //document.getElementById("green").innerHTML += strGreen;
+
+                //strYellow = '<p>';
+                //if (author.Value == 1) {
+                //    strYellow += author.Key;
+                //    strYellow += " ";
+                //}
+                //strYellow += '</p>';
+                //document.getElementById("yellow").innerHTML += strYellow;
+
             }
         }
 
@@ -82,7 +111,11 @@
             <input type="text" id="searchWord" placeholder="Search Word" />
             <button type="button" id="search">Search</button>
         </div>
-
+        <div class="words">
+            <div id="red"></div>
+            <div id="yellow"></div>
+            <div id="green"></div>
+        </div>
     </div>
 
 </body>
