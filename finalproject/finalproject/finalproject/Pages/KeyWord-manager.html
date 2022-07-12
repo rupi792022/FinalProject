@@ -33,41 +33,41 @@
             strRed = "";
             strGreen = "";
             strYellow = "";
-
-            for(let k in dict) // נדרשת עוד בדיקה. לא לשכוח למחוק 
-            /*foreach(KeyValuePair < string, Int32 > author in dict.OrderByDescending(key => key.Value))*/
+            for (let k in dict)
             {
                 
-                if (dict[k] >= 3) {
+                if (dict[k] >=5) {
                     strRed = '<p>';
                     strRed += k;
                     strRed += " ";
                     strRed += '</p>';
                     document.getElementById("red").innerHTML += strRed;
                 }
-                
-
-                //strGreen = '<p>';
-                //if (author.Value >= 2 ) {
-                //    strGreen += author.Key;
-                //    strGreen += " ";
-                //}
-                //strGreen += '</p>';
-                //document.getElementById("green").innerHTML += strGreen;
-
-                //strYellow = '<p>';
-                //if (author.Value == 1) {
-                //    strYellow += author.Key;
-                //    strYellow += " ";
-                //}
-                //strYellow += '</p>';
-                //document.getElementById("yellow").innerHTML += strYellow;
+               else if (dict[k] >=3) {
+                    strYellow = '<p>';
+                    strYellow += k;
+                    strYellow += " ";
+                    strYellow += '</p>';
+                    document.getElementById("yellow").innerHTML += strYellow;
+                }
+                else if (dict[k] == 2) {
+                    strGreen = '<p>';
+                    strGreen += k;
+                    strGreen += " ";
+                    strGreen += '</p>';
+                    document.getElementById("green").innerHTML += strGreen;
+                }
 
             }
         }
 
-
-
+        // בדף זה יופיעו רק המילים. המילים ממויינות לפי מספר הפעמים שהן במערכת
+        // המילים הינן אשטגים בלבד!
+        // אם מילה מופיעה פעמיים לפחות היא תהיה בצבע ירוק אם היא מופיעה יותר ועד 5 היא תהיה בצבע כתום ואם 5 ומעלה אדום
+        // תראי שהדברים נראים טוב, שהמילים מופיעות לפי הצבעים שהן אמורות ומה שצריך לשנות כמובן לשנות
+        // אין צורך בחיפוש, במיון לפי שפה והוספת מילה חדשה אז אפשר למחוק
+        // הדף אצל המנהל ואצל המתנדב נראה אותו הדבר - כלומר אותו הדף
+        // תוסיפי בבקשה כותרת של "Keywords"
     </script>
             
 </head >

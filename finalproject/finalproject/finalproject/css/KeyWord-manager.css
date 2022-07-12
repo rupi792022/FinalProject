@@ -155,3 +155,19 @@ tr td {
     top: 42px;
 }
 
+#red {
+    font-family: Calibri;
+    color: red;
+}
+
+#yellow {
+    font-family: Calibri;
+    color: orange;
+}
+
+#green {
+    font-family: Calibri;
+    color: green;
+}
+
+

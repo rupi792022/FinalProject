@@ -168,7 +168,7 @@ namespace finalproject.Models
             {
                 listOf_hashtags.AddRange(h.Split(',').ToList());
             }
-
+            listOf_hashtags.RemoveAll(item => item == "");
             var dict = new Dictionary<string, int>();
             foreach (var value in listOf_hashtags)
             {
@@ -176,14 +176,13 @@ namespace finalproject.Models
                 dict.TryGetValue(value, out int count);
                 dict[value] = count + 1;
             }
-            //foreach (KeyValuePair<string, Int32> author in dict.OrderByDescending(key => key.Value))
-            //{
-            //    firstValue = author.Value;
+            var dictSort = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, Int32> author in dict.OrderBy(key => key.Key))
+            {
+                dictSort.Add(author.Key, author.Value);
+            }
 
-            //    Console.WriteLine("Key: {0}, Value: {1}", author.Key, author.Value);
-            //}
-
-            return dict;
+                return dictSort;
         }
 
         public Dictionary<string, int> getHashtag()
