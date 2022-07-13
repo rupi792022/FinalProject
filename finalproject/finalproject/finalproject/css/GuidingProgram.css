@@ -60,9 +60,7 @@ input[type="number"] {
     outline: none;
     height: 35px;
     color: gray;
-    /*   background: #E5EDED;*/
     font-family: Calibri;
-    /*    border-radius: 10px;*/
     font-size: 14px;
     padding-left: 10px;
     box-sizing: border-box;
@@ -103,7 +101,6 @@ textarea {
 }
 
 textarea:hover {
-/*border: 1px solid #C59636;*/
 border-radius: 7px;
 box-shadow: 0 0 5px #C59636;
 font-family: Calibri;

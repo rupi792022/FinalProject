@@ -25,7 +25,7 @@
             else {
                 alert("web storage not supported!");
             }
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + volunteerDetails.First_name.toUpperCase() + ' ' + volunteerDetails.Last_name.toUpperCase() + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + volunteerDetails.First_name + ' ' + volunteerDetails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
         }
 
@@ -52,7 +52,7 @@
                 <li><a class="space" href="Guiding.html">Tutorial</a></li>
                 <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="Reports.html">Reports</a></li>
-                <li><a class="space" href="#">Keywords</a></li>
+                <li><a class="space" href="KeyWord-volunteer.html">Keywords</a></li>
                 <li class="dropdown"></li>
             </ul>
         </div>
@@ -83,7 +83,7 @@
             </tr>
             <tr>
                 <td>
-                    <a class="btnCard" href="#">
+                    <a class="btnCard" href="KeyWord-volunteer.html">
                         <div class="card">
                             <img class="imgCard" src="../Images/keywoeds.png" />
                             <div class="textCard">

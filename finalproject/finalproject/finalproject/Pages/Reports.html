@@ -29,18 +29,23 @@
         function submitReport() {
             ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessTweet, postErrorTweet);
             return false;
+           
         }
 
         function postSuccessTweet(exist) {
+            
             if (exist == true) {
                 alert("The report is allready exist, please add another report.");
             }
-            else alert("The report was added successfully!");
-            $("#contentLink").val('');
-            $("#country").val('');
-            $("#language").val('');
-            $("#Hashtag").val('');
-            $("#explanation").val('');
+            else {
+                alert("The report was added successfully!");
+                $("#contentLink").val('');
+                $("#country").val('');
+                $("#language").val('');
+                $("#Hashtag").val('');
+                $("#explanation").val('');
+/*                $('input[name=socialNetwork]').attr("checked", false);*/
+            }
         }
 
         function postErrorTweet(error) {
@@ -88,16 +93,17 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
-                <li><a class="space" href="#">Tutorial</a></li>
+                <li><a class="space" href="Guiding.html">Tutorial</a></li>
                 <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="Reports.html">Reports</a></li>
-                <li><a class="space" href="#">Keywords</a></li>
+                <li><a class="space" href="KeyWord-volunteer.html">Keywords</a></li>
                 <li class="dropdown"></li>
             </ul>
         </div>
     </nav>
     <div class="loginBox">
         <div class="inputBox">
+            <p id="headerReport">Report</p>
             <table>
                 <tr>
                     <td colspan="2"><p>Content link:</p></td>
@@ -117,7 +123,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2"><p>Tweet content:</p></td>
+                    <td colspan="2"  id="tweetContent"><p>Tweet content:</p></td>
                     <td colspan="2"><textarea id="explanation" name="explanation" cols="50" rows="8" placeholder="Enter a short explanation"></textarea></td>
                 </tr>
             </table>

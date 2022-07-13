@@ -27,7 +27,6 @@
     padding: 40px;
     font-family: Calibri;
     font-size:14px;
-    /*box-sizing: border-box;*/
 }
 
 
@@ -136,3 +135,7 @@ tr td {
 p{
     padding-left:10px;
 }
+
+#SaveDatails{
+    position: absolute;
+    right: 1px;}

@@ -301,6 +301,7 @@
     <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\GuidingProgram.html" />
     <Content Include="Pages\ForgotPassword.html" />
+    <Content Include="Pages\KeyWord-volunteer.html" />
     <Content Include="Pages\KeyWord-manager.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\MonitoringReport.html" />
