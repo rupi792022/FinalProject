@@ -1083,22 +1083,22 @@ namespace finalproject.Models.DAL
                     con.Close();
             }
         }
-        ////////////////Twitter///////////////////
-        
-        public bool InsertTweet(Twitter twitter)
+        ////////////////Report///////////////////
+
+        public bool InsertReport(Report report) // שינינו רק את זה
         {
             SqlConnection con = null;
 
             try
             {
-               bool tweetExist = ReadTweet_(twitter.Tweet_id);
-                if(tweetExist == false)
+               bool reportExist = ReadTweet_(report.Tweet_id);
+                if(reportExist == false)
                 {
                      con = Connect("webOsDB");
-                     SqlCommand selectCommand = createSelectCommand_InsertTweet(con, twitter);
+                     SqlCommand selectCommand = createSelectCommand_InsertReport(con, report);
                      selectCommand.ExecuteNonQuery();
                 }
-                return tweetExist;
+                return reportExist;
 
             }
             catch (Exception ex)
@@ -1115,7 +1115,7 @@ namespace finalproject.Models.DAL
         }
 
         
-        private SqlCommand createSelectCommand_InsertTweet(SqlConnection con, Twitter t)
+        private SqlCommand createSelectCommand_InsertReport(SqlConnection con, Report t)
         {
             string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name],[status],[lang] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText.Replace("'", "") + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "', '" + t.Status + "', '" + t.Lang + "')";
             SqlCommand command = new SqlCommand(insertStr, con);

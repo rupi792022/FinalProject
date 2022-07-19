@@ -27,12 +27,12 @@
         }
 
         function submitReport() {
-            ajaxCall("POST", "../api/Reports", JSON.stringify(t), postSuccessReports, postErrorReports);
+            ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessTweet, postErrorTweet);
             return false;
            
         }
 
-        function postSuccessReports(exist) {
+        function postSuccessTweet(exist) {
             
             if (exist == true) {
                 alert("The report is allready exist, please add another report.");
@@ -48,7 +48,7 @@
             }
         }
 
-        function postErrorReports(error) {
+        function postErrorTweet(error) {
             console.log(error);
         }
 

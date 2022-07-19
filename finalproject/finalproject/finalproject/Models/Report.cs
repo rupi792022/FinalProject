@@ -20,7 +20,7 @@ using System.Net.Http;
 
 namespace finalproject.Models
 {
-    public class Twitter
+    public class Report
     {
         long tweet_id;
         string lang;
@@ -35,8 +35,8 @@ namespace finalproject.Models
         string status;
 
 
-        public Twitter() { }
-        public Twitter(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status)
+        public Report() { }
+        public Report(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status)
         {
             Tweet_id = tweet_id;
             Lang = lang;
@@ -69,7 +69,7 @@ namespace finalproject.Models
         const string Access_Token = "1521117634267435009-a2CLrnlhS5ATNDDjufTwrkYSAFuToO";
         const string Access_Token_Secret = "RLBdasjycfyovwIYobJ6V8KbpbcUKdPIyIg3VHY3cAp1F";
 
-        public async Task<Twitter> getTweet(long tweetid, string email)
+        public async Task<Report> getTweet(long tweetid, string email)
         {
             // we create a client with your user's credentials
             var userClient = new TwitterClient(API_key, API_Key_Secret, Access_Token, Access_Token_Secret);
@@ -86,31 +86,32 @@ namespace finalproject.Models
             {
                 geo = tweet.Geo.ToString();
             }
-            else if(user.Location != null)
+            else if (user.Location != null)
             {
                 geo = user.Location.ToString();
             }
-            if (tweet.Entities.Hashtags != null) { 
+            if (tweet.Entities.Hashtags != null)
+            {
                 for (int i = 0; i < tweet.Entities.Hashtags.Length; i++)
                 {
                     hashtag += tweet.Entities.Hashtags[i].Tag.ToString() + ",";
                 }
             }
-            Twitter myTwitter = new Twitter(tweetid, tweet.Lang, tweet.Text, utc, geo, url, "Twitter", hashtag, authorName, email, "Not removed");
+            Report myTwitter = new Report(tweetid, tweet.Lang, tweet.Text, utc, geo, url, "Twitter", hashtag, authorName, email, "Not removed");
             return myTwitter;
         }
 
 
-        public bool InsertTweet()
+        public bool InsertReport()
         {
             DataServices ds = new DataServices();
-            return ds.InsertTweet(this);
-           
+            return ds.InsertReport(this);
+
         }
 
-        public List<Twitter> getStatusPage(List<Twitter> notRe_tweets)
+        public List<Report> getStatusPage(List<Report> notRe_tweets)
         {
-            List<Twitter> t_List = new List<Twitter>();
+            List<Report> t_List = new List<Report>();
             foreach (var t in notRe_tweets)
             {
                 try
@@ -130,12 +131,12 @@ namespace finalproject.Models
                 catch (WebException e)
                 {
                     //Console.WriteLine("\r\nWebException Raised. The following error occurred : {0}", e.Status);
-                    if(e.Status.ToString() == "ProtocolError")
+                    if (e.Status.ToString() == "ProtocolError")
                     {
                         t.Status = "Removed";
                         t_List.Add(t);
                     }
-                    continue; 
+                    continue;
 
                 }
             }
@@ -151,13 +152,13 @@ namespace finalproject.Models
             return ds.getTweets();
         }
 
-        public void UpdateStatus(List<Twitter> tweets)
+        public void UpdateStatus(List<Report> reports)
 
         {
-            List<Twitter> tweets_List = new List<Twitter>();
-            tweets_List = getStatusPage(tweets);
+            List<Report> reports_List = new List<Report>();
+            reports_List = getStatusPage(reports);
             DataServices ds = new DataServices();
-            ds.UpdateStatus(tweets_List);
+            ds.UpdateStatus(reports_List);
         }
 
         public Dictionary<string, int> sorthashtags(List<string> hashtags)
@@ -181,7 +182,7 @@ namespace finalproject.Models
                 dictSort.Add(author.Key, author.Value);
             }
 
-                return dictSort;
+            return dictSort;
         }
 
         public Dictionary<string, int> getHashtag()
