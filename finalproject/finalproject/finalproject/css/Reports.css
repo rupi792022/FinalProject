@@ -71,7 +71,7 @@ textarea {
     font-size: 14px;
     padding-left: 7px;
     box-sizing: border-box;
-    width: 500px;
+    width: 465px;
     height: 80px;
     resize: none;
     background: #E5EDED;
@@ -87,12 +87,7 @@ body {
     margin: 0;
     padding: 0;
     background: #3E8C84;
-    height: 100vh;
     font-family: Calibri;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow: hidden
 }
 
 #particles-js {
@@ -101,11 +96,11 @@ body {
 
 .loginBox {
     position: absolute;
-    top: 55%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1000px;
-    height: 560px;
+    height: 705px;
     background: #E5EDED;
     border-radius: 10px;
     padding: 30px;
@@ -205,4 +200,12 @@ button {
 
 #tweetContent {
     vertical-align:top;
+}
+
+#socialNetwork {
+    font-weight: bold;
+}
+
+#contentLink{
+    width:465px;
 }

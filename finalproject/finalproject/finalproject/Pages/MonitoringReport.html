@@ -21,6 +21,11 @@
 
         });
 
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
         function getTheTweet() {
             let apiCall = "../api/Twitters/getTweets";
             ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
@@ -51,7 +56,11 @@
             }
             str +="</table>"
                 str += "<br><button id='checkStatus'>Check the status</button>";
-                document.getElementById("reports").innerHTML = str;
+            document.getElementById("reports").innerHTML = str;
+
+            if (tweets.length > 6) {
+                $(".loginBox").css({ "height": "+=30px" });
+            }
         }
 
         function checkStatus() {
