@@ -31,6 +31,14 @@ namespace finalproject.Controllers
         }
 
         [HttpGet]
+        [Route("api/Twitters/getTweetsNotRe")]
+        public List<Twitter> getTweetsNotRe()
+        {
+            Twitter t = new Twitter();
+            return t.getTweetsNotRe();
+        }
+
+        [HttpGet]
         [Route("api/Twitters/getTweets")]
         public List<Twitter> getTweets()
         {

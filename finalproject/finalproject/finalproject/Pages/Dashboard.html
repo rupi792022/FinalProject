@@ -10,7 +10,14 @@
     <link href="../css/Guiding.css" rel="stylesheet" />
     <title></title>
     <script>
-        window.onload = function () {
+
+        $(document).ready(function () {
+            let apiCall = "../api/Twitters/getTweets";
+            ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
+        });
+
+
+        function getSuccessGetTweets() {
 
             var chart = new CanvasJS.Chart("chartContainer", {
                 exportEnabled: true,
@@ -48,8 +55,12 @@
                 e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
             }
             e.chart.render();
-
         }
+
+        function getErrorGetTweets(error) {
+            console.log(error);
+        }
+
     </script>
 </head>
 <body>

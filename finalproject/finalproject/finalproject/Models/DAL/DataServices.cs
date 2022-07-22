@@ -692,7 +692,7 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-       
+
 
         public void UpdateGuidingDetails(GuidingProgram gp) // Update the values 
         {
@@ -717,9 +717,9 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateGuidingDetails(SqlConnection con, int guiding_serial_num, string file_path, string content_level,  string program_name)
+        private SqlCommand createSelectCommand_UpdateGuidingDetails(SqlConnection con, int guiding_serial_num, string file_path, string content_level, string program_name)
         {
-            string commandStr = "UPDATE Guiding_program_2022 SET"+
+            string commandStr = "UPDATE Guiding_program_2022 SET" +
                " file_path = @file_path" +
                 ",content_level = @content_level" +
                 ",program_name = @program_name" +
@@ -994,21 +994,21 @@ namespace finalproject.Models.DAL
                         SqlCommand command = Create_InsertProgram(q, con);
                         command.ExecuteNonQuery();
                     }
-                    else 
+                    else
                     {
                         SqlCommand selectCommand = createSelectCommand_UpdateQandADetails(con, q.Question_serial_num, q.Question_content, q.Answers, q.Guiding_serial_num);
                         selectCommand.ExecuteNonQuery();
                     }
-                   
+
                 }
                 if (Q_List.Count > qa.Count)
                 {
                     for (int i = 0; i < (Q_List.Count - qa.Count); i++)
                     {
-                        SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, Q_List[qa.Count+i].Question_serial_num, Q_List[qa.Count+i].Guiding_serial_num);
+                        SqlCommand selectCommand = createSelectCommand_DeleteQandA(con, Q_List[qa.Count + i].Question_serial_num, Q_List[qa.Count + i].Guiding_serial_num);
                         selectCommand.ExecuteNonQuery();
                     }
-                   
+
                 }
 
             }
@@ -1024,7 +1024,7 @@ namespace finalproject.Models.DAL
             }
         }
 
-        private SqlCommand createSelectCommand_UpdateQandADetails(SqlConnection con,int question_serial_num,string question_content, string answers, int guiding_serial_num)
+        private SqlCommand createSelectCommand_UpdateQandADetails(SqlConnection con, int question_serial_num, string question_content, string answers, int guiding_serial_num)
         {
             string commandStr = "UPDATE Q_and_A_2022 SET" +
                 " question_content = @question_content" +
@@ -1083,22 +1083,22 @@ namespace finalproject.Models.DAL
                     con.Close();
             }
         }
-        ////////////////Report///////////////////
+        ////////////////Twitter///////////////////
 
-        public bool InsertReport(Report report) // שינינו רק את זה
+        public bool InsertTweet(Twitter twitter)
         {
             SqlConnection con = null;
 
             try
             {
-               bool reportExist = ReadTweet_(report.Tweet_id);
-                if(reportExist == false)
+                bool tweetExist = ReadTweet_(twitter.Tweet_id);
+                if (tweetExist == false)
                 {
-                     con = Connect("webOsDB");
-                     SqlCommand selectCommand = createSelectCommand_InsertReport(con, report);
-                     selectCommand.ExecuteNonQuery();
+                    con = Connect("webOsDB");
+                    SqlCommand selectCommand = createSelectCommand_InsertTweet(con, twitter);
+                    selectCommand.ExecuteNonQuery();
                 }
-                return reportExist;
+                return tweetExist;
 
             }
             catch (Exception ex)
@@ -1111,13 +1111,13 @@ namespace finalproject.Models.DAL
                 if (con != null)
                     con.Close();
             }
-           
+
         }
 
-        
-        private SqlCommand createSelectCommand_InsertReport(SqlConnection con, Report t)
+
+        private SqlCommand createSelectCommand_InsertTweet(SqlConnection con, Twitter t)
         {
-            string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name],[status],[lang] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText.Replace("'", "") + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "', '" + t.Status + "', '" + t.Lang + "')";
+            string insertStr = "INSERT INTO Tweets_2022 ( [email_v],[tweet_id], [content_text],[created_at],[country],[link_url],[network],[hashtag],[author_name],[status],[lang],[submit_time] ) VALUES('" + t.Volunteer_email + "', '" + t.Tweet_id + "', '" + t.ContentText.Replace("'", "") + "', '" + t.Created_at + "', '" + t.Country + "', '" + t.LinkUrl + "', '" + t.Network + "', '" + t.Hashtag + "', '" + t.Author_name + "', '" + t.Status + "', '" + t.Lang + "', '" + t.Submit_time + "')";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeouti
             command.CommandTimeout = 5;
@@ -1173,7 +1173,7 @@ namespace finalproject.Models.DAL
             return command;
         }
 
-        public List<Twitter> getTweets()
+        public List<Twitter> getTweetsNotRe()
         {
             SqlConnection con = null;
 
@@ -1181,7 +1181,7 @@ namespace finalproject.Models.DAL
             {
                 con = Connect("webOsDB");
                 List<Twitter> tweets_List = new List<Twitter>();
-               
+
                 SqlCommand selectCommand = createSelectCommand_notRemoved_tw(con);
                 SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dr.Read())
@@ -1195,6 +1195,7 @@ namespace finalproject.Models.DAL
                     t.Network = (string)dr["network"];
                     t.Lang = (string)dr["lang"];
                     t.Status = (string)dr["status"];
+                    t.Submit_time = Convert.ToDateTime(dr["submit_time"]);
                     tweets_List.Add(t);
                 }
                 return tweets_List;
@@ -1213,7 +1214,7 @@ namespace finalproject.Models.DAL
         }
         private SqlCommand createSelectCommand_notRemoved_tw(SqlConnection con)
         {
-            string insertStr = "select tweet_id,link_url,email_v,country,status,created_at,network,lang from Tweets_2022 where lower(status) = 'not removed'";
+            string insertStr = "select tweet_id,link_url,email_v,country,status,created_at,network,lang,submit_time from Tweets_2022 where lower(status) = 'not removed'";
             SqlCommand command = new SqlCommand(insertStr, con);
             // TBC - Type and Timeouti
             command.CommandTimeout = 5;
@@ -1293,12 +1294,62 @@ namespace finalproject.Models.DAL
                     con.Close();
             }
         }
-        
+
         private SqlCommand createSelectCommand_getHashtag(SqlConnection con)
         {
             string commandStr = "SELECT hashtag from Tweets_2022";
             SqlCommand cmd = createCommand(con, commandStr);
             return cmd;
+        }
+
+
+        public List<Twitter> getTweets()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                List<Twitter> tweets_List = new List<Twitter>();
+
+                SqlCommand selectCommand = createSelectCommand_tweets(con);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                while (dr.Read())
+                {
+                    Twitter t = new Twitter();
+                    t.Tweet_id = Convert.ToInt64(dr["tweet_id"]);
+                    t.LinkUrl = (string)dr["link_url"];
+                    t.Volunteer_email = (string)dr["email_v"];
+                    t.Country = (string)dr["country"];
+                    t.Created_at = Convert.ToDateTime(dr["created_at"]);
+                    t.Network = (string)dr["network"];
+                    t.Lang = (string)dr["lang"];
+                    t.Status = (string)dr["status"];
+                    t.Submit_time = Convert.ToDateTime(dr["submit_time"]);
+                    tweets_List.Add(t);
+                }
+                return tweets_List;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read all the tweet", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+        private SqlCommand createSelectCommand_tweets(SqlConnection con)
+        {
+            string insertStr = "select * from Tweets_2022";
+            SqlCommand command = new SqlCommand(insertStr, con);
+            // TBC - Type and Timeouti
+            command.CommandTimeout = 5;
+            command.CommandType = System.Data.CommandType.Text;
+            return command;
         }
 
     }

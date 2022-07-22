@@ -52,6 +52,24 @@ a {
     color: dimgrey;
 }
 
+.loginBox {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 600px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    border: 1px solid #C59636;
+}
+
+
+    .loginBox input {
+        margin-bottom: 7px;
+    }
 
 .inputBox {
     position: relative;
@@ -71,13 +89,14 @@ textarea {
     font-size: 14px;
     padding-left: 7px;
     box-sizing: border-box;
-    width: 465px;
+    width: 500px;
     height: 80px;
     resize: none;
     background: #E5EDED;
 }
 
     textarea:hover {
+        /*border: 1px solid #C59636;*/
         border-radius: 7px;
         box-shadow: 0 0 5px #C59636;
         font-family: Calibri;
@@ -87,7 +106,12 @@ body {
     margin: 0;
     padding: 0;
     background: #3E8C84;
+    height: 100vh;
     font-family: Calibri;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
 }
 
 #particles-js {
@@ -96,11 +120,11 @@ body {
 
 .loginBox {
     position: absolute;
-    top: 65%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1000px;
-    height: 705px;
+    height: 550px;
     background: #E5EDED;
     border-radius: 10px;
     padding: 30px;
@@ -134,6 +158,7 @@ body {
             .loginBox input[type="url"]:hover,
             .loginBox input[type="text"]:hover,
             .loginBox select:hover {
+                /*    color: #C59636;*/
                 border: 1px solid #C59636;
                 border-radius: 7px;
                 box-shadow: 0 0 5px #C59636;
@@ -149,19 +174,19 @@ body {
             }
 
 
-.loginBox button {
-    border: none;
-    outline: none;
-    height: 40px;
-    width: 180px;
-    font-size: 16px;
-    background: #C59636;
-    color: #fff;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: Calibri;
-    margin-left: 118px;
-}
+    .loginBox button {
+        border: none;
+        outline: none;
+        height: 40px;
+        width: 180px;
+        font-size: 16px;
+        background: #C59636;
+        color: #fff;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: Calibri;
+        margin-left: 118px;
+    }
 
 
 table {
@@ -174,17 +199,18 @@ table {
 
 
 tr td {
+    /*    width: 160px;*/
     vertical-align: text-top;
-    padding-top:10px;
-    padding-left:15px;
+    padding-top: 10px;
+    padding-left: 15px;
 }
 
 p {
     padding-left: 10px;
 }
 
-label{
-    font-weight:normal;
+label {
+    font-weight: normal;
 }
 
 button {
@@ -192,20 +218,5 @@ button {
     right: 10px;
 }
 
-#headerReport {
-    font-size: 24px;
-    text-align: center;
-    color: dimgray;
-}
-
-#tweetContent {
-    vertical-align:top;
-}
-
-#socialNetwork {
-    font-weight: bold;
-}
-
-#contentLink{
-    width:465px;
+#Hashtag {
 }

@@ -253,7 +253,6 @@
     <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\PerformsProgramsController.cs" />
     <Compile Include="Controllers\QandAsController.cs" />
-    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TwittersController.cs" />
     <Compile Include="Controllers\VolunteersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -266,7 +265,6 @@
     <Compile Include="Models\GuidingProgram.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\QandA.cs" />
-    <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Twitter.cs" />
     <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -304,11 +302,12 @@
     <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\GuidingProgram.html" />
     <Content Include="Pages\ForgotPassword.html" />
+    <Content Include="Pages\Author-manager .html" />
+    <Content Include="Pages\Author-volunteer.html" />
     <Content Include="Pages\KeyWord-volunteer.html" />
     <Content Include="Pages\KeyWord-manager.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\MonitoringReport.html" />
-    <Content Include="Pages\Reports - Copy.html" />
     <Content Include="Pages\Reports.html" />
     <Content Include="Pages\SingIn.html" />
     <Content Include="Pages\ManagerHome.html" />

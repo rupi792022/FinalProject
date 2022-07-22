@@ -27,12 +27,12 @@
         }
 
         function submitReport() {
-            ajaxCall("POST", "../api/Reports", JSON.stringify(t), postSuccessReports, postErrorReports);
+            ajaxCall("POST", "../api/Twitters", JSON.stringify(t), postSuccessTweet, postErrorTweet);
             return false;
            
         }
 
-        function postSuccessReports(exist) {
+        function postSuccessTweet(exist) {
             
             if (exist == true) {
                 alert("The report is allready exist, please add another report.");
@@ -48,7 +48,7 @@
             }
         }
 
-        function postErrorReports(error) {
+        function postErrorTweet(error) {
             console.log(error);
         }
 
@@ -106,7 +106,33 @@
             <p id="headerReport">Report</p>
             <table>
                 <tr>
-                    <td><p id="socialNetwork">First choose social network:</p></td>
+                    <td colspan="2"><p>Content link:</p></td>
+                    <td><input type="url" id="contentLink" name="contentLink" /></td>
+                    <td><button type="button" id="getDetails">Get The Details</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p>Country where the post was published:</p></td>
+                    <td>
+                        <input type="text" id="country" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p>Hashtag:</p></td>
+                    <td>
+                        <input type="text" id="Hashtag" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"  id="tweetContent"><p>Tweet content:</p></td>
+                    <td colspan="2"><textarea id="explanation" name="explanation" cols="50" rows="8"></textarea></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td><p>Choose language:</p></td>
+                    <td>
+                        <input type="text" id="language" />
+                    <td><p>Choose social network:</p></td>
                     <td>
                         <input type="radio" id="Facebook" name="socialNetwork" value="Facebook" />
                         <label for="Facebook">Facebook</label><br>
@@ -120,47 +146,6 @@
                         <label for="YouTube">YouTube</label><br>
                         <input type="radio" id="VK" name="socialNetwork" value="VK" />
                         <label for="VK">VK</label>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td><p>Content link:</p></td>
-                    <td><input type="url" id="contentLink" name="contentLink" /></td>
-                    <td><button type="button" id="getDetails">Get The Details</button></td>
-                </tr>
-                <tr>
-                    <td><p>Published date:</p></td>
-                    <td>
-                        <input type="text" id="publishDate" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><p>The author of the post:</p></td>
-                    <td>
-                        <input type="text" id="author" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><p>Country where the post was published:</p></td>
-                    <td>
-                        <input type="text" id="country" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><p>Hashtag:</p></td>
-                    <td>
-                        <input type="text" id="Hashtag" />
-                    </td>
-                </tr>
-                <tr>
-                    <td id="tweetContent"><p>Tweet content:</p></td>
-                    <td colspan="2"><textarea id="explanation" name="explanation" cols="50" rows="8"></textarea></td>
-                </tr>
-                <tr>
-                    <td><p>Language:</p></td>
-                    <td>
-                        <input type="text" id="language" />
                     </td>
                 </tr>
             </table>

@@ -27,11 +27,11 @@
         }
 
         function getTheTweet() {
-            let apiCall = "../api/Twitters/getTweets";
-            ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
+            let apiCall = "../api/Twitters/getTweetsNotRe";
+            ajaxCall("GET", apiCall, "", getSuccessgetTweetsNotRe, getErrorgetTweetsNotRe);
         }
 
-        function getSuccessGetTweets(tweets) {
+        function getSuccessgetTweetsNotRe(tweets) {
             console.log("success GetTweets");
             Tweets = tweets;
             if (tweets.length > 0) {
@@ -68,7 +68,7 @@
             return false;
         }
 
-        function getErrorGetTweets(error) {
+        function getErrorgetTweetsNotRe(error) {
             console.log(error);
         }
 

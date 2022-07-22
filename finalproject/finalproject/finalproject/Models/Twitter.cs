@@ -33,10 +33,11 @@ namespace finalproject.Models
         string author_name;
         string volunteer_email;
         string status;
+        DateTime submit_time;
 
 
         public Twitter() { }
-        public Twitter(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status)
+        public Twitter(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status, DateTime submit_time)
         {
             Tweet_id = tweet_id;
             Lang = lang;
@@ -49,6 +50,7 @@ namespace finalproject.Models
             Author_name = author_name;
             Volunteer_email = volunteer_email;
             Status = status;
+            Submit_time = submit_time;
 
         }
 
@@ -63,6 +65,7 @@ namespace finalproject.Models
         public string Volunteer_email { get => volunteer_email; set => volunteer_email = value; }
         public long Tweet_id { get => tweet_id; set => tweet_id = value; }
         public string Status { get => status; set => status = value; }
+        public DateTime Submit_time { get => submit_time; set => submit_time = value; }
 
         const string API_key = "hcUmMrTLpUjBoT3x7RtSHzTwF";
         const string API_Key_Secret = "7A0XTPRHfKzRCWyohOaKut5kpukOLMrD9epvW8QwQlbNmU2kEJ";
@@ -82,6 +85,9 @@ namespace finalproject.Models
             var userResponse = await userClient.UsersV2.GetUserByIdAsync(tweet.AuthorId);
             var user = userResponse.User;
             string authorName = user.Username;
+            DateTime localDate = DateTime.Now;
+            //var date = dateAndTime.Date;
+
             if (tweet.Geo != null)
             {
                 geo = tweet.Geo.ToString();
@@ -96,7 +102,7 @@ namespace finalproject.Models
                     hashtag += tweet.Entities.Hashtags[i].Tag.ToString() + ",";
                 }
             }
-            Twitter myTwitter = new Twitter(tweetid, tweet.Lang, tweet.Text, utc, geo, url, "Twitter", hashtag, authorName, email, "Not removed");
+            Twitter myTwitter = new Twitter(tweetid, tweet.Lang, tweet.Text, utc, geo, url, "Twitter", hashtag, authorName, email, "Not removed", localDate);
             return myTwitter;
         }
 
@@ -145,11 +151,18 @@ namespace finalproject.Models
 
 
 
+        public List<Twitter> getTweetsNotRe()
+        {
+            DataServices ds = new DataServices();
+            return ds.getTweetsNotRe();
+        }
+
         public List<Twitter> getTweets()
         {
             DataServices ds = new DataServices();
             return ds.getTweets();
         }
+        
 
         public void UpdateStatus(List<Twitter> tweets)
 
