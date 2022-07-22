@@ -12,7 +12,7 @@
     <script>
         $(document).ready(function () {
             getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><<li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
             let apiCall = "../api/GuidingPrograms/Read_GP";
@@ -215,8 +215,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
-                <li><a class="space" href="Guiding-New.html">Tutorial</a></li>
-                <li><a class="space" href="#">Activity time</a></li>
+                <li><a class="space" href="Guiding.html">Tutorial</a></li>
                 <li><a class="space" href="Reports.html">Reports</a></li>
                 <li><a class="space" href="KeyWord-volunteer.html">Keywords</a></li>
                 <li class="dropdown"></li>

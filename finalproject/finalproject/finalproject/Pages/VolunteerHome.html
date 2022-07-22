@@ -25,7 +25,7 @@
             else {
                 alert("web storage not supported!");
             }
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + volunteerDetails.First_name + ' ' + volunteerDetails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + volunteerDetails.First_name + ' ' + volunteerDetails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
         }
 
@@ -50,7 +50,6 @@
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
                 <li><a class="space" href="Guiding.html">Tutorial</a></li>
-                <li><a class="space" href="#">Activity time</a></li>
                 <li><a class="space" href="Reports.html">Reports</a></li>
                 <li><a class="space" href="KeyWord-volunteer.html">Keywords</a></li>
                 <li class="dropdown"></li>
@@ -80,8 +79,6 @@
                         </div>
                     </a>
                 </td>
-            </tr>
-            <tr>
                 <td>
                     <a class="btnCard" href="KeyWord-volunteer.html">
                         <div class="card">
@@ -92,17 +89,8 @@
                         </div>
                     </a>
                 </td>
-                <td>
-                    <a class="btnCard" href="#">
-                        <div class="card">
-                            <img class="imgCard" src="../Images/Activity time.png" />
-                            <div class="textCard">
-                                <p>Activity time</p>
-                            </div>
-                        </div>
-                    </a>
-                </td>
             </tr>
+       
         </table>
     </div>     
 </body>

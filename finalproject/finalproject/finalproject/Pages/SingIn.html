@@ -14,7 +14,7 @@
 
         $(document).ready(function () {
             getDatails = JSON.parse(localStorage.getItem('managerDetails'));
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
             $("#send").click(Send);
         });
@@ -60,10 +60,9 @@
             <ul class="nav navbar-nav">
                 <li><a class="space" href="ManagerHome.html">Home</a></li>
                 <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
-                <li><a class="space" href="#">Activity time</a></li>
-                <li><a class="space" href="#">Reports</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
                 <li><a class="space" href="#">Deshbord</a></li>
-                <li><a class="space" href="#">Keywords</a></li>
+                <li><a class="space" href="KeyWord-manager.html">Keywords</a></li>
                 <li class="dropdown"></li>
             </ul>
         </div>
