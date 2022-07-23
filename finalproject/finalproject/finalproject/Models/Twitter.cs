@@ -33,11 +33,11 @@ namespace finalproject.Models
         string author_name;
         string volunteer_email;
         string status;
-        DateTime submit_time;
+        string submit_time;
 
 
         public Twitter() { }
-        public Twitter(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status, DateTime submit_time)
+        public Twitter(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status, string submit_time)
         {
             Tweet_id = tweet_id;
             Lang = lang;
@@ -65,7 +65,7 @@ namespace finalproject.Models
         public string Volunteer_email { get => volunteer_email; set => volunteer_email = value; }
         public long Tweet_id { get => tweet_id; set => tweet_id = value; }
         public string Status { get => status; set => status = value; }
-        public DateTime Submit_time { get => submit_time; set => submit_time = value; }
+        public string Submit_time { get => submit_time; set => submit_time = value; }
 
         const string API_key = "hcUmMrTLpUjBoT3x7RtSHzTwF";
         const string API_Key_Secret = "7A0XTPRHfKzRCWyohOaKut5kpukOLMrD9epvW8QwQlbNmU2kEJ";
@@ -85,8 +85,9 @@ namespace finalproject.Models
             var userResponse = await userClient.UsersV2.GetUserByIdAsync(tweet.AuthorId);
             var user = userResponse.User;
             string authorName = user.Username;
-            DateTime localDate = DateTime.Now;
-            //var date = dateAndTime.Date;
+            //DateTime localDate = DateTime.Now;
+            string localDate = DateTime.Now.ToString("yyyy");
+
 
             if (tweet.Geo != null)
             {
@@ -184,7 +185,6 @@ namespace finalproject.Models
             var dict = new Dictionary<string, int>();
             foreach (var value in listOf_hashtags)
             {
-                // When the key is not found, "count" will be initialized to 0
                 dict.TryGetValue(value, out int count);
                 dict[value] = count + 1;
             }
@@ -201,6 +201,35 @@ namespace finalproject.Models
         {
             DataServices ds = new DataServices();
             return sorthashtags(ds.getHashtag());
+        }
+
+        public Dictionary<string, int> sortCommonUsers(List<string> users)
+        {
+            List<string> listOf_commonUsers = new List<string>();
+            foreach (var h in users)
+            {
+                listOf_commonUsers.AddRange(h.Split(',').ToList());
+            }
+            listOf_commonUsers.RemoveAll(item => item == "");
+            var dict = new Dictionary<string, int>();
+            foreach (var value in listOf_commonUsers)
+            {
+                dict.TryGetValue(value, out int count);
+                dict[value] = count + 1;
+            }
+            var dictSort = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, Int32> author in dict.OrderBy(key => key.Key))
+            {
+                dictSort.Add(author.Key, author.Value);
+            }
+
+            return dictSort;
+        }
+
+        public Dictionary<string, int> getCommonUsers()
+        {
+            DataServices ds = new DataServices();
+            return sortCommonUsers(ds.getCommonUsers());
         }
 
 

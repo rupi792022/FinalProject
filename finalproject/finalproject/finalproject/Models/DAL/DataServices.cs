@@ -1195,7 +1195,7 @@ namespace finalproject.Models.DAL
                     t.Network = (string)dr["network"];
                     t.Lang = (string)dr["lang"];
                     t.Status = (string)dr["status"];
-                    t.Submit_time = Convert.ToDateTime(dr["submit_time"]);
+                    t.Submit_time = (string)dr["submit_time"];
                     tweets_List.Add(t);
                 }
                 return tweets_List;
@@ -1286,7 +1286,7 @@ namespace finalproject.Models.DAL
             catch (Exception ex)
             {
 
-                throw new Exception("failed to read the tweet", ex);
+                throw new Exception("failed to read the hashtags", ex);
             }
             finally
             {
@@ -1302,6 +1302,42 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
+        public List<string> getCommonUsers()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                List<string> commonUsers_List = new List<string>();
+                SqlCommand selectCommand = createSelectCommand_getCommonUsers(con);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                while (dr.Read())
+                {
+                    string author_name = (string)dr["author_name"];
+                    commonUsers_List.Add(author_name);
+                }
+                return commonUsers_List;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read the Common Users", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_getCommonUsers(SqlConnection con)
+        {
+            string commandStr = "SELECT author_name from Tweets_2022";
+            SqlCommand cmd = createCommand(con, commandStr);
+            return cmd;
+        }
 
         public List<Twitter> getTweets()
         {
@@ -1325,7 +1361,7 @@ namespace finalproject.Models.DAL
                     t.Network = (string)dr["network"];
                     t.Lang = (string)dr["lang"];
                     t.Status = (string)dr["status"];
-                    t.Submit_time = Convert.ToDateTime(dr["submit_time"]);
+                    t.Submit_time = (string)dr["submit_time"];
                     tweets_List.Add(t);
                 }
                 return tweets_List;

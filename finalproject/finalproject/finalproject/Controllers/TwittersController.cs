@@ -53,6 +53,14 @@ namespace finalproject.Controllers
             Twitter t = new Twitter();
             return t.getHashtag();
         }
+
+        [HttpGet]
+        [Route("api/Twitters/getCommonUsers")]
+        public Dictionary<string, int> getCommonUsers()
+        {
+            Twitter t = new Twitter();
+            return t.getCommonUsers();
+        }
         // PUT api/<controller>/5
 
         [HttpPost]

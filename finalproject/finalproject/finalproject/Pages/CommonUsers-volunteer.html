@@ -16,34 +16,31 @@
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a href="#">Personal details</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
-            let apiCall = "../api/Twitters/getHashtag";
-            ajaxCall("GET", apiCall, "", getSuccessHashtag, getErrorHashtag);
+            let apiCall = "../api/Twitters/getCommonUsers";
+            ajaxCall("GET", apiCall, "", getSuccessgetCommonUsers, getErrorgetCommonUsers);
 
         });
 
-        function getSuccessHashtag(dicWords) {
+        function getSuccessgetCommonUsers(dicWords) {
             console.log("success");
             sortHastag(dicWords);
-        }
-        function getErrorHashtag() {
-            console.log("error");
         }
 
         function sortHastag(dict) {
             strRed = "";
             strGreen = "";
             strYellow = "";
-            for (let k in dict)
-            {
-                
-                if (dict[k] >=5) {
+            str = 'No common users found';
+            for (let k in dict) {
+
+                if (dict[k] >= 5) {
                     strRed = '<p>';
                     strRed += k;
                     strRed += " ";
                     strRed += '</p>';
                     document.getElementById("red").innerHTML += strRed;
                 }
-               else if (dict[k] >=3) {
+                else if (dict[k] >= 3) {
                     strYellow = '<p>';
                     strYellow += k;
                     strYellow += " ";
@@ -57,15 +54,18 @@
                     strGreen += '</p>';
                     document.getElementById("green").innerHTML += strGreen;
                 }
-
+                else
+                    document.getElementById("noUsers").innerHTML = str; //לסדר את הערה שתראה נורמאלי ובולטת להעין
             }
         }
-        // בדף זה יופיעו רק המילים. המילים ממויינות לפי מספר הפעמים שהן במערכת
-        // המילים הינן אשטגים בלבד!
-        // אם מילה מופיעה פעמיים לפחות היא תהיה בצבע ירוק אם היא מופיעה יותר ועד 5 היא תהיה בצבע כתום ואם 5 ומעלה אדום
+
+        function getErrorgetCommonUsers() {
+            console.log("error");
+        }
+
     </script>
-            
-</head >
+
+</head>
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -73,18 +73,20 @@
                 <img src="../Images/FOA.png" />
             </div>
             <ul class="nav navbar-nav">
-                <li><a class="space" href="VolunteerHome.html">Home</a></li>
-                <li><a class="space" href="Guiding.html">Guiding Program</a></li>
-                <li><a class="space" href="#">Activity time</a></li>
-                <li><a class="space" href="Reports.html">Reports</a></li>
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
+                <li><a class="space" href="#">Dashbord</a></li>
                 <li><a class="space" href="KeyWord-volunteer.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers-volunteer.html">Common Users</a></li>
                 <li class="dropdown"></li>
             </ul>
         </div>
     </nav>
     <div class="loginBox">
         <div class="inputBox">
-            <p id="headerKeywords">Keywords</p>
+            <p id="headerAuthor">Common Users</p>
+            <p id="noUsers"></p>
             <div class="words">
                 <div id="red"></div>
                 <div id="yellow"></div>
@@ -93,4 +95,4 @@
         </div>
     </div>
 </body>
-</html >
+</html>
