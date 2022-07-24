@@ -8,17 +8,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <link href="../css/Guiding.css" rel="stylesheet" />
+    <link href="../css/Dashbord.css" rel="stylesheet" />
     <title></title>
     <script>
 
         $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
             let apiCall = "../api/Twitters/getTweets";
             ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
             //var date = dateAndTime.Date;
         });
 
-
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
 
         function getSuccessGetTweets(allTweets) {
             var dictStatus = {};
@@ -110,9 +117,30 @@
 
 </head>
 <body>
-    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-    <!--<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="logoFOA" src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
+                <li><a class="space" href="Dashboard.html">Dashbord</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div class="inputBox">
+            <p id="dashbordHeader">Dashbord</p>
+            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+            <!--<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+            <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>-->
+        </div>
+    </div>
 </body>
 </html>

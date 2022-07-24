@@ -9,17 +9,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <link href="../css/KeyWord-manager.css" rel="stylesheet" />
+    <link href="../css/KeyWord.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
             let apiCall = "../api/Twitters/getHashtag";
             ajaxCall("GET", apiCall, "", getSuccessHashtag, getErrorHashtag);
 
         });
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
 
         function getSuccessHashtag(dicWords) {
             console.log("success");

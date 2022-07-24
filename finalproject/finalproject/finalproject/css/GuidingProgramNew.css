@@ -258,3 +258,9 @@ form label {
     margin-left:37px;
     margin-top:8px;
 }
+
+#lableFile {
+    color: gray;
+    font-size: 18px;
+    font-family: Calibri;
+}

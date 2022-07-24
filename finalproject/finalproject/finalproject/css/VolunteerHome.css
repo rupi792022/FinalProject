@@ -16,7 +16,7 @@ body {
 }
 
  .space {
-    width: 120px;
+    width: 145px;
    text-align: center;
 }
 
@@ -95,5 +95,5 @@ a {
 
 td {
     padding-left: 20px;
-    padding-top:100px;
+    padding-top:20px;
 }

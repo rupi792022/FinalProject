@@ -1,6 +1,7 @@
-﻿img {
+﻿.logoFOA {
     height: 60px;
 }
+
 
 .container-fluid {
     background: #E5EDED;
@@ -10,21 +11,7 @@
     margin-top: 8px;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    background: #3E8C84;
-    height: 100vh;
-    font-family: Calibri;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow: hidden
-}
 
-#particles-js {
-    height: 100%
-}
 
 .space {
     width: 145px;
@@ -33,7 +20,7 @@ body {
 
 a {
     color: dimgrey;
-    font-family: Calibri;
+    font-family: Calibri !important;
     font-size: 15px;
 }
 
@@ -47,6 +34,7 @@ a {
 
 .navbar {
     border: none;
+    font-family: Calibri !important;
 }
 
 .navbar-header {
@@ -66,11 +54,11 @@ a {
 
 .loginBox {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 900px;
-    height: 450px;
+    width: 1000px;
+    height: 600px;
     background: #E5EDED;
     border-radius: 10px;
     padding: 30px;
@@ -78,22 +66,31 @@ a {
     border: 1px solid #C59636;
 }
 
-#red {
-    font-family: Calibri;
-    color: red;
+
+    .loginBox input {
+        margin-bottom: 7px;
+    }
+
+.inputBox {
+    position: relative;
 }
 
-#yellow {
+    .inputBox span {
+        position: absolute;
+    }
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #3E8C84;
+    height: 100vh;
     font-family: Calibri;
-    color: orange;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-#green {
-    font-family: Calibri;
-    color: green;
-}
-
-#headerKeywords {
+#dashbordHeader {
     font-size: 24px;
     text-align: center;
     color: dimgray;

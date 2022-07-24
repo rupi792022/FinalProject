@@ -121,8 +121,6 @@ a {
     border-radius: 10px;
     cursor: pointer;
     font-family: Calibri;
-  /*  position: absolute;
-    bottom: 160px;*/
     font-weight: normal;
 }
 
@@ -164,4 +162,8 @@ a {
     font-size: 16px;
     font-family: Calibri;
     font-weight: bold;
+}
+
+p {
+    font-weight: normal;
 }

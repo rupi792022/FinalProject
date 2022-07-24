@@ -275,10 +275,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\Dashbord.css" />
     <Content Include="css\ForgotPassword.css" />
     <Content Include="css\GuidingProgram.css" />
     <Content Include="css\GuidingProgramNew.css" />
-    <Content Include="css\KeyWord-manager - Copy.css" />
+    <Content Include="css\KeyWord.css" />
     <Content Include="css\CommonUsers.css" />
     <Content Include="css\LogIn.css" />
     <Content Include="css\ManagerHome.css" />
@@ -292,6 +293,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\Activity time.png" />
+    <Content Include="Images\common user.png" />
     <Content Include="Images\FOA.png" />
     <Content Include="Images\guiding.png" />
     <Content Include="Images\keywoeds.png" />
@@ -304,10 +306,10 @@
     <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\GuidingProgram.html" />
     <Content Include="Pages\ForgotPassword.html" />
-    <Content Include="Pages\CommonUsers-manager.html" />
+    <Content Include="Pages\CommonUsers.html" />
     <Content Include="Pages\CommonUsers-volunteer.html" />
     <Content Include="Pages\KeyWord-volunteer.html" />
-    <Content Include="Pages\KeyWord-manager.html" />
+    <Content Include="Pages\KeyWord.html" />
     <Content Include="Pages\LogIn.html" />
     <Content Include="Pages\MonitoringReport.html" />
     <Content Include="Pages\Reports - Copy.html" />

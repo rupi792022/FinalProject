@@ -12,7 +12,7 @@
     <script>
         $(document).ready(function () {
             getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
-            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><<li><a onclick="logOut()">Log out</a></li></ul>');
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
             let apiCall = "../api/GuidingPrograms/Read_GP";
@@ -163,7 +163,7 @@
                     str += '<input type="radio" id="answer' + count + '" name="answer" value="' + randomAnswers[i] + '"><label class="lableRadio" for="answer' + count + '">' + randomAnswers[i] + '</label><br>';
                     count++;
                 }
-                str += '<lebal>You need to click "Check" before moving on to the next question<lebal><br><button id="checkAnswer">Check</button><br>';
+                str += '<p>You need to click <b>"Check"</b> before moving on to the next question</p><button id="checkAnswer">Check</button>';
                 str += '<div id="renderNext"><button id="nextAnswer" disabled>Next</button></div>';
                 indexQuestion++;
                 document.getElementById("learning").innerHTML = str;
@@ -178,7 +178,7 @@
                 return false;
 
             }
-
+            
         }
 
         function postSuccessSave() {
@@ -212,12 +212,13 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <img class="logoFOA" src="../Images/FOA.png" />
-            </div>
+            </div> 
             <ul class="nav navbar-nav">
                 <li><a class="space" href="VolunteerHome.html">Home</a></li>
                 <li><a class="space" href="Guiding.html">Tutorial</a></li>
                 <li><a class="space" href="Reports.html">Reports</a></li>
-                <li><a class="space" href="KeyWord-volunteer.html">Keywords</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
                 <li class="dropdown"></li>
             </ul>
         </div>

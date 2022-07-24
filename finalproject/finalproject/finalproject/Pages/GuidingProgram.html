@@ -158,12 +158,8 @@
             questions = [];
             answers = [];
             concatAllanswers = [];
-            //if (toUpdate) {
-            //    count = numOfQ;
-            //}
             for (var i = 0; i < count; i++) {
                 questions[i] = $("#question" + (i + 1)).val();
-                /*concatAllanswers = $("#" + (i + 1) + "_correctAnswer" + (i + 1)).val()*/
                 for (var k = 0; k < NumOfAnswers; k++) {
                     concatAllanswers[k] = $("#Answer" + (i + 1) + "_" + (k + 1)).val();
                 }
@@ -186,7 +182,7 @@
         }
 
         function putSuccessSaveGP() {
-            console.log("success to upadte all GuidingPrograms details");
+            console.log("Success to upadte all GuidingPrograms details");
             QandA = SaveQAdetails();
             ajaxCall("PUT", "../api/QandAs/UpdateQandADetails", JSON.stringify(QandA), putSuccessSaveQA, putErrorSaveQA);
             return false;
@@ -221,7 +217,7 @@
 
         function postSuccessSaveGP() {
             QandA = SaveQAdetails();
-            console.log("success MyGuidingProgram");
+            console.log("Success MyGuidingProgram");
             ajaxCall("POST", "../api/QandAs", JSON.stringify(QandA), postSuccessSaveQA, postErrorSaveQA);
             return false;
         }
@@ -231,8 +227,8 @@
         }
 
         function postSuccessSaveQA() {
-            console.log("success MyQandA");
-            alert("success in adding the program");
+            console.log("Success MyQandA");
+            alert("Success in adding the program");
             addORedit();
         }
 
@@ -270,14 +266,13 @@
 
         function deleteSuccessQA() {
             console.log("Success delete the QA");
-            alert("success in deleting the program");
+            alert("Success in deleting the program");
             let apiCall = "../api/GuidingPrograms/Read_Max_Program"; //Reading the latest tutorial number
             ajaxCall("GET", apiCall, "", getSuccessMaxProgram, getErrorMaxProgram);
-/*            addORedit();*/
         }
 
         function getSuccessRead_GP(gp) {
-            console.log("success Read_GP");
+            console.log("Success Read_GP");
             GP = gp;
             renderPrograms();
         }
@@ -308,7 +303,7 @@
         function getSuccessRead_QandA(qa) {
             numOfQ = qa.length;
             count = numOfQ;
-            console.log("success Read_QandA");
+            console.log("Success Read_QandA");
             renderInputLevel();
             $("#program_name").val(GP[programNum - 1].Program_name);
             $("#contentguiding").val(GP[programNum - 1].Content_level);
@@ -342,9 +337,9 @@
 
         function renderInputLevel() {
             let str = "";
-            str += '<table><tr><td><p>Name of Program:</p></td><td><input type="text" id="program_name" name="program_name" placeholder="Name of the program"/></td></tr></table><br>';
+            str += '<table><tr><td><p>Name of Program:</p></td><td><input type="text" id="program_name" name="program_name"/></td></tr></table><br>';
             str += '<textarea id="contentguiding" name="contentguiding" cols="50" rows="8" placeholder="Enter a content"></textarea>';
-            str += '<form method="post" enctype="multipart/form-data" id="formUpload"><div><label for="files">Please select file - you can choose more than one.</label><input type="file" id="files" name="files" multiple="multiple" /></div><br /><button type="button" id="buttonUpload">Upload files</button><br></form>';
+            str += '<form method="post" enctype="multipart/form-data" id="formUpload"><div><label id="lableFile" for="files"><b>Please select file</b> - you can choose more than <b>one</b>.</label><input type="file" id="files" name="files" multiple="multiple" /></div><br /><button type="button" id="buttonUpload">Upload files</button><br></form>';
             str += ' <div id="ph"></div>';
             str += '<br><button type="button" id="AddQuestion">Add Question</button><br>';
 
@@ -373,8 +368,9 @@
                 <li><a class="space" href="ManagerHome.html">Home</a></li>
                 <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
                 <li><a class="space" href="MonitoringReport.html">Reports</a></li>
-                <li><a class="space" href="#">Dashbord</a></li>
-                <li><a class="space" href="KeyWord-manager.html">Keywords</a></li>
+                <li><a class="space" href="Dashboard.html">Dashbord</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
                 <li class="dropdown"></li>
             </ul>
         </div>
