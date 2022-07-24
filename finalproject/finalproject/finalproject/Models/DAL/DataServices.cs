@@ -318,7 +318,7 @@ namespace finalproject.Models.DAL
             cmd.Parameters["@Volunteer_type"].Value = Volunteer_type;
             cmd.Parameters.Add("@Gender", SqlDbType.NVarChar);
             cmd.Parameters["@Gender"].Value = Gender;
-            cmd.Parameters.Add("@Start_date", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Start_date", SqlDbType.Date);
             cmd.Parameters["@Start_date"].Value = Start_date;
             cmd.Parameters.Add("@Language", SqlDbType.NVarChar);
             cmd.Parameters["@Language"].Value = Language;
@@ -1083,8 +1083,8 @@ namespace finalproject.Models.DAL
                     con.Close();
             }
         }
-        ////////////////Twitter///////////////////
 
+        ////////////////Twitter///////////////////
         public bool InsertTweet(Twitter twitter)
         {
             SqlConnection con = null;
@@ -1339,6 +1339,8 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
+        ////////////////Dashboard///////////////////
+
         public List<Twitter> getTweets()
         {
             SqlConnection con = null;
@@ -1386,6 +1388,52 @@ namespace finalproject.Models.DAL
             command.CommandTimeout = 5;
             command.CommandType = System.Data.CommandType.Text;
             return command;
+        }
+
+        public List<Volunteer> volunteerDash()
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                // C - Connect
+                con = Connect("webOsDB");
+                // C - Create Command
+
+                SqlCommand selectCommand = createSelectCommand_volunteerDash(con);
+                List<Volunteer> vDash_List = new List<Volunteer>();
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dr.Read())
+                {
+                    Volunteer v = new Volunteer();
+                    v.First_name = (string)dr["first_name"];
+                    v.Last_name = (string)dr["last_name"];
+                    v.Volunteer_email = (string)dr["email"];
+                    vDash_List.Add(v);
+                }
+                return vDash_List;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read volunteer details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        SqlCommand createSelectCommand_volunteerDash(SqlConnection con)
+        {
+            string commandStr = "SELECT first_name,last_name,email FROM Volunteer_2022 WHERE year([start_date]) = year(cast(getdate() as date))";
+            SqlCommand cmd = createCommand(con, commandStr);
+            return cmd;
         }
 
     }

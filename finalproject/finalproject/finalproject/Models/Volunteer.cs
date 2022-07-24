@@ -157,6 +157,11 @@ namespace finalproject.Models
             ds.UpdateVolunteerDetails(volunteer);
         }
 
-
+        public List<Volunteer> volunteerDash()
+        {
+            DataServices ds = new DataServices();
+            return ds.volunteerDash();
+        }
+        
     }
 }

@@ -74,6 +74,14 @@ namespace finalproject.Controllers
             volunteer.UpdateVolunteerDetails(volunteer);
         }
 
+        [HttpGet]
+        [Route("api/Volunteers/volunteerDash")]
+        public List<Volunteer> volunteerDash()
+        {
+            Volunteer v = new Volunteer();
+            return v.volunteerDash();
+        }
+
 
         // DELETE api/<controller>/5
         public void Delete(int id)

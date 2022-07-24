@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <link href="../css/Dashbord.css" rel="stylesheet" />
     <title></title>
@@ -17,9 +18,9 @@
             var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
             $(user).clone().appendTo(".dropdown");
 
-            let apiCall = "../api/Twitters/getTweets";
-            ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
-            //var date = dateAndTime.Date;
+            let apiCall = "../api/Volunteers/volunteerDash";
+            ajaxCall("GET", apiCall, "", getSuccessvolunteerDash, getErrorvolunteerDash);
+
         });
 
         function logOut() {
@@ -27,26 +28,32 @@
             window.location.href = "LogIn.html";
         }
 
+        function getSuccessvolunteerDash(ListOfvolunteer) {
+            vList = ListOfvolunteer;
+            let apiCall = "../api/Twitters/getTweets";
+            ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
+        }
+
+        function getErrorvolunteerDash(error) {
+            console.log(error);
+        }
+
         function getSuccessGetTweets(allTweets) {
-            var dictStatus = {};
-            var dictCountry = {};
-            var dictYear = {};
+            dictEmail = {};
+            dictYear = {};
             ListOfYears = []
             ListOfValues = [];
             Years = [];
+            removed_list = [];
+            Names_list = [];
+            repoValues_v = [];
+            count_statuses = 0;
             for (var i = 0; i < allTweets.length; i++) {
-                if (dictCountry[allTweets[i].Country] === undefined) {
-                    dictCountry[allTweets[i].Country] = 1;
+                if (dictEmail[allTweets[i].Volunteer_email] === undefined) {
+                    dictEmail[allTweets[i].Volunteer_email] = 1;
                 }
                 else {
-                    dictCountry[allTweets[i].Country] = dictCountry[allTweets[i].Country] + 1;
-                }
-
-                if (dictStatus[allTweets[i].Status] === undefined) {
-                    dictStatus[allTweets[i].Status] = 1;
-                }
-                else {
-                    dictStatus[allTweets[i].Status] = dictStatus[allTweets[i].Status] + 1;
+                    dictEmail[allTweets[i].Volunteer_email] = dictEmail[allTweets[i].Volunteer_email] + 1;
                 }
                 if (dictYear[allTweets[i].Submit_time] === undefined) {
                     dictYear[allTweets[i].Submit_time] = 1;
@@ -54,16 +61,14 @@
                 else {
                     dictYear[allTweets[i].Submit_time] = dictYear[allTweets[i].Submit_time] + 1;
                 }
-
-                //ListOfYears.push(allTweets[i].Submit_time);
-                //Years = removeDuplicates(ListOfYears);
             }
-            removed_list = [];
-            count_statuses = 0;
+
             for (let k in dictYear) {
                 ListOfValues.push(dictYear[k]);
                 Years.push(k);
             }
+
+
             for (var j = 0; j < Years.length; j++) {
                 for (var i = 0; i < allTweets.length; i++) {
                     if (Years[j] == allTweets[i].Submit_time && allTweets[i].Status == "Removed") {
@@ -73,7 +78,18 @@
                 removed_list.push(count_statuses);
                 count_statuses = 0;
             }
-           
+            Currentyear = new Date().getFullYear()
+            for (let k in dictEmail) {
+                repoValues_v.push(Math.round((dictEmail[k] / dictYear[Currentyear]) * 100));
+                for (var i = 0; i < vList.length; i++) {
+                    if (vList[i].Volunteer_email == k) {
+                        name = vList[i].First_name + " " + vList[i].Last_name;
+                        Names_list.push(name);
+                    }
+                }
+
+            }
+
             dashboard();
         }
 
@@ -83,15 +99,15 @@
 
         function dashboard() {
             new Chart("myChart", {
-                type: "bar",     
-            data: {
-                labels: Years,
+                type: "bar",
+                data: {
+                    labels: Years,
                     datasets: [{
-                        backgroundColor: 'red',
+                        backgroundColor: 'rgba(84, 185, 151, 0.8)',
                         label: 'All Reports',
                         data: ListOfValues
                     }, {
-                        backgroundColor: 'blue',
+                        backgroundColor: 'rgba(226, 138, 56, 0.8)',
                         label: 'Removed',
                         data: removed_list
                     }]
@@ -101,7 +117,8 @@
                     legend: { display: true },
                     title: {
                         display: true,
-                        text: "Total reports & removed reports"
+                        text: "Total reports & removed reports",
+                        fontSize: 16
                     },
                     scales: {
                         yAxes: [{
@@ -111,7 +128,42 @@
                 }
             });
 
+            var barColors = [
+                "#ffff99",
+                "#ffcc99",
+                "#ff9999",
+                "#ff9966",
+                "#ffcc66"
+            ];
+
+            new Chart("myChart2", { // לנסות להוסיף אחוז
+                type: "pie",
+                data: {
+                    labels: Names_list,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: repoValues_v
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "The percentage of volunteer reports this year",
+                        fontSize: 16
+                    }
+                }
+            });
+
+            //var layout = { title: "World Wide Wine Production" };
+
+            //var data = [{ labels: Names_list, values: repoValues_v, type: "pie" }];
+
+            //Plotly.newPlot("myPlot", data, layout);
+
         }
+
+                
+
 
     </script>
 
@@ -126,7 +178,7 @@
                 <li><a class="space" href="ManagerHome.html">Home</a></li>
                 <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
                 <li><a class="space" href="MonitoringReport.html">Reports</a></li>
-                <li><a class="space" href="Dashboard.html">Dashbord</a></li>
+                <li><a class="space" href="Dashboard.html">Dashboard</a></li>
                 <li><a class="space" href="KeyWord.html">Keywords</a></li>
                 <li><a class="space" href="CommonUsers.html">Common Users</a></li>
                 <li class="dropdown"></li>
@@ -135,11 +187,10 @@
     </nav>
     <div class="loginBox">
         <div class="inputBox">
-            <p id="dashbordHeader">Dashbord</p>
+            <p id="dashbordHeader">Dashboard</p>
             <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-            <!--<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-            <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>-->
+            <canvas id="myChart2" style="width:60%;max-width:360px"></canvas>
+            <!--<div id="myPlot" style="width:100%;max-width:700px"></div>-->
         </div>
     </div>
 </body>
