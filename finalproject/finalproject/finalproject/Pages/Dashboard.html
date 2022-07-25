@@ -81,6 +81,7 @@
             Currentyear = new Date().getFullYear()
             for (let k in dictEmail) {
                 repoValues_v.push(Math.round((dictEmail[k] / dictYear[Currentyear]) * 100));
+                /*repoValues_v.push(dictEmail[k]);*/
                 for (var i = 0; i < vList.length; i++) {
                     if (vList[i].Volunteer_email == k) {
                         name = vList[i].First_name + " " + vList[i].Last_name;

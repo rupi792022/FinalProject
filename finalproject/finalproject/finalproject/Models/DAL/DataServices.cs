@@ -929,6 +929,85 @@ namespace finalproject.Models.DAL
             return cmd;
         }
 
+        public List<PerformsProgram> Read_minScore()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_Read_minScore(con);
+                SqlDataReader dr = selectCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                List<PerformsProgram> minScore_List = new List<PerformsProgram>();
+
+                while (dr.Read())
+                {
+                    PerformsProgram p = new PerformsProgram();
+
+                    p.Volunteer_email = (string)dr["email"];
+                    p.Score = Convert.ToInt16(dr["score"]);
+                    p.Guiding_serial_num = Convert.ToInt16(dr["guiding_serial_num"]);
+                 
+                    minScore_List.Add(p);
+                }
+                return minScore_List;
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to read the program", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_Read_minScore(SqlConnection con)
+        {
+            string commandStr = "SELECT * FROM Performs_program_2022 where score <= 50";
+            SqlCommand cmd = createCommand(con, commandStr);
+            return cmd;
+        }
+
+        public void deletePerforms(string email, int guiding_serial_num)  
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+                con = Connect("webOsDB");
+                SqlCommand selectCommand = createSelectCommand_deletePerforms(con, email, guiding_serial_num);
+                selectCommand.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("failed to update the Guiding details", ex);
+            }
+            finally
+            {
+                if (con != null)
+                    con.Close();
+            }
+        }
+
+        private SqlCommand createSelectCommand_deletePerforms(SqlConnection con, string email, int guiding_serial_num)
+        {
+            string commandStr = "DELETE from Performs_program_2022 WHERE email = @email and guiding_serial_num = @guiding_serial_num";
+            SqlCommand cmd = createCommand(con, commandStr);
+            cmd.Parameters.Add("@email", SqlDbType.NVarChar);
+            cmd.Parameters["@email"].Value = email;
+            cmd.Parameters.Add("@guiding_serial_num", SqlDbType.SmallInt);
+            cmd.Parameters["@guiding_serial_num"].Value = guiding_serial_num;
+            return cmd;
+        }
+
 
 
         //////QandA

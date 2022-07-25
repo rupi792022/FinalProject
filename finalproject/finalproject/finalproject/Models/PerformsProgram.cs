@@ -36,6 +36,18 @@ namespace finalproject.Models
             return ds.Read_maxProPerforms(email);
         }
 
-        
+        public List<PerformsProgram> Read_minScore()
+        {
+            DataServices ds = new DataServices();
+            return ds.Read_minScore();
+        }
+
+        public void deletePerforms(string email, int guiding_serial_num)
+        {
+            DataServices ds = new DataServices();
+            ds.deletePerforms(email, guiding_serial_num);
+        }
+
+
     }
 }

@@ -26,6 +26,13 @@ namespace finalproject.Controllers
             return p.Read_maxProPerforms(email);
         }
 
+        [HttpGet]
+        [Route("api/PerformsPrograms/Read_minScore")]
+        public List<PerformsProgram> Read_minScore()
+        {
+            PerformsProgram p = new PerformsProgram();
+            return p.Read_minScore();
+        }
 
         // POST api/<controller>
         public void Post([FromBody] PerformsProgram p)
@@ -34,14 +41,17 @@ namespace finalproject.Controllers
             
         }
 
+        public void Delete(string email, int guiding_serial_num)
+        {
+            PerformsProgram p = new PerformsProgram();
+            p.deletePerforms(email, guiding_serial_num);
+        }
+
+
         // PUT api/<controller>/5
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
     }
 }

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <title></title>
+    <script>
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
+            volunteerTest();
+            $(document).on("click", ".btnApprove", approve);
+        });
+
+        function volunteerTest() {
+        let apiCall = "../api/Volunteers/volunteerDash";
+            ajaxCall("GET", apiCall, "", getSuccessName, getErrorName);
+        }
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+        function getSuccessName(nameList) {
+            name_list = nameList;
+            let apiCall = "../api/PerformsPrograms/Read_minScore";
+            ajaxCall("GET", apiCall, "", getSuccessMinScore, getErrorMinScore);
+        }
+
+        function getSuccessMinScore(TestList) {
+            str = "";
+            if (TestList.length == 0) {
+                str = '<p id="NoR">No volunteer fails in the guiding programs.</p>';
+                document.getElementById("vTest").innerHTML = str;
+            }
+            else {
+                test_l = TestList;
+                str += "<table>";
+                for (var i = 0; i < test_l.length; i++) {
+                    for (var j = 0; j < name_list.length; j++) {
+                        if (name_list[j].Volunteer_email == test_l[i].Volunteer_email) {
+                            str += "<tr><td><div>Volunteer Name:" + name_list[j].First_name + " " + name_list[j].Last_name + "</div></td>";
+                            str += "<td><div>Score in program " + test_l[i].Guiding_serial_num + " is: " + test_l[i].Score + "</div></td>";
+                            str += "<td><div><button class='btnApprove' id='" + test_l[i].Guiding_serial_num + "," + test_l[i].Volunteer_email + "'>Approve</button></div></td>";
+                        }
+                    }
+                }
+                str += "</tr><table>";
+                document.getElementById("vTest").innerHTML = str;
+            }
+        }
+
+        function getErrorMinScore(error) {
+            console.log(error);
+        }
+
+        function getErrorName(error) {
+            console.log(error);
+        }
+
+        function approve() {
+            vName = $(this).attr("id");
+            keys = vName.split(",");
+            let apiCall = "../api/PerformsPrograms?email=" + keys[1] + "&guiding_serial_num=" + keys[0];
+            ajaxCall("DELETE", apiCall, "", deleteSuccessPerforms, deleteErrorPerforms);
+        }
+
+        function deleteSuccessPerforms() {
+            console.log("Success");
+            alert("The volunteer was given the opportunity to do this guiding program again")
+            volunteerTest();
+        }
+
+        function deleteErrorPerforms(error) {
+            console.log(error);
+        }
+
+    </script>
+</head>
+<body>
+    <!--Volunteer Tests בכותרת בבר-->
+    <!--If you want the volunteer to perform the training program again, click Approve מתחת לכותרת-->
+    <div id="vTest"></div>
+</body>
+</html>
