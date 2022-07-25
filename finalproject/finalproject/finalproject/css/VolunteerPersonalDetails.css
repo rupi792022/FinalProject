@@ -62,7 +62,6 @@
             .loginBox input[type="text"]:hover,
             .loginBox input[type="date"]:hover,
             .loginBox input[type="tel"]:hover {
-                /*    color: #C59636;*/
                 border: 1px solid #C59636;
                 border-radius: 40px;
                 box-shadow: 0 0 5px #C59636;

@@ -101,3 +101,8 @@ a {
     text-align: center;
     color: dimgray;
 }
+
+td {
+    vertical-align: text-top;
+    padding-right:30px;
+}

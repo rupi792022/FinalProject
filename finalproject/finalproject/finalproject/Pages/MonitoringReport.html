@@ -32,13 +32,13 @@
         }
 
         function getSuccessgetTweetsNotRe(tweets) {
-            console.log("success GetTweets");
+            console.log("Success GetTweets");
             Tweets = tweets;
             if (tweets.length > 0) {
                 renderReport(tweets);
             }
             else {
-                strNoR = "No reports for review. All posts have been removed!";
+                strNoR ='<p id="NoR">No reports for review.<br> <b>All posts have been removed!</b></p>';
                 document.getElementById("reports").innerHTML = strNoR;
             }
         }
@@ -73,7 +73,7 @@
         }
 
         function postSuccessUrl() {
-            console.log("success tweetStatus");
+            console.log("Success tweetStatus");
             getTheTweet();
         }
 
@@ -94,7 +94,7 @@
                 <li><a class="space" href="ManagerHome.html">Home</a></li>
                 <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
                 <li><a class="space" href="MonitoringReport.html">Reports</a></li>
-                <li><a class="space" href="Dashboard.html">Dashbord</a></li>
+                <li><a class="space" href="Dashboard.html">Dashboard</a></li>
                 <li><a class="space" href="KeyWord.html">Keywords</a></li>
                 <li><a class="space" href="CommonUsers.html">Common Users</a></li>
                 <li class="dropdown"></li>

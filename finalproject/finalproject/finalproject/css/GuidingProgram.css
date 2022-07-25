@@ -29,6 +29,7 @@ a {
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #C59636;
 }
+
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: #C59636;
 }
@@ -53,8 +54,7 @@ a {
 }
 
 
-input[type="text"],
-input[type="number"] {
+input[type="text"] {
     border: none;
     border-bottom: 1px solid #C59636;
     outline: none;
@@ -68,8 +68,7 @@ input[type="number"] {
     background: #E5EDED;
 }
 
-    input[type="text"]:hover,
-    input[type="number"]:hover {
+    input[type="text"]:hover {
         border: 1px solid #C59636;
         border-radius: 7px;
         box-shadow: 0 0 5px #C59636;
@@ -77,8 +76,7 @@ input[type="number"] {
     }
 
 
-    input[type="text"]:focus,
-    input[type="number"]:focus{
+    input[type="text"]:focus {
         border: 1px solid #C59636;
         border-radius: 7px;
         font-family: Calibri;
@@ -100,11 +98,11 @@ textarea {
     background: #E5EDED;
 }
 
-textarea:hover {
-border-radius: 7px;
-box-shadow: 0 0 5px #C59636;
-font-family: Calibri;
-}
+    textarea:hover {
+        border-radius: 7px;
+        box-shadow: 0 0 5px #C59636;
+        font-family: Calibri;
+    }
 
 button {
     border: 1px solid #C59636;
@@ -124,18 +122,15 @@ table {
     width: 100%;
     font-family: Calibri;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 
- td {
+td {
     vertical-align: text-top;
     text-align: center;
 }
 
 #defineTheProgram p {
-    padding-left: 20px;
     width: 130px;
 }
 
@@ -156,17 +151,13 @@ table {
 }
 
 
-p {
-    padding-left: 20px;
-}
-
-.rightSide{
+.rightSide {
     padding-left: 30px;
 }
 
-.correctAnswer ::placeholder { 
+.correctAnswer ::placeholder {
     color: red;
-    opacity: 1; 
+    opacity: 1;
 }
 
 .correctAnswer input[type="text"] {
@@ -176,34 +167,37 @@ p {
 #AddNewQuestion input[type="text"],
 #renderQA input[type="text"] {
     width: 400px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
 }
 
-#AddQuestion, 
-#buttonUpload,
-#finishProgram {
+#AddQuestion,
+#buttonUpload {
     width: 120px;
 }
+
 #editProgram,
-#addNewProgram{
+#addNewProgram {
     width: 180px;
-    height:95px;
-    font-size:20px;
+    height: 95px;
+    font-size: 20px;
 }
 
 #remove {
     width: 150px;
 }
 
-#btn td{
-    width:280px;
-    text-align:left;
+#btn td {
+    width: 280px;
+    text-align: left;
 }
 
-#title{
-    font-family:Calibri;
-    color:dimgray;
-    text-align:center;
-    padding-top:-20px;
+#title {
+    font-family: Calibri;
+    color: dimgray;
+    text-align: center;
+    padding-top: -20px;
 }
 
 
@@ -213,7 +207,7 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1000px;
-    height: 600px;
+    height: 580px;
     background: #E5EDED;
     border-radius: 10px;
     padding: 30px;
@@ -222,18 +216,49 @@ p {
 }
 
 #btnChoose {
-    text-align: center;   
-    padding-top:170px;
+    text-align: center;
+    padding-top: 170px;
 }
-
-#defineTheProgram {
-   padding-left:100px;
-}
-
 
 form label {
     color: black;
     font-weight: normal;
-    font-size:16px;
+    font-size: 16px;
 }
 
+#save {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.btnProgram {
+    width: 150px;
+    height: 95px;
+    font-size: 20px;
+
+}
+
+
+
+#backAddEdit {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.btn-group button {
+    cursor: pointer;
+    display: block; 
+}
+
+.btnDelete{
+    margin-left:37px;
+    margin-top:8px;
+}
+
+#lableFile {
+    color: gray;
+    font-size: 18px;
+    font-family: Calibri;
+}

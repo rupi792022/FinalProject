@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <link href="../css/Dashbord.css" rel="stylesheet" />
+    <link href="../css/Dashboard.css" rel="stylesheet" />
     <title></title>
     <script>
 
@@ -87,7 +87,6 @@
                         Names_list.push(name);
                     }
                 }
-
             }
 
             dashboard();
@@ -145,7 +144,8 @@
                         data: repoValues_v
                     }]
                 },
-                options: {
+       
+                 options: {
                     title: {
                         display: true,
                         text: "The percentage of volunteer reports this year",
@@ -153,6 +153,7 @@
                     }
                 }
             });
+
 
             //var layout = { title: "World Wide Wine Production" };
 
@@ -187,9 +188,13 @@
     </nav>
     <div class="loginBox">
         <div class="inputBox">
-            <p id="dashbordHeader">Dashboard</p>
-            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-            <canvas id="myChart2" style="width:60%;max-width:360px"></canvas>
+            <p id="dashboardHeader">Dashboard</p>
+            <table>
+                <tr>
+                    <td><canvas id="myChart"></canvas></td>
+                    <td><canvas id="myChart2"></canvas></td>
+                </tr>
+            </table>
             <!--<div id="myPlot" style="width:100%;max-width:700px"></div>-->
         </div>
     </div>

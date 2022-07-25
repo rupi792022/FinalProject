@@ -29,7 +29,6 @@
                
                 var userV = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatailsVolunteer.First_name + ' ' + getDatailsVolunteer.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a onclick="logOut()">Log out</a></li></ul>');
                 $(userV).clone().appendTo(".dropdown");
-
             }
             else {
                 let strM = "";
@@ -37,7 +36,7 @@
                 strM += '<ul class="nav navbar-nav"><li><a class="space" href="ManagerHome.html">Home</a></li>';
                 strM += '<li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>';
                 strM += '<li><a class="space" href="MonitoringReport.html">Reports</a></li>';
-                strM += '<li><a class="space" href="Dashboard.html">Dashbord</a></li>';
+                strM += '<li><a class="space" href="Dashboard.html">Dashboard</a></li>';
                 strM += '<li><a class="space" href="KeyWord.html">Keywords</a></li>';
                 strM += '<li><a class="space" href="CommonUsers.html">Common Users</a></li>';
                 strM += '<li class="dropdown"></li></ul>';
@@ -58,11 +57,11 @@
         }
 
         function getSuccessHashtag(dicWords) {
-            console.log("success");
+            console.log("Success");
             sortHastag(dicWords);
         }
         function getErrorHashtag() {
-            console.log("error");
+            console.log("Error");
         }
 
         function sortHastag(dict) {
@@ -71,7 +70,7 @@
             strYellow = "";
             for (let k in dict)
             {
-                
+
                 if (dict[k] >=5) {
                     strRed = '<p>';
                     strRed += k;
@@ -79,10 +78,10 @@
                     strRed += '</p>';
                     document.getElementById("red").innerHTML += strRed;
                 }
-               else if (dict[k] >=3) {
-                    strYellow = '<p>';
-                    strYellow += k;
-                    strYellow += " ";
+                else if (dict[k] >= 3) {
+                        strYellow = '<p>';
+                        strYellow += k;
+                        strYellow +=' ';
                     strYellow += '</p>';
                     document.getElementById("yellow").innerHTML += strYellow;
                 }
@@ -93,8 +92,7 @@
                     strGreen += '</p>';
                     document.getElementById("green").innerHTML += strGreen;
                 }
-
-            }
+            } 
         }
         // בדף זה יופיעו רק המילים. המילים ממויינות לפי מספר הפעמים שהן במערכת
         // המילים הינן אשטגים בלבד!
@@ -114,9 +112,13 @@
         <div class="inputBox">
             <p id="headerKeywords">Keywords</p>
             <div class="words">
-                <div id="red"></div>
-                <div id="yellow"></div>
-                <div id="green"></div>
+                <table>
+                    <tr>
+                        <td><div id="red"></div></td>
+                        <td><div id="yellow"></div></td>
+                        <td><div id="green"></div></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

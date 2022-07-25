@@ -52,7 +52,6 @@
                 else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
             }
             document.getElementById("learning").innerHTML = str;
-
         }
 
         function getErrorGP() {
@@ -66,7 +65,6 @@
         function getErrorMaxPro() {
             console.log("the MaxPro is not read");
         }
-
 
         function startProgram() {
             programNum = $(this).attr("id");
@@ -93,7 +91,6 @@
             nextUpload();
         }
 
-
         function nextUpload() {
             str = "";
             if (index == (allPath.length - 1)) { //check if we have finished going through all the files
@@ -114,7 +111,6 @@
             document.getElementById("learning").innerHTML = str;
         }
 
-
         function readQandA() {
             let apiCall = "../api/QandAs/Read_QandA?numProgram=" + programNum;
             ajaxCall("GET", apiCall, "", getSuccessRead_QandA, getErrorRead_QandA);
@@ -128,7 +124,6 @@
         function getErrorRead_QandA() {
             console.log("the QandA is not read");
         }
-
 
         function createQuestion(qa) {
             score = 0;
@@ -176,9 +171,7 @@
                 }
                 ajaxCall("POST", "../api/PerformsPrograms", JSON.stringify(MyPerforms), postSuccessSave, postErrorSave);
                 return false;
-
-            }
-            
+            }  
         }
 
         function postSuccessSave() {
@@ -187,7 +180,6 @@
             document.getElementById("alertMessage").innerHTML = str;
             performs();
         }
-
 
         function postErrorSave() {
             console.log("failed in saving performs details");
@@ -203,7 +195,6 @@
             else alert("Sorry, The answer is incorrect");
             $("#nextAnswer").attr('disabled', false);
         }
-
 
     </script>
 </head>

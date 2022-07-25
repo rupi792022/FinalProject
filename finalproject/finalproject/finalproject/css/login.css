@@ -51,7 +51,6 @@ body {
 
         .loginBox input[type="email"]:hover,
         .loginBox input[type="password"]:hover {
-            /*    color: #C59636;*/
             border: 1px solid #C59636;
             border-radius: 40px;
             box-shadow: 0 0 5px #C59636;
@@ -91,9 +90,7 @@ body {
 .loginBox a {
     color: #C59636;
     font-size: 14px;
-/*    font-weight: bold;*/
     text-decoration: none;
-    /*text-align: center;*/
     display: block
 }
 

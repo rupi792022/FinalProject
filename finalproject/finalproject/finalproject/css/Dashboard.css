@@ -54,11 +54,11 @@ a {
 
 .loginBox {
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1000px;
-    height: 600px;
+    height: 500px;
     background: #E5EDED;
     border-radius: 10px;
     padding: 30px;
@@ -90,8 +90,19 @@ body {
     background-position: center;
 }
 
-#dashbordHeader {
+#dashboardHeader {
     font-size: 24px;
     text-align: center;
     color: dimgray;
+}
+
+#myChart {
+    width: 100%;
+    max-width: 600px;
+}
+
+#myChart2 {
+    width: 60%;
+    max-width: 360px;
+    padding-top:30px;
 }

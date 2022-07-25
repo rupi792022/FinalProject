@@ -39,7 +39,7 @@
                 localStorage.setItem('userDetails', JSON.stringify(email));
             }
             else {
-                alert("web storage not supported!");
+                alert("Web storage not supported!");
             }
         }
 
@@ -64,9 +64,7 @@
                 ajaxCall("GET", apiCall, "", getSuccessDetails_v, getErrorDetails_v);
             }
             else console.log("The password is incorrect, please try again");
-
         }
-
 
         function getErrorPassword_v() {
             console.log("Failed to read volunteer's passsword")
@@ -82,7 +80,7 @@
                 localStorage.setItem('VolunteerDetails', JSON.stringify(myVolunteer));
             }
             else {
-                alert("web storage not supported!");
+                alert("Web storage not supported!");
             }
             if (VolunteerDetails == true) {
                 window.location.href = "VolunteerPersonalDetails.html";
@@ -118,7 +116,6 @@
         function getErrorPassword_m() {
             console.log("Failed to read manager's passsword");
         }
-
 
     </script>
 </head>
