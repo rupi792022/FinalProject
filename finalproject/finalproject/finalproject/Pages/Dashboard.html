@@ -80,8 +80,8 @@
             }
             Currentyear = new Date().getFullYear()
             for (let k in dictEmail) {
-                repoValues_v.push(Math.round((dictEmail[k] / dictYear[Currentyear]) * 100));
-                /*repoValues_v.push(dictEmail[k]);*/
+               /* repoValues_v.push(Math.round((dictEmail[k] / dictYear[Currentyear]) * 100));*/
+                repoValues_v.push(dictEmail[k]);
                 for (var i = 0; i < vList.length; i++) {
                     if (vList[i].Volunteer_email == k) {
                         name = vList[i].First_name + " " + vList[i].Last_name;
@@ -140,28 +140,7 @@
                 "#ffcc66"
             ];
 
-            //new Chart("myChart2", { // לנסות להוסיף אחוז
-            //    type: "pie",
-            //    data: {
-            //        labels: Names_list,
-            //        datasets: [{
-            //            backgroundColor: barColors,
-            //            data: repoValues_v
-            //        }]
-            //    },
-       
-            //     options: {
-            //        title: {
-            //            display: true,
-            //            text: "The percentage of volunteer reports this year",
-            //            fontSize: 16
-            //        }
-            //    }
-            //});
-
-
             var layout = { title: "The percentage of volunteer reports this year" };
-
             var data = [{
                 labels: Names_list,
                 values: repoValues_v,
@@ -174,6 +153,8 @@
             Plotly.newPlot("myPlot", data, layout);
 
         }
+
+
 
                 
 
