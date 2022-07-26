@@ -67,14 +67,14 @@ namespace finalproject.Models
             return sb.ToString();
         }
 
-        public bool sendEmail(string email, string password) //בגלל ההרשאות החדשות של גוגל הפונקציה לא עובדת
+        public bool sendEmail(string email, string password) 
         {
             // Gmail Address from where you send the mail 
             var fromAddress = "rupi792022@gmail.com";
             // any address where the email will be sending       
             var toAddress = email;
             //Password of your gmail address 
-            const string fromPassword = "AdiAmitTomer";
+            const string fromPassword = "lpkpirbidtgqilim";
             // Passing the values and make a email formate to display 
             string subject = "Password";
             string body = "From: FOA System" + "\n";
@@ -101,10 +101,10 @@ namespace finalproject.Models
             DataServices ds = new DataServices();
             this.Volunteer_password = genereateRandomPassword();
             bool Emailexist = ds.InsertEmail(this);
-            //if (Emailexist == false) // בגלל ההרשאות החדשות של גוגל פונקציית שליחת מייל לא עובדת
-            //{
-            //    Emailexist = sendEmail(this.Volunteer_email, this.Volunteer_password);
-            //}
+            if (Emailexist == false) 
+            {
+                Emailexist = sendEmail(this.Volunteer_email, this.Volunteer_password);
+            }
             return Emailexist;
 
         }
