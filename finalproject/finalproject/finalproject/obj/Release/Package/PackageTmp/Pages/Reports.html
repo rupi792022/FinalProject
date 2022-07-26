@@ -36,16 +36,21 @@
 
             if (exist == true) {
                 alert("The report is allready exist, please add another report.");
+                cleanInputs();
             }
             else {
                 alert("The report was added successfully!");
-                $("#contentLink").val('');
-                $("#country").val('');
-                $("#language").val('');
-                $("#Hashtag").val('');
-                $("#explanation").val('');
-                $("input[type=radio][name=socialNetwork]").prop('checked', false);
+                cleanInputs();
             }
+        }
+
+        function cleanInputs(){
+            $("#contentLink").val('');
+            $("#country").val('');
+            $("#language").val('');
+            $("#Hashtag").val('');
+            $("#explanation").val('');
+            $("input[type=radio][name=socialNetwork]").prop('checked', false);
         }
 
         function postErrorTweet(error) {

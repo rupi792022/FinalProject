@@ -71,7 +71,7 @@ a {
 
 .loginBox {
     position: absolute;
-    top: 55%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 850px;
@@ -143,8 +143,10 @@ a {
     color: black;
     font-weight: normal;
     padding-left: 7px;
-    padding-top: 7px;
+    padding-top:50px;
     font-size: 16px;
+    display:inline !important;
+
 }
 
 #renderNext {
@@ -158,12 +160,19 @@ a {
 }
 
 #alertMessage {
-    color: teal;
-    font-size: 16px;
+    color: #3E8C84;
+    font-size: 18px;
     font-family: Calibri;
-    font-weight: bold;
+    padding-left: 30px;
 }
 
 p {
     font-weight: normal;
 }
+
+#headerTutorial, #exam {
+    font-size: 24px !important;
+    text-align: center;
+    color: dimgray;
+}
+

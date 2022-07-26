@@ -16,14 +16,14 @@ body {
 }
 
 .space {
-    width: 145px;
+    width: 130px;
     text-align: center;
 }
 
 a {
     color: dimgrey;
     font-family: Calibri;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
@@ -55,7 +55,7 @@ a {
 
 .loginBox {
     position: absolute;
-    top: 55%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 850px;
@@ -112,4 +112,8 @@ table {
     text-align: center;
     color: #C59636;
     font-size: 17px;
+}
+
+td{
+    padding-top:15px;
 }

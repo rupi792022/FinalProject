@@ -18,7 +18,6 @@
             $(user).clone().appendTo(".dropdown");
             $(document).on("click", "#checkStatus", checkStatus);
             getTheTweet();
-
         });
 
         function logOut() {
@@ -58,8 +57,12 @@
                 str += "<br><button id='checkStatus'>Check the status</button>";
             document.getElementById("reports").innerHTML = str;
 
+         
             if (tweets.length > 6) {
-                $(".loginBox").css({ "height": "+=30px" });
+                diff = tweets.length - 6;
+                add_height = 50 * (diff);
+                add_top = 4 * (diff);
+                $(".loginBox").css({ "height": "+=" + add_height + "px", "top": "+=" + add_top +"%" });
             }
         }
 
