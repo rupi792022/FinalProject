@@ -1270,7 +1270,7 @@ namespace finalproject.Models.DAL
                     t.LinkUrl = (string)dr["link_url"];
                     t.Volunteer_email = (string)dr["email_v"];
                     t.Country = (string)dr["country"];
-                    t.Created_at = Convert.ToDateTime(dr["created_at"]);
+                    t.Created_at = (string)dr["created_at"];
                     t.Network = (string)dr["network"];
                     t.Lang = (string)dr["lang"];
                     t.Status = (string)dr["status"];
@@ -1438,7 +1438,7 @@ namespace finalproject.Models.DAL
                     t.LinkUrl = (string)dr["link_url"];
                     t.Volunteer_email = (string)dr["email_v"];
                     t.Country = (string)dr["country"];
-                    t.Created_at = Convert.ToDateTime(dr["created_at"]);
+                    t.Created_at = (string)dr["created_at"];
                     t.Network = (string)dr["network"];
                     t.Lang = (string)dr["lang"];
                     t.Status = (string)dr["status"];

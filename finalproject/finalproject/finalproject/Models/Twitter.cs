@@ -25,7 +25,7 @@ namespace finalproject.Models
         long tweet_id;
         string lang;
         string contentText;
-        DateTime created_at;
+        string created_at;
         string country;
         string linkUrl;
         string network;
@@ -37,7 +37,7 @@ namespace finalproject.Models
 
 
         public Twitter() { }
-        public Twitter(long tweet_id, string lang, string contentText, DateTime created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status, string submit_time)
+        public Twitter(long tweet_id, string lang, string contentText, string created_at, string country, string linkUrl, string network, string hashtag, string author_name, string volunteer_email, string status, string submit_time)
         {
             Tweet_id = tweet_id;
             Lang = lang;
@@ -56,7 +56,7 @@ namespace finalproject.Models
 
         public string Lang { get => lang; set => lang = value; }
         public string ContentText { get => contentText; set => contentText = value; }
-        public DateTime Created_at { get => created_at; set => created_at = value; }
+        public string Created_at { get => created_at; set => created_at = value; }
         public string Country { get => country; set => country = value; }
         public string LinkUrl { get => linkUrl; set => linkUrl = value; }
         public string Network { get => network; set => network = value; }
@@ -79,7 +79,7 @@ namespace finalproject.Models
             var tweetResponse = await userClient.TweetsV2.GetTweetAsync(tweetid);
             var tweet = tweetResponse.Tweet;
             string url = "https://twitter.com/" + tweet.AuthorId + "/status/" + tweet.Id;
-            DateTime utc = tweet.CreatedAt.UtcDateTime;
+            string utc = tweet.CreatedAt.UtcDateTime.ToString("dd/MM/yyyy");
             string geo = "not Published";
             string hashtag = "";
             var userResponse = await userClient.UsersV2.GetUserByIdAsync(tweet.AuthorId);
