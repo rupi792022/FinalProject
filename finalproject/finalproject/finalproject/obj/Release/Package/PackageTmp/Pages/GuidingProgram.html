@@ -50,7 +50,7 @@
             }
 
             if (clickUpload == 1) {
-                $(".loginBox").css({ "height": "+=60", "top": "+=5%" });
+                $(".loginBox").css({ "height": "+=60", "top": "+=8%" });
             }
 
              clickUpload = 0;
@@ -138,7 +138,7 @@
             }
             str += '</tr>';
             $(str).clone().appendTo("#renderQA");
-            $(".loginBox").css({ "height": "+=185", "top": "+=15.5%" });
+            $(".loginBox").css({ "height": "+=185", "top": "+=16%" });
             $("#remove").show();
         }
 
@@ -325,7 +325,7 @@
                     str += '<tr><td></td><td></td><td><p>' + (j + 1) + '.</p><td><input type="text" id="Answer' + qa[i].Question_serial_num + '_' + (j + 1) + '" name="Answer"' + (j + 1) + '" value="' + arrAnswers[j] + '"></td>';
                 }
                 str += '</tr>';
-                $(".loginBox").css({ "height": "+=185", "top": "+=14%" });
+                $(".loginBox").css({ "height": "+=185", "top": "+=18%" });
             }
 
             $(str).clone().appendTo("#renderQA");
