@@ -50,7 +50,7 @@
             }
 
             if (clickUpload == 1) {
-                $(".loginBox").css({ "height": "+=55", "top": "+=5%" });
+                $(".loginBox").css({ "height": "+=60", "top": "+=5%" });
             }
 
              clickUpload = 0;
@@ -104,7 +104,7 @@
                 str += '<button type="button" id="editProgram">Edit/Delete Program</button>';
             }
             $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
-            $(".loginBox").css({ "height": "589px", "top": "60%" });
+            $(".loginBox").css({ "height": "575px", "top": "62%" });
             document.getElementById("btnChoose").innerHTML = str;
         }
 
@@ -130,11 +130,15 @@
             str += '<tr><td><p>Question ' + Qnum + ':</p></td>';
             str += '<td><input type="text" id="question' + Qnum + '" name="Question" required placeholder="Enter a question"></td>';
             for (var i = 0; i < NumOfAnswers; i++) {
+                if (i==0) {
+                    str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="Answer' + Qnum + '_' + (i + 1) + '" name="Answer"' + (i + 1) + '"required placeholder="Enter correct answer"></td>';
+                    i++;
+                }
                 str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="Answer' + Qnum + '_' + (i + 1) + '" name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
             }
             str += '</tr>';
             $(str).clone().appendTo("#renderQA");
-            $(".loginBox").css({ "height": "+=185", "top": "+=14%" });
+            $(".loginBox").css({ "height": "+=185", "top": "+=15.5%" });
             $("#remove").show();
         }
 
@@ -284,7 +288,7 @@
             }
             str += '<div id="backAddEdit"><button id="backHomeBTN" onclick="addORedit()">Back</button></div>';
             $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
-            $(".loginBox").css({ "height": "589px", "top": "60%" });
+            $(".loginBox").css({ "height": "589px", "top": "65%" });
             document.getElementById("btnChoose").innerHTML = str;
         }
 
@@ -345,6 +349,10 @@
 
             str += '<table id="AddNewQuestion"><tr><td><p>Question 1:</p></td><td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td>';
             for (var i = 0; i < NumOfAnswers; i++) {
+                if (i == 0) {
+                    str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p></td><td> <input type="text" id="Answer1_' + (i + 1) + '" name="Answer' + (i + 1) + '" placeholder="Enter correct answer" /></td></tr>';
+                    i++;
+                }
                 str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p></td><td> <input type="text" id="Answer1_' + (i + 1) + '" name="Answer' + (i + 1) + '" placeholder="Enter a possible answer" /></td></tr>';
             }
             str += '</table>';

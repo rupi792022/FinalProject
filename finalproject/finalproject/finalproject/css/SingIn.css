@@ -118,14 +118,14 @@ img {
 
 
 .space {
-    width: 145px;
+    width: 130px;
     text-align: center;
 }
 
 a {
     color: dimgrey;
     font-family: Calibri;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {

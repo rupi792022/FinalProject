@@ -94,17 +94,14 @@ body {
     display: block
 }
 
-.loginBox label {
+#alertMessage {
     color: red;
-    font-size: 14px;
+    font-size: 15px;
+    text-align:center;
 }
 
 a:hover {
     font-weight: bold;
-}
-
-p {
-    color: #0000ff
 }
 
 img {
@@ -114,3 +111,4 @@ img {
     margin-left: auto;
     margin-right: auto;
 }
+

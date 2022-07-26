@@ -19,7 +19,6 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    overflow: hidden
 }
 
 #particles-js {
@@ -27,14 +26,14 @@ body {
 }
 
 .space {
-    width: 145px;
+    width: 130px;
     text-align: center;
 }
 
 a {
     color: dimgrey;
     font-family: Calibri;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
@@ -66,7 +65,7 @@ a {
 
 .loginBox {
     position: absolute;
-    top: 50%;
+    top: 52%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 900px;
@@ -100,4 +99,9 @@ a {
     font-size: 24px;
     text-align: center;
     color: dimgray;
+}
+
+td {
+    vertical-align: text-top;
+    padding-right: 30px;
 }

@@ -24,7 +24,7 @@
 
             if (email == "" || password == "") { //check required fields
                 str = '';
-                str += '*You must enter email and a password to log in';
+                str += '<p>*You must enter email and a password to log In</p>';
                 document.getElementById("alertMessage").innerHTML = str;
             }
 
@@ -58,12 +58,16 @@
             console.log("Failed to read volunteer's email")
         }
 
+        
         function getSuccessPassword_v(VolunteerPassword) {
             if (VolunteerPassword == true) {
                 let apiCall = "../api/Volunteers/ReadDetails_V?email=" + email;
                 ajaxCall("GET", apiCall, "", getSuccessDetails_v, getErrorDetails_v);
             }
-            else console.log("The password is incorrect, please try again");
+            else {
+                console.log("The password is incorrect");
+                alertMessage();
+            }
         }
 
         function getErrorPassword_v() {
@@ -98,7 +102,10 @@
                 let apiCall = "../api/Managers?email=" + email + "&password=" + password;
                 ajaxCall("GET", apiCall, "", getSuccessPassword_m, getErrorPassword_m);
             }
-            else console.log("The email is incorrect, please try again");
+            else {
+                console.log("The email is incorrect");
+                alertMessage();
+            }
         }
 
         function getErrorEmail_m() {
@@ -110,13 +117,22 @@
                 SaveUserDetails();
                 window.location.href = "ManagerHome.html";
             }
-            else console.log("The password is incorrect, please try again");
+            else {
+                console.log("The password is incorrect");
+                alertMessage();
+            }
+            
         }
 
         function getErrorPassword_m() {
             console.log("Failed to read manager's passsword");
         }
 
+        function alertMessage() {
+            str = "";
+            str += "<p>The email or password is incorrect, please try again</p>";
+            document.getElementById("alertMessage").innerHTML = str;
+        }
     </script>
 </head>
 <body>
@@ -125,8 +141,8 @@
         <div class="inputBox">
             <input type="email" id="email" name="email" placeholder="Enter email" pattern="^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]+(\.[a-z]+)?$" />
             <input type="password" id="password" name="password" placeholder="Enter password">
-            <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a><br />
-            <label id="alertMessage"></label>
+            <a id="forgetpassword" href="ForgotPassword.html">Forgot Password</a>
+            <div id="alertMessage"></div><br>
             <button id="LogIn" type="button">Log In</button>
         </div>
     </div>

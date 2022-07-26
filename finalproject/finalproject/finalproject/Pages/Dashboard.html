@@ -114,11 +114,14 @@
                 },
 
                 options: {
-                    legend: { display: true },
+                    legend: {
+                        display: true,
+                    },
                     title: {
                         display: true,
                         text: "Total reports & removed reports",
                         fontSize: 16
+                        
                     },
                     scales: {
                         yAxes: [{
@@ -128,6 +131,7 @@
                 }
             });
 
+           
             var barColors = [
                 "#ffff99",
                 "#ffcc99",
@@ -136,31 +140,38 @@
                 "#ffcc66"
             ];
 
-            new Chart("myChart2", { // לנסות להוסיף אחוז
-                type: "pie",
-                data: {
-                    labels: Names_list,
-                    datasets: [{
-                        backgroundColor: barColors,
-                        data: repoValues_v
-                    }]
-                },
+            //new Chart("myChart2", { // לנסות להוסיף אחוז
+            //    type: "pie",
+            //    data: {
+            //        labels: Names_list,
+            //        datasets: [{
+            //            backgroundColor: barColors,
+            //            data: repoValues_v
+            //        }]
+            //    },
        
-                 options: {
-                    title: {
-                        display: true,
-                        text: "The percentage of volunteer reports this year",
-                        fontSize: 16
-                    }
-                }
-            });
+            //     options: {
+            //        title: {
+            //            display: true,
+            //            text: "The percentage of volunteer reports this year",
+            //            fontSize: 16
+            //        }
+            //    }
+            //});
 
 
-            //var layout = { title: "World Wide Wine Production" };
+            var layout = { title: "The percentage of volunteer reports this year" };
 
-            //var data = [{ labels: Names_list, values: repoValues_v, type: "pie" }];
+            var data = [{
+                labels: Names_list,
+                values: repoValues_v,
+                type: "pie",
+                marker: {
+                    colors: barColors
+                },
+            }];
 
-            //Plotly.newPlot("myPlot", data, layout);
+            Plotly.newPlot("myPlot", data, layout);
 
         }
 
@@ -194,10 +205,11 @@
             <table>
                 <tr>
                     <td><canvas id="myChart"></canvas></td>
-                    <td><canvas id="myChart2"></canvas></td>
+                    <td> <div id="myPlot"></div></td>
+                    <!--<td><canvas id="myChart2"></canvas></td>-->
                 </tr>
             </table>
-            <!--<div id="myPlot" style="width:100%;max-width:700px"></div>-->
+           
         </div>
     </div>
 </body>

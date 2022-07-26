@@ -14,14 +14,14 @@
 
 
 .space {
-    width: 145px;
+    width: 130px;
     text-align: center;
 }
 
 a {
     color: dimgrey;
     font-family: Calibri !important;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
@@ -54,7 +54,7 @@ a {
 
 .loginBox {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1000px;
@@ -98,11 +98,23 @@ body {
 
 #myChart {
     width: 100%;
-    max-width: 600px;
+    max-width: 7000px !important;
+    margin-bottom:140px;
 }
 
-#myChart2 {
-    width: 60%;
-    max-width: 360px;
-    padding-top:30px;
+#myPlot {
+    width: 100%;
+    max-width: 450px;
+}
+
+.main-svg {
+    background-color: transparent !important;
+}
+
+rect {
+    fill: none !important;
+}
+
+td{
+    width:100%;
 }

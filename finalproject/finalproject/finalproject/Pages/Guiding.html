@@ -45,9 +45,10 @@
 
         function renderProgram() {
             str = "";
+            str += '<p id="headerTutorial">Tutorial</p><br />';
             for (var i = 0; i < GP.length; i++) {
                 if ((i + 1) <= themaxProgram) {
-                    str += '<button type="button" style="background:green" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                    str += '<button type="button" style="background:#3E8C84" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
                 }
                 else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
             }
@@ -94,14 +95,15 @@
         function nextUpload() {
             str = "";
             if (index == (allPath.length - 1)) { //check if we have finished going through all the files
+                str += '<p id="exam">Exam<p>';
                 str += '<p>Now you are required to take an exam.</br>A number of questions will appear on the exam.</br> When you click on the "Next" button you will start the exam and you will not be able to go back.</br>At the end of each question, click on the "Check" button and then "Next" to continue to the next question.</p>';
                 str += '<div id="renderNext"><button id="readQandA">Next</button></div>'; // לבדוק את הכפתור next מבחינת עיצוב
-                $(".loginBox").css({ "height": "540px", "width": "850px", "top": "55%" });
+                $(".loginBox").css({ "height": "540px", "width": "850px", "top": "60%" });
             }
             else {
                 if (Extantions[index] == "pdf" || Extantions[index] == "docx") {
                     str += '<embed class="uploadPDF" type="text/' + Extantions[index] + '" src="../' + filesPath[index] + '.' + Extantions[index] + '">';
-                    $(".loginBox").css({ "height": "650px", "width": "950px", "top": "65%" });
+                    $(".loginBox").css({ "height": "650px", "width": "950px", "top": "70%" });
                 }
                 else if (Extantions[index] == "png" || Extantions[index] == "jpg")
                     str += '<img class="uploadImage" src="../' + filesPath[index] + '.' + Extantions[index] + '" />';
@@ -158,7 +160,7 @@
                     str += '<input type="radio" id="answer' + count + '" name="answer" value="' + randomAnswers[i] + '"><label class="lableRadio" for="answer' + count + '">' + randomAnswers[i] + '</label><br>';
                     count++;
                 }
-                str += '<p>You need to click <b>"Check"</b> before moving on to the next question</p><button id="checkAnswer">Check</button>';
+                str += '<br><p>You need to click <b>"Check"</b> before moving on to the next question</p><button id="checkAnswer">Check</button>';
                 str += '<div id="renderNext"><button id="nextAnswer" disabled>Next</button></div>';
                 indexQuestion++;
                 document.getElementById("learning").innerHTML = str;
@@ -176,7 +178,7 @@
 
         function postSuccessSave() {
             str = '';
-            str += 'You have completed the ' + GP[programNum - 1].Program_name + ' program! Your final score is: ' + Math.round(score) + '!';
+            str += '<br>You have completed the ' + GP[programNum - 1].Program_name + ' program! Your final score is:<b> ' + Math.round(score) + '</b>';
             document.getElementById("alertMessage").innerHTML = str;
             performs();
         }
