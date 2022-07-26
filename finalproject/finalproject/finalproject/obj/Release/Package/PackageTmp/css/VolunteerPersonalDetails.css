@@ -1,0 +1,140 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background: #3E8C84;
+    height: 100vh;
+    font-family: Calibri;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
+}
+
+#particles-js {
+    height: 100%
+}
+
+.loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 670px;
+    height:540px;
+    min-height: 350px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 40px;
+    font-family: Calibri;
+    font-size:14px;
+}
+
+
+    .loginBox input {
+        margin-bottom: 7px;
+    }
+
+        .loginBox input[type="email"],
+        .loginBox input[type="password"],
+        .loginBox input[type="text"],
+        .loginBox input[type="date"],
+        .loginBox input[type="tel"] {
+            border: none;
+            border-bottom: 1px solid #C59636;
+            outline: none;
+            height: 35px;
+            color: gray;
+            background: #E5EDED;
+            font-family: Calibri;
+            border-radius: 40px;
+            font-size: 14px;
+            padding-left: 20px;
+            box-sizing: border-box;
+            width: 180px;
+        }
+        .loginBox input[type="date"] {
+            padding-right: 12px;
+        }
+
+
+            .loginBox input[type="email"]:hover,
+            .loginBox input[type="password"]:hover,
+            .loginBox input[type="text"]:hover,
+            .loginBox input[type="date"]:hover,
+            .loginBox input[type="tel"]:hover {
+                border: 1px solid #C59636;
+                border-radius: 40px;
+                box-shadow: 0 0 5px #C59636;
+                font-family: Calibri;
+            }
+
+.loginBox input[type="email"]:focus,
+.loginBox input[type="password"]:focus,
+.loginBox input[type="text"]:focus,
+.loginBox input[type="date"]:focus,
+.loginBox input[type="tel"]:focus {
+    border: 1px solid #C59636;
+    border-radius: 40px;
+    font-family: Calibri;
+}
+
+.inputBox {
+    position: relative;
+}
+
+    .inputBox span {
+        position: absolute;
+    }
+
+.loginBox button{
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 180px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Calibri;
+    margin-left:118px;
+}
+
+#alertMessage {
+    color: red;
+    font-size: 14px;
+    font-family: Calibri;
+    font-weight: normal;
+    padding-left: 118px;
+}
+
+
+img {
+    height: 80px;
+    width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    width: 100%;
+    font-family: Calibri;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+tr td {
+    width: 150px;
+    vertical-align: text-top;
+}
+
+p{
+    padding-left:10px;
+}
+
+#SaveDatails{
+    position: absolute;
+    right: 1px;}

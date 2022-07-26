@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/GuidingProgram.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
+            NumOfAnswers = 4;
+            count = 1;
+            Qnum = 1;
+            clickUpload = 0;
+            toUpdate = false;
+
+            $(document).on("click", "#addNewProgram", AddNewProgram);
+            $(document).on("click", "#editProgram", EditProgram);
+            $(document).on("click", "#AddQuestion", AddQuestion);
+            $(document).on("click", "#remove", Remove);
+            $(document).on("click", "#save", Save);
+            $(document).on("click", ".btnProgram", getProgram);
+            $(document).on("click", ".btnDelete", deleteProgram);
+            $(document).on("click", "#buttonUpload", ButtonUpload);
+
+            let apiCall = "../api/GuidingPrograms/Read_Max_Program"; //Reading the latest tutorial number
+            ajaxCall("GET", apiCall, "", getSuccessMaxProgram, getErrorMaxProgram);
+
+        });
+
+        function ButtonUpload() {
+            clickUpload++;
+            var data = new FormData();
+            var files = $("#files").get(0).files;
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("uploadedFiles", files[f]);
+                }
+                data.append("name", "FOAfiles"); // append what ever data you want to send along with the files. See how you extract it in the controller.
+            }
+
+            if (clickUpload == 1) {
+                $(".loginBox").css({ "height": "+=55", "top": "+=5%" });
+            }
+
+             clickUpload = 0;
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: showImages,
+                error: error
+            });
+
+            return false;
+        }
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+        function showImages(data) {
+            console.log(data);
+            filePath = "";
+            var imgStr = "";
+
+            if (Array.isArray(data)) {
+
+                for (var i = 0; i < data.length; i++) {
+                    imgStr += "<img src='../" + data[i] + "'/>";
+                    filePath += data[i];
+                    filePath += ","
+                }
+            }
+
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+            }
+            document.getElementById("ph").innerHTML = imgStr;
+        }
+
+        function error(data) {
+            console.log(data);
+        }
+
+        function addORedit() {
+            let str = '<button type ="button" id = "addNewProgram"> Add New Program</button>&nbsp;&nbsp;&nbsp;';
+            if (numOfprogram != 0) {
+                str += '<button type="button" id="editProgram">Edit/Delete Program</button>';
+            }
+            $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
+            $(".loginBox").css({ "height": "589px", "top": "60%" });
+            document.getElementById("btnChoose").innerHTML = str;
+        }
+
+        function AddNewProgram() {
+            toUpdate = false;
+            numOfprogram++;
+            renderInputLevel();
+        }
+
+        function getSuccessMaxProgram(maxProgram) {
+            numOfprogram = maxProgram;
+            addORedit();
+        }
+
+        function getErrorMaxProgram() {
+            console.log("Error");
+        }
+
+        function AddQuestion() {
+            count++;
+            Qnum++;
+            str = "";
+            str += '<tr><td><p>Question ' + Qnum + ':</p></td>';
+            str += '<td><input type="text" id="question' + Qnum + '" name="Question" required placeholder="Enter a question"></td>';
+            for (var i = 0; i < NumOfAnswers; i++) {
+                str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p><td><input type="text" id="Answer' + Qnum + '_' + (i + 1) + '" name="Answer"' + (i + 1) + '"required placeholder="Enter a possible answer"></td>';
+            }
+            str += '</tr>';
+            $(str).clone().appendTo("#renderQA");
+            $(".loginBox").css({ "height": "+=185", "top": "+=14%" });
+            $("#remove").show();
+        }
+
+        function Remove() {//remove question
+            var table = document.getElementById("renderQA");
+            var rowCount = table.rows.length;
+            for (let i = 1; i < 6; i++) {
+                table.deleteRow(rowCount - i);
+            }
+            count--;
+            Qnum--;
+            $(".loginBox").css({ "height": "-=185", "top": "-=14%" });
+            if (count == 1)
+                $("#remove").hide();
+        }
+
+        function Save() {
+            programName = $("#program_name").val();
+            contentguiding = $("#contentguiding").val();
+            contentLevel = $("#contentguiding").val();
+            questions = [];
+            answers = [];
+            concatAllanswers = [];
+            for (var i = 0; i < count; i++) {
+                questions[i] = $("#question" + (i + 1)).val();
+                for (var k = 0; k < NumOfAnswers; k++) {
+                    concatAllanswers[k] = $("#Answer" + (i + 1) + "_" + (k + 1)).val();
+                }
+                answers[i] = concatAllanswers.join(", ");
+            }
+
+            MyGuidingProgram = {
+                Program_name: programName,
+                Guiding_serial_num: numOfprogram,
+                File_path: filePath,
+                Content_level: contentLevel
+            }
+
+            if (toUpdate) {
+                ajaxCall("PUT", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), putSuccessSaveGP, putErrorSaveGP)
+            }
+            else
+                ajaxCall("POST", "../api/GuidingPrograms", JSON.stringify(MyGuidingProgram), postSuccessSaveGP, postErrorSaveGP);
+            return false;
+        }
+
+        function putSuccessSaveGP() {
+            console.log("Success to upadte all GuidingPrograms details");
+            QandA = SaveQAdetails();
+            ajaxCall("PUT", "../api/QandAs/UpdateQandADetails", JSON.stringify(QandA), putSuccessSaveQA, putErrorSaveQA);
+            return false;
+        }
+
+        function putErrorSaveGP(error) {
+            console.log(error);
+        }
+
+        function putSuccessSaveQA() {
+            alert("Program update complete");
+            EditProgram();
+        }
+
+        function putErrorSaveQA(error) {
+            console.log(error);
+        }
+
+        function SaveQAdetails() {
+            QandA = [];
+            for (var i = 0; i < questions.length; i++) {
+                MyQandA = {
+                    Question_serial_num: (i + 1),
+                    Question_content: questions[i],
+                    Answers: answers[i],
+                    Guiding_serial_num: numOfprogram
+                }
+                QandA[i] = MyQandA;
+            }
+            return QandA;
+        }
+
+        function postSuccessSaveGP() {
+            QandA = SaveQAdetails();
+            console.log("Success MyGuidingProgram");
+            ajaxCall("POST", "../api/QandAs", JSON.stringify(QandA), postSuccessSaveQA, postErrorSaveQA);
+            return false;
+        }
+
+        function postErrorSaveGP(error) {
+            console.log(error);
+        }
+
+        function postSuccessSaveQA() {
+            console.log("Success MyQandA");
+            alert("Success in adding the program");
+            addORedit();
+        }
+
+        function postErrorSaveQA(error) {
+            console.log(error);
+        }
+
+        function EditProgram() {
+            toUpdate = true;
+            let apiCall = "../api/GuidingPrograms/Read_GP";
+            ajaxCall("GET", apiCall, "", getSuccessRead_GP, getErrorRead_GP);
+        }
+
+        function deleteProgram(){
+            programNum = $(this).attr("id");
+            let apiCall = "../api/GuidingPrograms?numProgram=" + programNum;
+            ajaxCall("DELETE", apiCall, "", deleteSuccessGP, deleteErrorGP);
+        }
+
+        function deleteErrorGP(error) {
+            console.log(error);
+        }
+
+
+        function deleteSuccessGP() {
+            console.log("Success delete the GP");
+            let apiCall = "../api/QandAs/DeleteQandA?numProgram=" + programNum;
+            ajaxCall("DELETE", apiCall, "", deleteSuccessQA, deleteErrorQA);
+        }
+
+        function deleteErrorQA() {
+            console.log("Error delete QA");
+        }
+
+
+        function deleteSuccessQA() {
+            console.log("Success delete the QA");
+            alert("Success in deleting the program");
+            let apiCall = "../api/GuidingPrograms/Read_Max_Program"; //Reading the latest tutorial number
+            ajaxCall("GET", apiCall, "", getSuccessMaxProgram, getErrorMaxProgram);
+        }
+
+        function getSuccessRead_GP(gp) {
+            console.log("Success Read_GP");
+            GP = gp;
+            renderPrograms();
+        }
+
+        function renderPrograms() {
+            let str = "";
+            for (var i = 0; i < GP.length; i++) {
+                str += '<div class="btn-group"><button type="button" class="btnProgram" id="' + GP[i].Guiding_serial_num + '">' + GP[i].Program_name + ' </button ><button type="button" class="btnDelete" id="' + GP[i].Guiding_serial_num + '"> Delete </button></div>&nbsp;&nbsp;&nbsp';
+            }
+            str += '<div id="backAddEdit"><button id="backHomeBTN" onclick="addORedit()">Back</button></div>';
+            $("#btnChoose").css({ "text-align": "center", "padding-top": "170px" });
+            $(".loginBox").css({ "height": "589px", "top": "60%" });
+            document.getElementById("btnChoose").innerHTML = str;
+        }
+
+
+        function getErrorRead_GP(error) {
+            console.log(error);
+        }
+
+        function getProgram() {
+            programNum = this.id;
+            let apiCall = "../api/QandAs/Read_QandA?numProgram=" + programNum;
+            ajaxCall("GET", apiCall, "", getSuccessRead_QandA, getErrorRead_QandA);
+        }
+
+
+        function getSuccessRead_QandA(qa) {
+            numOfQ = qa.length;
+            count = numOfQ;
+            console.log("Success Read_QandA");
+            renderInputLevel();
+            $("#program_name").val(GP[programNum - 1].Program_name);
+            $("#contentguiding").val(GP[programNum - 1].Content_level);
+            $("#question1").val(qa[0].Question_content);
+            arrAnswers = qa[0].Answers.split(",");
+            for (var i = 0; i < arrAnswers.length; i++) {
+                $("#Answer1_" + (i + 1)).val(arrAnswers[i]);
+            }
+            let str = "";
+            for (var i = 1; i < qa.length; i++) {
+                arrAnswers = qa[i].Answers.split(",");
+                str += '<tr><td><p>Question ' + qa[i].Question_serial_num + ':</p></td>';
+                str += '<td><input type="text" id="question' + qa[i].Question_serial_num + '" name="Question" value="' + qa[i].Question_content + '"></td>';
+                for (var j = 0; j < arrAnswers.length; j++) {
+                    str += '<tr><td></td><td></td><td><p>' + (j + 1) + '.</p><td><input type="text" id="Answer' + qa[i].Question_serial_num + '_' + (j + 1) + '" name="Answer"' + (j + 1) + '" value="' + arrAnswers[j] + '"></td>';
+                }
+                str += '</tr>';
+                $(".loginBox").css({ "height": "+=185", "top": "+=14%" });
+            }
+
+            $(str).clone().appendTo("#renderQA");
+            Qnum = i;
+            if (count > 1)
+                $("#remove").show();
+        }
+
+        function getErrorRead_QandA(error) {
+            console.log(error);
+        }
+
+
+        function renderInputLevel() {
+            let str = "";
+            str += '<table><tr><td><p>Name of Program:</p></td><td><input type="text" id="program_name" name="program_name"/></td></tr></table><br>';
+            str += '<textarea id="contentguiding" name="contentguiding" cols="50" rows="8" placeholder="Enter a content"></textarea>';
+            str += '<form method="post" enctype="multipart/form-data" id="formUpload"><div><label id="lableFile" for="files"><b>Please select file</b> - you can choose more than <b>one</b>.</label><input type="file" id="files" name="files" multiple="multiple" /></div><br /><button type="button" id="buttonUpload">Upload files</button><br></form>';
+            str += ' <div id="ph"></div>';
+            str += '<br><button type="button" id="AddQuestion">Add Question</button><br>';
+
+            str += '<table id="AddNewQuestion"><tr><td><p>Question 1:</p></td><td><input type="text" id="question1" name="Question" placeholder="Enter a question" /></td>';
+            for (var i = 0; i < NumOfAnswers; i++) {
+                str += '<tr><td></td><td></td><td><p>' + (i + 1) + '.</p></td><td> <input type="text" id="Answer1_' + (i + 1) + '" name="Answer' + (i + 1) + '" placeholder="Enter a possible answer" /></td></tr>';
+            }
+            str += '</table>';
+
+            str += '<table id="renderQA"></table></table><table id="btn"><tr><td><button hidden="true" type="button" id="remove">Remove question</button><br></td><td></td><td colspan="2"><label id="alertMessage2"></label></td></tr>';
+            str += '<tr><td></td><td></td><td><button type="button" id="save">save</button></td></tr></table>';
+
+            $("#btnChoose").css({ "text-align": "left", "padding-top": "-=170px" });
+            document.getElementById("btnChoose").innerHTML = str;
+        }
+
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
+                <li><a class="space" href="Dashboard.html">Dashboard</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
+                <li><a class="space" href="VolunteerTests.html">Volunteer Tests</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div id="btnChoose"></div>
+    </div>
+</body>
+</html>

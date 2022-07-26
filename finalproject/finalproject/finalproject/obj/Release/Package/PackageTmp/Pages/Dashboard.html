@@ -1,0 +1,204 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/Dashboard.css" rel="stylesheet" />
+    <title></title>
+    <script>
+
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+
+            let apiCall = "../api/Volunteers/volunteerDash";
+            ajaxCall("GET", apiCall, "", getSuccessvolunteerDash, getErrorvolunteerDash);
+
+        });
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+        function getSuccessvolunteerDash(ListOfvolunteer) {
+            vList = ListOfvolunteer;
+            let apiCall = "../api/Twitters/getTweets";
+            ajaxCall("GET", apiCall, "", getSuccessGetTweets, getErrorGetTweets);
+        }
+
+        function getErrorvolunteerDash(error) {
+            console.log(error);
+        }
+
+        function getSuccessGetTweets(allTweets) {
+            dictEmail = {};
+            dictYear = {};
+            ListOfYears = []
+            ListOfValues = [];
+            Years = [];
+            removed_list = [];
+            Names_list = [];
+            repoValues_v = [];
+            count_statuses = 0;
+            for (var i = 0; i < allTweets.length; i++) {
+                if (dictEmail[allTweets[i].Volunteer_email] === undefined) {
+                    dictEmail[allTweets[i].Volunteer_email] = 1;
+                }
+                else {
+                    dictEmail[allTweets[i].Volunteer_email] = dictEmail[allTweets[i].Volunteer_email] + 1;
+                }
+                if (dictYear[allTweets[i].Submit_time] === undefined) {
+                    dictYear[allTweets[i].Submit_time] = 1;
+                }
+                else {
+                    dictYear[allTweets[i].Submit_time] = dictYear[allTweets[i].Submit_time] + 1;
+                }
+            }
+
+            for (let k in dictYear) {
+                ListOfValues.push(dictYear[k]);
+                Years.push(k);
+            }
+
+
+            for (var j = 0; j < Years.length; j++) {
+                for (var i = 0; i < allTweets.length; i++) {
+                    if (Years[j] == allTweets[i].Submit_time && allTweets[i].Status == "Removed") {
+                        count_statuses++;
+                    }
+                }
+                removed_list.push(count_statuses);
+                count_statuses = 0;
+            }
+            Currentyear = new Date().getFullYear()
+            for (let k in dictEmail) {
+                repoValues_v.push(Math.round((dictEmail[k] / dictYear[Currentyear]) * 100));
+                /*repoValues_v.push(dictEmail[k]);*/
+                for (var i = 0; i < vList.length; i++) {
+                    if (vList[i].Volunteer_email == k) {
+                        name = vList[i].First_name + " " + vList[i].Last_name;
+                        Names_list.push(name);
+                    }
+                }
+            }
+
+            dashboard();
+        }
+
+        function getErrorGetTweets(error) {
+            console.log(error);
+        }
+
+        function dashboard() {
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: Years,
+                    datasets: [{
+                        backgroundColor: 'rgba(84, 185, 151, 0.8)',
+                        label: 'All Reports',
+                        data: ListOfValues
+                    }, {
+                        backgroundColor: 'rgba(226, 138, 56, 0.8)',
+                        label: 'Removed',
+                        data: removed_list
+                    }]
+                },
+
+                options: {
+                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: "Total reports & removed reports",
+                        fontSize: 16
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: { min: 0 }
+                        }],
+                    }
+                }
+            });
+
+            var barColors = [
+                "#ffff99",
+                "#ffcc99",
+                "#ff9999",
+                "#ff9966",
+                "#ffcc66"
+            ];
+
+            new Chart("myChart2", { // לנסות להוסיף אחוז
+                type: "pie",
+                data: {
+                    labels: Names_list,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: repoValues_v
+                    }]
+                },
+       
+                 options: {
+                    title: {
+                        display: true,
+                        text: "The percentage of volunteer reports this year",
+                        fontSize: 16
+                    }
+                }
+            });
+
+
+            //var layout = { title: "World Wide Wine Production" };
+
+            //var data = [{ labels: Names_list, values: repoValues_v, type: "pie" }];
+
+            //Plotly.newPlot("myPlot", data, layout);
+
+        }
+
+                
+
+
+    </script>
+
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="logoFOA" src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
+                <li><a class="space" href="Dashboard.html">Dashboard</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
+                <li><a class="space" href="VolunteerTests.html">Volunteer Tests</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div class="inputBox">
+            <p id="dashboardHeader">Dashboard</p>
+            <table>
+                <tr>
+                    <td><canvas id="myChart"></canvas></td>
+                    <td><canvas id="myChart2"></canvas></td>
+                </tr>
+            </table>
+            <!--<div id="myPlot" style="width:100%;max-width:700px"></div>-->
+        </div>
+    </div>
+</body>
+</html>

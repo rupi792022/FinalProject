@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/KeyWord.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+           
+            getDatailsManager = JSON.parse(localStorage.getItem('managerDetails'));
+            getDatailsVolunteer = JSON.parse(localStorage.getItem('VolunteerDetails'));
+            if (getDatailsManager == null) {
+               
+                let strV = "";
+                strV += '<div class="navbar-header"><img src="../Images/FOA.png" /></div>';
+                strV += '<ul class="nav navbar-nav"><li><a class="space" href="VolunteerHome.html">Home</a></li>';
+                strV += '<li><a class="space" href="Guiding.html">Tutorial</a></li>';
+                strV += '<li><a class="space" href="Reports.html">Reports</a></li>';
+                strV += '<li><a class="space" href="KeyWord.html">Keywords</a></li>';
+                strV += '<li><a class="space" href="CommonUsers.html">Common Users</a></li>';
+                strV += '<li class="dropdown"></li></ul>';
+                document.getElementById("navbarKeyWord").innerHTML = strV;
+               
+                var userV = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatailsVolunteer.First_name + ' ' + getDatailsVolunteer.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a onclick="logOut()">Log out</a></li></ul>');
+                $(userV).clone().appendTo(".dropdown");
+            }
+            else {
+                let strM = "";
+                strM += '<div class="navbar-header"><img src="../Images/FOA.png" /></div>';
+                strM += '<ul class="nav navbar-nav"><li><a class="space" href="ManagerHome.html">Home</a></li>';
+                strM += '<li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>';
+                strM += '<li><a class="space" href="MonitoringReport.html">Reports</a></li>';
+                strM += '<li><a class="space" href="Dashboard.html">Dashboard</a></li>';
+                strM += '<li><a class="space" href="KeyWord.html">Keywords</a></li>';
+                strM += '<li><a class="space" href="CommonUsers.html">Common Users</a></li>';
+                strM += '<li><a class="space" href="VolunteerTests.html">Volunteer Tests</a></li>';
+                strM += '<li class="dropdown"></li></ul>';
+                document.getElementById("navbarKeyWord").innerHTML = strM;
+
+                var userM = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatailsManager.First_name + ' ' + getDatailsManager.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+                $(userM).clone().appendTo(".dropdown");
+            }
+           
+            let apiCall = "../api/Twitters/getHashtag";
+            ajaxCall("GET", apiCall, "", getSuccessHashtag, getErrorHashtag);
+
+        });
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+        function getSuccessHashtag(dicWords) {
+            console.log("Success");
+            sortHastag(dicWords);
+        }
+        function getErrorHashtag() {
+            console.log("Error");
+        }
+
+        function sortHastag(dict) {
+            strRed = "";
+            strGreen = "";
+            strYellow = "";
+            for (let k in dict)
+            {
+
+                if (dict[k] >=5) {
+                    strRed = '<p>';
+                    strRed += k;
+                    strRed += " ";
+                    strRed += '</p>';
+                    document.getElementById("red").innerHTML += strRed;
+                }
+                else if (dict[k] >= 3) {
+                        strYellow = '<p>';
+                        strYellow += k;
+                        strYellow +=' ';
+                    strYellow += '</p>';
+                    document.getElementById("yellow").innerHTML += strYellow;
+                }
+                else if (dict[k] == 2) {
+                    strGreen = '<p>';
+                    strGreen += k;
+                    strGreen += " ";
+                    strGreen += '</p>';
+                    document.getElementById("green").innerHTML += strGreen;
+                }
+            } 
+        }
+        // בדף זה יופיעו רק המילים. המילים ממויינות לפי מספר הפעמים שהן במערכת
+        // המילים הינן אשטגים בלבד!
+        // אם מילה מופיעה פעמיים לפחות היא תהיה בצבע ירוק אם היא מופיעה יותר ועד 5 היא תהיה בצבע כתום ואם 5 ומעלה אדום
+    </script>
+            
+</head >
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header" id="navbarKeyWord">
+                <img src="../Images/FOA.png" />
+            </div>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <div class="inputBox">
+            <p id="headerKeywords">Keywords</p>
+            <div class="words">
+                <table>
+                    <tr>
+                        <td><div id="red"></div></td>
+                        <td><div id="yellow"></div></td>
+                        <td><div id="green"></div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html >

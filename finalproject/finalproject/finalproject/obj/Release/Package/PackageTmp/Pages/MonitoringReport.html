@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/MonitoringReport.css" rel="stylesheet" />
+    <title></title>
+    <script>
+
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('managerDetails'));
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + getDatails.First_name + ' ' + getDatails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+            $(document).on("click", "#checkStatus", checkStatus);
+            getTheTweet();
+
+        });
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+        function getTheTweet() {
+            let apiCall = "../api/Twitters/getTweetsNotRe";
+            ajaxCall("GET", apiCall, "", getSuccessgetTweetsNotRe, getErrorgetTweetsNotRe);
+        }
+
+        function getSuccessgetTweetsNotRe(tweets) {
+            console.log("Success GetTweets");
+            Tweets = tweets;
+            if (tweets.length > 0) {
+                renderReport(tweets);
+            }
+            else {
+                strNoR ='<p id="NoR">No reports for review.<br> <b>All posts have been removed!</b></p>';
+                document.getElementById("reports").innerHTML = strNoR;
+            }
+        }
+
+        function renderReport(tweets) {
+            str = "<table><tr id='headerTable'><td><p>Content link</p></td><td><p>Country</p></td><td><p>Date</p></td><td><p>Network</p></td><td><p>Language</p></td><td><p>Volunteer email</p></td><td><p>Status</p></td></tr>";
+            for (var i = 0; i < tweets.length; i++) {
+                str += "<tr><td><p>" + tweets[i].LinkUrl + "</p></td>";
+                str += "<td><p>" + tweets[i].Country + "</p></td>";
+                str += "<td><p>" + tweets[i].Created_at + "</p></td>";
+                str += "<td><p>" + tweets[i].Network + "</p></td>";
+                str += "<td><p>" + tweets[i].Lang + "</p></td>";
+                str += "<td><p>" + tweets[i].Volunteer_email + "</p></td>";
+                str += "<td><p>" + tweets[i].Status + "</p></td></tr>";
+            }
+            str +="</table>"
+                str += "<br><button id='checkStatus'>Check the status</button>";
+            document.getElementById("reports").innerHTML = str;
+
+            if (tweets.length > 6) {
+                $(".loginBox").css({ "height": "+=30px" });
+            }
+        }
+
+        function checkStatus() {
+            ajaxCall("POST", "../api/Twitters/UpdateStatus", JSON.stringify(Tweets), postSuccessUrl, postErrorUrl);
+            return false;
+        }
+
+        function getErrorgetTweetsNotRe(error) {
+            console.log(error);
+        }
+
+        function postSuccessUrl() {
+            console.log("Success tweetStatus");
+            getTheTweet();
+        }
+
+        function postErrorUrl(error) {
+            console.log(error);
+        }
+
+
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
+                <li><a class="space" href="Dashboard.html">Dashboard</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
+                <li><a class="space" href="VolunteerTests.html">Volunteer Tests</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="loginBox">
+        <p id="headerReports">Reports</p>
+        <div id="reports"></div>
+    </div>
+</body>
+</html>

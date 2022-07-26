@@ -1,0 +1,103 @@
+﻿img {
+    height: 60px;
+}
+
+.container-fluid {
+    background: #E5EDED;
+}
+
+.nav {
+    margin-top: 8px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #3E8C84;
+    height: 100vh;
+    font-family: Calibri;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
+}
+
+#particles-js {
+    height: 100%
+}
+
+.space {
+    width: 145px;
+    text-align: center;
+}
+
+a {
+    color: dimgrey;
+    font-family: Calibri;
+    font-size: 15px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #C59636;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #C59636;
+}
+
+.navbar {
+    border: none;
+}
+
+.navbar-header {
+    padding-top: 5px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 7px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #E5EDED;
+}
+
+.dropdown-menu > li > a {
+    color: dimgrey;
+}
+
+.loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 450px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    border: 1px solid #C59636;
+}
+
+#red {
+    font-family: Calibri;
+    color: red;
+    font-size:20px;
+}
+
+#yellow {
+    font-family: Calibri;
+    color: orange;
+    font-size: 20px;
+}
+
+#green {
+    font-family: Calibri;
+    color: green;
+    font-size: 20px;
+}
+
+#headerAuthor {
+    font-size: 24px;
+    text-align: center;
+    color: dimgray;
+}

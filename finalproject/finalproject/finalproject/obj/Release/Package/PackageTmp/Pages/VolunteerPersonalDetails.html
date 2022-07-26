@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+    </script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/ajaxCallsWithKey.js"></script>
+    <link href="../css/VolunteerPersonalDetails.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            $("#SaveDatails").click(SaveDatails);
+        });
+
+        function SaveDatails() {
+            getDatails = JSON.parse(localStorage.getItem('VolunteerDetails'));
+
+            let newpassword = $("#NewPassword").val();
+            let verifynewpassword = $("#VerifyNewPassword").val();
+            if (newpassword != verifynewpassword) {
+                alert("Verification is not correct.")
+            }
+            else {
+
+                if (newpassword != "")
+                    password = $("#NewPassword").val();
+                else
+                    password = getDatails.Volunteer_password;
+            }
+             firstname = $("#firstname").val();
+             lastname = $("#lastname").val();
+             birthdate = $("#birthdate").val();
+             mobilephone = $("#mobilephone").val();
+             email = getDatails.Volunteer_email;
+             gender = $("input[type=radio][name=gender]:checked").val();
+             startdate = $("#startdate").val();
+             volunteertype = $("input[type=radio][name=volunteertype]:checked").val();
+            var arrLanguage = [];
+            $.each($("input[name='language']:checked"), function () {
+                arrLanguage.push($(this).val());
+            });
+             strLanguage = arrLanguage.toString();
+
+            //Required fields
+            if (firstname == "" || lastname == "" || birthdate == "" || mobilephone == "" || startdate == "" || gender == undefined || volunteertype == undefined || strLanguage == "") {
+                str = '';
+                str += '*You must enter all fields to continue';
+                document.getElementById("alertMessage").innerHTML = str;
+            }
+            else {
+                let MyVolunteerDetails = {
+                    First_name: firstname,
+                    Last_name: lastname,
+                    Date_of_birth: birthdate,
+                    Phone_number: mobilephone,
+                    Gender: gender,
+                    Volunteer_email: email,
+                    Start_date: startdate,
+                    Volunteer_type: volunteertype,
+                    Volunteer_password: password,
+                    Language: strLanguage
+                }
+                ajaxCall("PUT", "../api/Volunteers", JSON.stringify(MyVolunteerDetails), SaveSuccess, SaveError)
+                return false;
+            }
+          
+        }
+     
+            function SaveSuccess() {
+                localStorage.setItem("userDetails", JSON.stringify(getDatails.Volunteer_email));
+                window.location.href = "VolunteerHome.html";
+            }
+            function SaveError(error) {
+                console.log(error);
+            }
+
+    </script>
+</head>
+<body>
+    <div class="loginBox">
+        <img src="../Images/FOA.png" /><br />
+            <div class="inputBox">
+                <table>
+                    <tr>
+                        <td><p>First name:</p></td>
+                        <td><input type="text" id="firstname" name="firstname" placeholder="First name" /></td>
+                        <td><p>Last name:</p></td>
+                        <td><input type="text" id="lastname" name="lastname" placeholder="Last name" /></td>
+                    </tr>
+                    <tr>
+                        <td><p>Date of birth:</p></td>
+                        <td><input type="date" id="birthdate" name="birthdate" /></td>
+                        <td><p>Phone:</p></td>
+                        <td><input type="tel" id="mobilephone" name="mobilephone" placeholder="Phone number" pattern="[0][5][0-9]{1}[-]{0,1}[0-9]{3}[-]{0,1}[0-9]{4}" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Gender:</p>
+                            <input type="radio" id="woman" name="gender" value="Woman" />
+                            <label for="woman"> Woman</label><br>
+                            <input type="radio" id="man" name="gender" value="Man" />
+                            <label for="man"> Man</label><br>
+                            <input type="radio" id="other" name="gender" value="Other" />
+                            <label for="other"> Other</label>
+                        </td>
+                        <td>
+                            <p>Volunteer Type:</p>
+                            <input type="radio" id="freetime" name="volunteertype" value="FreeTime" />
+                            <label for="freetime"> Free time</label><br>
+                            <input type="radio" id="Volunteer hours" name="volunteertype" value="Volunteer hours" />
+                            <label for="Volunteer hours"> Volunteer hours</label>
+                        </td>
+                        <td>
+                            <p>Choose your language/s:</p>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="Hebrew" name="language" value="Hebrew" />
+                            <label for="Hebrew">Hebrew</label><br>
+                            <input type="checkbox" id="English" name="language" value="English" />
+                            <label for="English">English</label><br>
+                            <input type="checkbox" id="Russian" name="language" value="Russian" />
+                            <label for="Russian">Russian</label><br>
+                            <input type="checkbox" id="French" name="language" value="French" />
+                            <label for="French">French</label><br>
+                            <input type="checkbox" id="Arabic" name="language" value="Arabic" />
+                            <label for="Arabic">Arabic</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p>Start date:</p>
+                        <td>
+                            <input type="date" id="startdate" name="startdate" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><p><b>Change password:</b></p></td>
+                        <td colspan="2"><p>Passwords must be at least 8 characters long</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>New password:</p></td>
+                        <td><input type="password" id="NewPassword" name="NewPassword" placeholder="Enter new password" pattern=".{8,}" /></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><p>Verify new password:</p></td>
+                        <td><input type="password" id="VerifyNewPassword" name="VerifyNewPassword" placeholder="Enter verify new password" pattern=".{8,}" /></td>
+                        <td colspan="2"><p id="alertMessage"></p></td>
+                    </tr>
+                </table>
+                 <button type="button" id="SaveDatails">Save</button>
+            </div>
+    </div>
+</body>
+    </html>

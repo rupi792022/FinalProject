@@ -1,0 +1,154 @@
+﻿
+body {
+    margin: 0;
+    padding: 0;
+    background: #3E8C84;
+    height: 100vh;
+    font-family: Calibri;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
+}
+
+#particles-js {
+    height: 100%
+}
+
+.loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 430px;
+    min-height: 200px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box;
+    font-family: Calibri !important;
+}
+
+
+    .loginBox input {
+        width: 260px;
+        margin-bottom: 20px
+    }
+
+        .loginBox input[type="email"] {
+            border: none;
+            border-bottom: 1px solid #C59636;
+            outline: none;
+            height: 40px;
+            color: gray;
+            background: #E5EDED;
+            font-family: Calibri;
+            border-radius: 40px;
+            font-size: 16px;
+            padding-left: 20px;
+            box-sizing: border-box;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .loginBox input[type="email"]:hover {
+                border: 1px solid #C59636;
+                border-radius: 40px;
+                box-shadow: 0 0 5px #C59636;
+                font-family: Calibri;
+            }
+
+            .loginBox input[type="email"]:focus {
+                border: 1px solid #C59636;
+                border-radius: 40px;
+                font-family: Calibri;
+            }
+
+.inputBox {
+    position: relative;
+}
+
+    .inputBox span {
+        position: absolute;
+    }
+
+button {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 260px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Calibri;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginBox a {
+    color: #C59636;
+    font-size: 14px;
+    text-decoration: none;
+    display: block
+}
+
+p {
+    color: gray;
+    font-family: Calibri !important;
+    text-align:center;
+    font-size:15px;
+}
+
+
+img {
+    height: 60px;
+}
+
+.container-fluid {
+    background: #E5EDED;
+}
+
+.nav {
+    margin-top: 8px;
+}
+
+
+.space {
+    width: 145px;
+    text-align: center;
+}
+
+a {
+    color: dimgrey;
+    font-family: Calibri;
+    font-size: 15px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #C59636;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #C59636;
+}
+
+.navbar {
+    border: none;
+}
+
+.navbar-header {
+    padding-top: 5px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 7px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #E5EDED;
+}
+.dropdown-menu > li > a {
+    color: dimgrey;
+}

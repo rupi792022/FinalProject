@@ -1,0 +1,169 @@
+﻿.logoFOA {
+    height: 60px;
+}
+
+
+.container-fluid {
+    background: #E5EDED;
+}
+
+.nav {
+    margin-top: 8px;
+}
+
+body {
+    font-family: Calibri;
+    background: #3E8C84;
+    color: gray;
+}
+
+.space {
+    width: 145px;
+    text-align: center;
+}
+
+a {
+    color: dimgrey;
+    font-family: Calibri !important;
+    font-size: 15px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #C59636;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #C59636;
+}
+
+.navbar {
+    border: none;
+    font-family: Calibri !important;
+}
+
+.navbar-header {
+    padding-top: 5px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 7px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #E5EDED;
+}
+
+.dropdown-menu > li > a {
+    color: dimgrey;
+}
+
+.btnLevel {
+    border: 1px solid #C59636;
+    outline: none;
+    width: 150px;
+    height: 95px;
+    font-size: 22px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+}
+
+.loginBox {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 850px;
+    height: 540px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box;
+    border: 1px solid #C59636;
+}
+
+#learning {
+    padding-left: 30px;
+}
+
+    #learning p {
+        font-size: 17px;
+        font-family: Calibri;
+    }
+
+#uploadRender,
+#nextUpload,
+#createQuestion,
+#nextAnswer,
+#readQandA {
+    border: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    width: 70px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+    font-weight: normal;
+}
+
+#checkAnswer {
+    border: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    width: 70px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+    font-weight: normal;
+}
+
+.uploadImage {
+    width: 400px;
+    height: 400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+}
+
+.uploadPDF {
+    width: 850px;
+    height: 540px;
+    padding-right: 30px;
+}
+
+.lableRadio {
+    color: black;
+    font-weight: normal;
+    padding-left: 7px;
+    padding-top: 7px;
+    font-size: 16px;
+}
+
+#renderNext {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.questionP {
+    color: black;
+}
+
+#alertMessage {
+    color: teal;
+    font-size: 16px;
+    font-family: Calibri;
+    font-weight: bold;
+}
+
+p {
+    font-weight: normal;
+}

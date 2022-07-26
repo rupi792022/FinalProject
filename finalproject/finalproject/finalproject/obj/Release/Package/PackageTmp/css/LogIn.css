@@ -1,0 +1,116 @@
+﻿
+body {
+    margin: 0;
+    padding: 0;
+    background: #3E8C84;
+    height: 100vh;
+    font-family: Calibri;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden
+}
+
+#particles-js {
+    height: 100%
+}
+
+.loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    min-height: 200px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+
+.loginBox input {
+    width: 100%;
+    margin-bottom: 20px
+}
+
+    .loginBox input[type="email"],
+    .loginBox input[type="password"] {
+        border: none;
+        border-bottom: 1px solid #C59636;
+        outline: none;
+        height: 40px;
+        color: gray;
+        background: #E5EDED;
+        font-family: Calibri;
+        border-radius: 40px;
+        font-size: 16px;
+        padding-left: 20px;
+        box-sizing: border-box
+    }
+
+        .loginBox input[type="email"]:hover,
+        .loginBox input[type="password"]:hover {
+            border: 1px solid #C59636;
+            border-radius: 40px;
+            box-shadow: 0 0 5px #C59636;
+            font-family: Calibri;
+        }
+
+        .loginBox input[type="email"]:focus,
+        .loginBox input[type="password"]:focus {
+            border: 1px solid #C59636;
+            border-radius: 40px;
+            font-family: Calibri;
+        }
+
+.inputBox {
+    position: relative;
+}
+
+    .inputBox span {
+        position: absolute;
+
+    }
+
+
+ button {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Calibri;
+}
+
+.loginBox a {
+    color: #C59636;
+    font-size: 14px;
+    text-decoration: none;
+    display: block
+}
+
+.loginBox label {
+    color: red;
+    font-size: 14px;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+p {
+    color: #0000ff
+}
+
+img {
+    height: 80px;
+    width: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

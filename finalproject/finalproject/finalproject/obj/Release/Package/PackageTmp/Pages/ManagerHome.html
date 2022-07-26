@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="../css/ManagerHome.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            getDatails = JSON.parse(localStorage.getItem('userDetails'));
+            ajaxCall("GET", "../api/Managers/ReadManager_M?email=" + getDatails, "", getSuccessDetails_m, getErrorDetails_m);
+        });
+
+        function getSuccessDetails_m(managerDetails) {
+            console.log(managerDetails);
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem('managerDetails', JSON.stringify(managerDetails));
+            }
+            else {
+                alert("web storage not supported!");
+            }
+            var user = $('<a class= "dropdown-toggle" data-toggle="dropdown" href="#">' + managerDetails.First_name + ' ' + managerDetails.Last_name + '<span class= "caret"></span></a><ul class="dropdown-menu"><li><a href="SingIn.html">Add volunteer</a></li><li><a onclick="logOut()">Log out</a></li></ul>');
+            $(user).clone().appendTo(".dropdown");
+        }
+
+        function getErrorDetails_m(error) {
+            console.log(error)
+        }
+
+        function logOut() {
+            localStorage.clear();
+            window.location.href = "LogIn.html";
+        }
+
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img src="../Images/FOA.png" />
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a class="space" href="ManagerHome.html">Home</a></li>
+                <li><a class="space" href="GuidingProgram.html">Guiding Program</a></li>
+                <li><a class="space" href="MonitoringReport.html">Reports</a></li>
+                <li><a class="space" href="Dashboard.html">Dashboard</a></li>
+                <li><a class="space" href="KeyWord.html">Keywords</a></li>
+                <li><a class="space" href="CommonUsers.html">Common Users</a></li>
+                <li><a class="space" href="VolunteerTests.html">Volunteer Tests</a></li>
+                <li class="dropdown"></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <table>
+            <tr>
+                <td>
+                    <a class="btnCard" href="GuidingProgram.html">
+                        <div class="card">
+                            <img class="imgCard" src="../Images/social media.png" />
+                            <div class="textCard">
+                                <p>Guiding Program </p>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                <td>
+                    <a class="btnCard" href="MonitoringReport.html">
+                        <div class="card">
+                            <img class="imgCard" src="../Images/reports.png" />
+                            <div class="textCard">
+                                <p>Reports</p>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+
+                <td>
+                    <a class="btnCard" href="Dashboard.html">
+                        <div class="card">
+                            <img class="imgCard" src="../Images/Learning.png" />
+                            <div class="textCard">
+                                <p>Dashboard</p>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btnCard" href="KeyWord.html">
+                        <div class="card">
+                            <img class="imgCard" src="../Images/keywords.png" />
+                            <div class="textCard">
+                                <p>Keywords</p>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                <td>
+                    <a class="btnCard" href="CommonUsers.html">
+                        <div class="card">
+                            <img class="imgCard" src="../Images/common user.png" />
+                            <div class="textCard">
+                                <p>Common Users</p>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                <td>
+                    <a class="btnCard" href="VolunteerTests.html">
+                        <div class="card">
+                            <img class="imgCard" src="../Images/volunteer.png" />
+                            <div class="textCard">
+                                <p>Volunteer Tests</p>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

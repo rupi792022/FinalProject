@@ -1,0 +1,264 @@
+﻿img {
+    height: 60px;
+}
+
+.container-fluid {
+    background: #E5EDED;
+}
+
+.nav {
+    margin-top: 8px;
+}
+
+body {
+    font-family: Calibri;
+    background: #3E8C84;
+}
+
+.space {
+    width: 145px;
+    text-align: center;
+}
+
+a {
+    color: dimgrey;
+    font-family: Calibri;
+    font-size: 15px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #C59636;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #C59636;
+}
+
+.navbar {
+    border: none;
+}
+
+.navbar-header {
+    padding-top: 5px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 7px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #E5EDED;
+}
+
+.dropdown-menu > li > a {
+    color: dimgrey;
+}
+
+
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    color: gray;
+    font-family: Calibri;
+    font-size: 14px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    width: 180px;
+    background: #E5EDED;
+}
+
+    input[type="text"]:hover {
+        border: 1px solid #C59636;
+        border-radius: 7px;
+        box-shadow: 0 0 5px #C59636;
+        font-family: Calibri;
+    }
+
+
+    input[type="text"]:focus {
+        border: 1px solid #C59636;
+        border-radius: 7px;
+        font-family: Calibri;
+    }
+
+textarea {
+    border: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    color: gray;
+    font-family: Calibri;
+    border-radius: 7px;
+    font-size: 14px;
+    padding-left: 7px;
+    box-sizing: border-box;
+    width: 500px;
+    height: 80px;
+    resize: none;
+    background: #E5EDED;
+}
+
+    textarea:hover {
+        border-radius: 7px;
+        box-shadow: 0 0 5px #C59636;
+        font-family: Calibri;
+    }
+
+button {
+    border: 1px solid #C59636;
+    outline: none;
+    height: 35px;
+    width: 70px;
+    font-size: 16px;
+    background: #C59636;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: Calibri;
+}
+
+
+table {
+    width: 100%;
+    font-family: Calibri;
+    display: block;
+}
+
+
+td {
+    vertical-align: text-top;
+    text-align: center;
+}
+
+#defineTheProgram p {
+    width: 130px;
+}
+
+#defineTheProgram label,
+#btn label, #alertMessageFile {
+    color: red;
+    font-size: 14px;
+    font-family: Calibri;
+    font-weight: normal;
+}
+
+#alertMessage1 {
+    padding-left: 20px;
+}
+
+#alertMessage2 {
+    padding-left: 60px;
+}
+
+
+.rightSide {
+    padding-left: 30px;
+}
+
+.correctAnswer ::placeholder {
+    color: red;
+    opacity: 1;
+}
+
+.correctAnswer input[type="text"] {
+    color: red;
+}
+
+#AddNewQuestion input[type="text"],
+#renderQA input[type="text"] {
+    width: 400px;
+    padding-left: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+#AddQuestion,
+#buttonUpload {
+    width: 120px;
+}
+
+#editProgram,
+#addNewProgram {
+    width: 180px;
+    height: 95px;
+    font-size: 20px;
+}
+
+#remove {
+    width: 150px;
+}
+
+#btn td {
+    width: 280px;
+    text-align: left;
+}
+
+#title {
+    font-family: Calibri;
+    color: dimgray;
+    text-align: center;
+    padding-top: -20px;
+}
+
+
+.loginBox {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 580px;
+    background: #E5EDED;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    border: 1px solid #C59636;
+}
+
+#btnChoose {
+    text-align: center;
+    padding-top: 170px;
+}
+
+form label {
+    color: black;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+#save {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.btnProgram {
+    width: 150px;
+    height: 95px;
+    font-size: 20px;
+
+}
+
+
+
+#backAddEdit {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.btn-group button {
+    cursor: pointer;
+    display: block; 
+}
+
+.btnDelete{
+    margin-left:37px;
+    margin-top:8px;
+}
+
+#lableFile {
+    color: gray;
+    font-size: 18px;
+    font-family: Calibri;
+}
