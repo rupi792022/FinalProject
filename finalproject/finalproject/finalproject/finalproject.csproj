@@ -288,6 +288,7 @@
     <Content Include="css\VolunteerHome.css" />
     <Content Include="css\Guiding.css" />
     <Content Include="css\VolunteerPersonalDetails.css" />
+    <Content Include="css\VolunteerTests.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -298,6 +299,7 @@
     <Content Include="Images\Learning.png" />
     <Content Include="Images\reports.png" />
     <Content Include="Images\social media.png" />
+    <Content Include="Images\volunteer.png" />
     <Content Include="Pages\Dashboard.html" />
     <Content Include="Pages\Guiding.html" />
     <Content Include="Pages\GuidingProgram.html" />
