@@ -54,11 +54,11 @@ a {
 }
 
 .loginBox {
-    position: absolute;
+   /* position: absolute;
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 850px;
+    width: 850px;*/
     height: 540px;
     background: #E5EDED;
     border-radius: 10px;

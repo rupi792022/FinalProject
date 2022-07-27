@@ -53,11 +53,11 @@ a {
 }
 
 .loginBox {
-    position: absolute;
+  /*  position: absolute;
     top: 60%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1000px;
+    transform: translate(-50%, -50%);*/
+/*    width: 1000px;*/
     height: 500px;
     background: #E5EDED;
     border-radius: 10px;
@@ -99,7 +99,7 @@ body {
 #myChart {
     width: 100%;
     max-width: 7000px !important;
-    margin-bottom:140px;
+    margin-bottom:80px;
 }
 
 #myPlot {

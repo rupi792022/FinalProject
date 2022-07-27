@@ -46,12 +46,17 @@
         function renderProgram() {
             str = "";
             str += '<p id="headerTutorial">Tutorial</p><br />';
-            for (var i = 0; i < GP.length; i++) {
-                if ((i + 1) <= themaxProgram) {
-                    str += '<button type="button" style="background:#3E8C84" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+        
+                for (var i = 0; i < GP.length; i++) {
+                    if ((themaxProgram == 0) && ((i+1) >1)) {
+                        str += '<button type="button" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                    }
+                   else if ((i + 1) <= themaxProgram) {
+                        str += '<button type="button" style="background:#3E8C84" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                    }
+                    else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
                 }
-                else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
-            }
+            
             document.getElementById("learning").innerHTML = str;
         }
 
@@ -98,12 +103,12 @@
                 str += '<p id="exam">Exam<p>';
                 str += '<p>Now you are required to take an exam.</br>A number of questions will appear on the exam.</br> When you click on the "Next" button you will start the exam and you will not be able to go back.</br>At the end of each question, click on the "Check" button and then "Next" to continue to the next question.</p>';
                 str += '<div id="renderNext"><button id="readQandA">Next</button></div>'; // לבדוק את הכפתור next מבחינת עיצוב
-                $(".loginBox").css({ "height": "540px", "width": "850px", "top": "60%" });
+                $(".loginBox").css({ "height": "540px", "top": "60%" });
             }
             else {
                 if (Extantions[index] == "pdf" || Extantions[index] == "docx") {
                     str += '<embed class="uploadPDF" type="text/' + Extantions[index] + '" src="../' + filesPath[index] + '.' + Extantions[index] + '">';
-                    $(".loginBox").css({ "height": "650px", "width": "950px", "top": "70%" });
+                    $(".loginBox").css({ "height": "650px", "top": "70%" });
                 }
                 else if (Extantions[index] == "png" || Extantions[index] == "jpg")
                     str += '<img class="uploadImage" src="../' + filesPath[index] + '.' + Extantions[index] + '" />';
@@ -216,10 +221,12 @@
             </ul>
         </div>
     </nav>
-    <div class="loginBox">
-        <div id="learning"></div>
-        <div id="alertMessage"></div>
-        <div id="QA"></div>
+    <div class="container">
+        <div class="loginBox">
+            <div id="learning"></div>
+            <div id="alertMessage"></div>
+            <div id="QA"></div>
+        </div>
     </div>
 </body>
 </html>
