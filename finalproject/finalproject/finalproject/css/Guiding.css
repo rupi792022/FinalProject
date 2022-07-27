@@ -150,9 +150,8 @@ a {
 }
 
 #renderNext {
-    position: absolute;
-    /*bottom: 15px;*/
-    right: 300px;
+    position: relative;
+    left: 900px;
 }
 
 .questionP {
