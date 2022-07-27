@@ -46,12 +46,17 @@
         function renderProgram() {
             str = "";
             str += '<p id="headerTutorial">Tutorial</p><br />';
-            for (var i = 0; i < GP.length; i++) {
-                if ((i + 1) <= themaxProgram) {
-                    str += '<button type="button" style="background:#3E8C84" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+        
+                for (var i = 0; i < GP.length; i++) {
+                    if ((themaxProgram == 0) && ((i+1) >1)) {
+                        str += '<button type="button" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                    }
+                   else if ((i + 1) <= themaxProgram) {
+                        str += '<button type="button" style="background:#3E8C84" class="btnLevel" disabled id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
+                    }
+                    else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
                 }
-                else str += '<button type="button" class="btnLevel" id="' + (i + 1) + '">' + GP[i].Program_name + '</button >&nbsp;&nbsp;&nbsp;';
-            }
+            
             document.getElementById("learning").innerHTML = str;
         }
 
